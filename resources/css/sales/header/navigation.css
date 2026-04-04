@@ -1,0 +1,48 @@
+@layer components {
+    .marketing-nav {
+        display: none;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .marketing-nav__link {
+        position: relative;
+        color: var(--color-muted);
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        padding-bottom: 0.5rem;
+        transition: color 0.2s ease;
+    }
+
+    .marketing-nav__link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -0.45rem;
+        height: 0.16rem;
+        border-radius: 999px;
+        background: var(--color-primary);
+        opacity: 0;
+        transform: scaleX(0.7);
+        transform-origin: center;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .marketing-nav__link:hover,
+    .marketing-nav__link--active {
+        color: var(--color-ink);
+    }
+
+    .marketing-nav__link--active::after {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+
+    @media (min-width: 768px) {
+        .marketing-nav {
+            display: flex;
+        }
+    }
+}

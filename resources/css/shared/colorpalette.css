@@ -1,0 +1,93 @@
+@layer base {
+    :root {
+        --tuscan-sun: #e8c547;
+        --graphite: #30323d;
+        --charcoal: #4d5061;
+        --glaucous: #5c80bc;
+        --ash-grey: #cdd1c4;
+        --harbor-ink: #1f2f45;
+        --harbor-steel: #36506f;
+        --harbor-frost: #dbe3ee;
+
+        --tuscan-sun-rgb: 232 197 71;
+        --graphite-rgb: 48 50 61;
+        --charcoal-rgb: 77 80 97;
+        --glaucous-rgb: 92 128 188;
+        --ash-grey-rgb: 205 209 196;
+        --harbor-ink-rgb: 31 47 69;
+        --harbor-steel-rgb: 54 80 111;
+        --harbor-frost-rgb: 219 227 238;
+
+        --color-primary: var(--glaucous);
+        --color-primary-hover: #4b6fa7;
+        --color-primary-rgb: var(--glaucous-rgb);
+        --color-primary-soft: rgb(var(--color-primary-rgb) / 0.14);
+
+        --color-accent: var(--tuscan-sun);
+        --color-accent-deep: #d8b53e;
+        --color-accent-rgb: var(--tuscan-sun-rgb);
+        --color-accent-soft: rgb(var(--color-accent-rgb) / 0.18);
+
+        --color-cream: #f3f5f0;
+        --color-stone: #e7eae2;
+        --color-surface: #ffffff;
+        --color-surface-rgb: 255 255 255;
+        --color-surface-alt: #e7eae2;
+        --color-surface-alt-rgb: 231 234 226;
+        --color-ink: var(--graphite);
+        --color-muted: var(--charcoal);
+        --color-forest: var(--color-primary);
+        --color-text-rgb: var(--graphite-rgb);
+        --color-border: var(--ash-grey);
+        --color-border-rgb: var(--ash-grey-rgb);
+        --color-header-ink-rgb: var(--harbor-ink-rgb);
+        --color-header-accent-rgb: var(--harbor-steel-rgb);
+        --color-header-surface-rgb: var(--harbor-frost-rgb);
+
+        --font-sans: "Space Grotesk", sans-serif;
+        --font-display: "Fraunces", serif;
+        --page-width: 80rem;
+        --surface-border: rgb(var(--color-border-rgb) / 0.72);
+        --surface-border-strong: rgb(var(--color-border-rgb) / 0.95);
+        --surface-shadow: 0 18px 60px rgb(var(--color-text-rgb) / 0.1);
+        --surface-shadow-soft: 0 16px 40px rgb(var(--color-text-rgb) / 0.06);
+        --surface-shadow-strong: 0 28px 80px rgb(var(--color-header-ink-rgb) / 0.26);
+        --gradient-soft: linear-gradient(
+            180deg,
+            rgb(var(--color-surface-rgb) / 1) 0%,
+            rgb(var(--color-surface-alt-rgb) / 0.78) 100%
+        );
+        --gradient-surface: linear-gradient(
+            180deg,
+            rgb(var(--color-surface-rgb) / 1) 0%,
+            rgb(var(--color-header-surface-rgb) / 0.72) 100%
+        );
+        --gradient-brand: linear-gradient(
+            135deg,
+            rgb(var(--color-accent-rgb) / 0.98) 0%,
+            rgb(var(--color-primary-rgb) / 0.94) 56%,
+            rgb(var(--color-text-rgb) / 1) 100%
+        );
+        --gradient-panel: linear-gradient(
+            160deg,
+            rgb(var(--color-header-ink-rgb) / 1) 0%,
+            rgb(var(--color-primary-rgb) / 0.92) 100%
+        );
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: var(--color-cream);
+        color: var(--color-ink);
+        font-family: var(--font-sans);
+    }
+
+    input,
+    select,
+    textarea {
+        font: inherit;
+    }
+}

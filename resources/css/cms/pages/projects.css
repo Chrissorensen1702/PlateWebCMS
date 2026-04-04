@@ -1,0 +1,227 @@
+@layer components {
+    [x-cloak] {
+        display: none !important;
+    }
+
+    .projects-page {
+        padding: 2.5rem 0;
+    }
+
+    .projects-page__layout {
+        display: grid;
+        gap: 1.25rem;
+    }
+
+    .projects-page__surface {
+        gap: 1.5rem;
+    }
+
+    .projects-page__header {
+        display: grid;
+        gap: 0.6rem;
+    }
+
+    .projects-page__copy {
+        color: var(--color-muted);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        max-width: 46rem;
+    }
+
+    .projects-page__customer-item {
+        gap: 0.9rem;
+    }
+
+    .projects-page__customer-item .dashboard-feed__copy {
+        margin-top: 0.3rem;
+    }
+
+    .projects-page__customer-actions {
+        display: flex;
+        justify-content: flex-start;
+        padding-top: 0.15rem;
+    }
+
+    .projects-page__meta-group,
+    .projects-page__project-meta-group {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem 0.8rem;
+        flex-wrap: wrap;
+    }
+
+    .projects-page__project-card {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .projects-page__project-card-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .projects-page__project-meta-group {
+        margin-top: 0.45rem;
+    }
+
+    .projects-page__project-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .projects-page__toggle-trigger,
+    .projects-page__note-trigger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.85rem;
+        height: 2.85rem;
+        border-radius: 999px;
+        border: 1px solid var(--surface-border-strong);
+        background: rgb(255 255 255 / 0.92);
+        color: rgb(var(--color-primary-rgb) / 0.68);
+        box-shadow: 0 14px 28px rgb(var(--color-primary-rgb) / 0.08);
+        transition: transform 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .projects-page__toggle-trigger:hover,
+    .projects-page__note-trigger:hover {
+        transform: translateY(-1px);
+        border-color: rgb(var(--color-primary-rgb) / 0.25);
+        color: rgb(var(--color-primary-rgb) / 0.92);
+        box-shadow: 0 18px 34px rgb(var(--color-primary-rgb) / 0.12);
+    }
+
+    .projects-page__toggle-trigger--open,
+    .projects-page__note-trigger--filled {
+        background: rgb(var(--color-primary-rgb) / 0.1);
+        color: rgb(var(--color-primary-rgb) / 0.96);
+        border-color: rgb(var(--color-primary-rgb) / 0.18);
+    }
+
+    .projects-page__toggle-trigger svg,
+    .projects-page__note-trigger svg {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+
+    .projects-page__toggle-trigger svg {
+        transition: transform 180ms ease;
+    }
+
+    .projects-page__toggle-trigger--open svg {
+        transform: rotate(180deg);
+    }
+
+    .projects-page__site-list {
+        display: grid;
+        gap: 0.85rem;
+    }
+
+    .projects-page__note-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: grid;
+        place-items: center;
+        padding: 1.5rem;
+    }
+
+    .projects-page__note-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgb(12 18 33 / 0.48);
+        backdrop-filter: blur(8px);
+    }
+
+    .projects-page__note-dialog {
+        position: relative;
+        z-index: 1;
+        width: min(42rem, 100%);
+        display: grid;
+        gap: 1rem;
+        border-radius: 1.5rem;
+        border: 1px solid var(--surface-border);
+        background: rgb(255 255 255 / 0.98);
+        box-shadow: 0 38px 90px rgb(15 23 42 / 0.18);
+        padding: 1.35rem;
+    }
+
+    .projects-page__note-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .projects-page__notes-copy {
+        color: var(--color-muted);
+        font-size: 0.92rem;
+        line-height: 1.6;
+    }
+
+    .projects-page__notes-form {
+        display: grid;
+        gap: 0.75rem;
+    }
+
+    .projects-page__notes-input {
+        min-height: 8.5rem;
+        resize: vertical;
+    }
+
+    .projects-page__notes-actions {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .projects-page__notes-display {
+        color: var(--color-muted);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        white-space: normal;
+        border-radius: 1.15rem;
+        border: 1px solid var(--surface-border-strong);
+        background: rgb(var(--color-primary-rgb) / 0.03);
+        padding: 1rem;
+    }
+
+    .projects-page__site-item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        border-radius: 1.15rem;
+        border: 1px solid var(--surface-border-strong);
+        background: rgb(var(--color-primary-rgb) / 0.03);
+        padding: 0.95rem 1rem;
+    }
+
+    @media (min-width: 1024px) {
+        .projects-page__layout {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            align-items: start;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .projects-page__project-card-top,
+        .projects-page__note-header {
+            flex-direction: column;
+        }
+
+        .projects-page__project-actions {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .projects-page__note-dialog {
+            padding: 1.1rem;
+        }
+    }
+}

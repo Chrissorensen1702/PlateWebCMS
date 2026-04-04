@@ -1,0 +1,222 @@
+<?xml version="1.0" ?>
+<svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" version="1.1" id="PlateWeb_builder_with_Platebook" sodipodi:docname="PlateWeb builder with Platebook" inkscape:export-xdpi="96" inkscape:export-ydpi="96" style="fill: none; stroke: none">
+   <defs/>
+   <sodipodi:namedview inkscape:pagecheckerboard="true" borderlayer="true" bordercolor="#666666" pagecolor="#ffffff"/>
+   <g inkscape:groupmode="layer" id="g_1" transform="matrix(1.0433333333333334, 0.0, 0.0, 1.0433333333333334, 1020.0, 160.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.1;fill:rgb(243, 197, 72)">
+      <ellipse rx="110.0" ry="110.0" cx="0" cy="0" id="ellipse_2" style="fill-opacity:0.1;fill:rgb(243, 197, 72)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_3" transform="matrix(1.0053333333333334, 0.0, 0.0, 1.0053333333333334, 980.0, 560.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.12;fill:rgb(32, 197, 199)">
+      <ellipse rx="190.0" ry="190.0" cx="0" cy="0" id="ellipse_4" style="fill-opacity:0.12;fill:rgb(32, 197, 199)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_5" transform="matrix(1.0346666666666666, 0.0, 0.0, 1.0346666666666666, 210.0, 120.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.14;fill:rgb(43, 99, 190)">
+      <ellipse rx="160.0" ry="160.0" cx="0" cy="0" id="ellipse_6" style="fill-opacity:0.14;fill:rgb(43, 99, 190)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_7" transform="matrix(1.0, 0.0, 0.0, 1.0, 600.0, 350.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(245, 248, 255)">
+      <rect width="1200" height="700" x="-600.0" y="-350.0" rx="0" id="rect_8" style="fill-opacity:1.0;fill:rgb(245, 248, 255)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_9" transform="matrix(1.0, 0.0, 0.0, 1.0, 182.0, 215.0)" inkscape:label="ShapeLayer" style="stroke:rgb(255, 255, 255);stroke-opacity:1.0;stroke-width:10;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round">
+      <path d="M -20,-2 C -20,-2 -10,20 -10,20 C -10,20 2,-2 2,-2 C 2,-2 12,20 12,20 C 12,20 22,-2 22,-2 " style=""/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_10" transform="matrix(1.0, 0.0, 0.0, 1.0, 182.0, 215.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(15, 61, 145)">
+      <ellipse rx="39.0" ry="39.0" cx="0" cy="0" id="ellipse_11" style="fill-opacity:1.0;fill:rgb(15, 61, 145)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_12" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 345.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.18;fill:rgb(43, 99, 190)">
+      <rect width="114" height="18" x="61.0" y="-146.0" rx="9" id="rect_13" style="fill-opacity:0.18;fill:rgb(43, 99, 190)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_14" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 345.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.32;fill:rgb(32, 197, 199)">
+      <ellipse rx="8.0" ry="8.0" cx="-120" cy="-137" id="ellipse_15" style="fill-opacity:0.32;fill:rgb(32, 197, 199)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_16" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 345.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.26;fill:rgb(43, 99, 190)">
+      <ellipse rx="8.0" ry="8.0" cx="-148" cy="-137" id="ellipse_17" style="fill-opacity:0.26;fill:rgb(43, 99, 190)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_18" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 345.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.2;fill:rgb(15, 61, 145)">
+      <ellipse rx="8.0" ry="8.0" cx="-176" cy="-137" id="ellipse_19" style="fill-opacity:0.2;fill:rgb(15, 61, 145)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_20" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 345.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(234, 241, 255)">
+      <rect width="470" height="58" x="-235.0" y="-166.0" rx="34" id="rect_21" style="fill-opacity:1.0;fill:rgb(234, 241, 255)"/>
+   </g>
+   <g id="stroke">
+      <use xlink:href="#g_22" style="stroke:rgb(215, 227, 255);stroke-opacity:1.0;stroke-width:6;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_22" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 345.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(252, 253, 255)">
+         <rect width="470" height="332" x="-235.0" y="-166.0" rx="34" id="rect_23" style="fill-opacity:1.0;fill:rgb(252, 253, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_24" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 504.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(15, 61, 145)">
+      <rect width="168" height="34" x="-84.0" y="-17.0" rx="17" id="rect_25" style="fill-opacity:1.0;fill:rgb(15, 61, 145)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_26" transform="matrix(1.0, 0.0, 0.0, 1.0, 394.0, 456.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.18;fill:rgb(43, 99, 190)">
+      <rect width="86" height="10" x="-43.0" y="-5.0" rx="5" id="rect_27" style="fill-opacity:0.18;fill:rgb(43, 99, 190)"/>
+   </g>
+   <g id="g_29">
+      <use xlink:href="#g_28" style="stroke:rgb(234, 241, 255);stroke-opacity:1.0;stroke-width:3;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_28" transform="matrix(1.0, 0.0, 0.0, 1.0, 394.0, 456.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="138" height="22" x="-69.0" y="-11.0" rx="11" id="rect_30" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_31" transform="matrix(1.0, 0.0, 0.0, 1.0, 414.0, 411.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.11;fill:rgb(100, 116, 139)">
+      <rect width="132" height="10" x="-66.0" y="-5.0" rx="5" id="rect_32" style="fill-opacity:0.11;fill:rgb(100, 116, 139)"/>
+   </g>
+   <g id="g_34">
+      <use xlink:href="#g_33" style="stroke:rgb(234, 241, 255);stroke-opacity:1.0;stroke-width:3;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_33" transform="matrix(1.0, 0.0, 0.0, 1.0, 414.0, 411.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="178" height="22" x="-89.0" y="-11.0" rx="11" id="rect_35" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_36" transform="matrix(1.0, 0.0, 0.0, 1.0, 418.0, 365.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.1;fill:rgb(30, 41, 59)">
+      <rect width="112" height="10" x="-56.0" y="-5.0" rx="5" id="rect_37" style="fill-opacity:0.1;fill:rgb(30, 41, 59)"/>
+   </g>
+   <g id="g_39">
+      <use xlink:href="#g_38" style="stroke:rgb(234, 241, 255);stroke-opacity:1.0;stroke-width:3;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_38" transform="matrix(1.0, 0.0, 0.0, 1.0, 418.0, 365.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="150" height="22" x="-75.0" y="-11.0" rx="11" id="rect_40" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_41" transform="matrix(1.0, 0.0, 0.0, 1.0, 250.0, 392.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.18;fill:rgb(32, 197, 199)">
+      <rect width="92" height="14" x="-50.0" y="27.0" rx="7" id="rect_42" style="fill-opacity:0.18;fill:rgb(32, 197, 199)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_43" transform="matrix(1.0, 0.0, 0.0, 1.0, 250.0, 392.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.12;fill:rgb(100, 116, 139)">
+      <rect width="78" height="14" x="-51.0" y="1.0" rx="7" id="rect_44" style="fill-opacity:0.12;fill:rgb(100, 116, 139)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_45" transform="matrix(1.0, 0.0, 0.0, 1.0, 250.0, 392.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.18;fill:rgb(43, 99, 190)">
+      <rect width="102" height="18" x="-51.0" y="-33.0" rx="9" id="rect_46" style="fill-opacity:0.18;fill:rgb(43, 99, 190)"/>
+   </g>
+   <g id="g_48">
+      <use xlink:href="#g_47" style="stroke:rgb(234, 241, 255);stroke-opacity:1.0;stroke-width:3;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_47" transform="matrix(1.0, 0.0, 0.0, 1.0, 250.0, 392.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="146" height="118" x="-73.0" y="-59.0" rx="22" id="rect_49" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_50" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 290.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.12;fill:rgb(100, 116, 139)">
+      <rect width="196" height="16" x="-145.0" y="32.0" rx="8" id="rect_51" style="fill-opacity:0.12;fill:rgb(100, 116, 139)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_52" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 290.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.09;fill:rgb(30, 41, 59)">
+      <rect width="234" height="22" x="-145.0" y="-5.0" rx="11" id="rect_53" style="fill-opacity:0.09;fill:rgb(30, 41, 59)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_54" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 290.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.28;fill:rgb(243, 197, 72)">
+      <rect width="140" height="18" x="-152.0" y="-37.0" rx="9" id="rect_55" style="fill-opacity:0.28;fill:rgb(243, 197, 72)"/>
+   </g>
+   <g id="g_57">
+      <use xlink:href="#g_56" style="stroke:rgb(234, 241, 255);stroke-opacity:1.0;stroke-width:3;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_56" transform="matrix(1.0, 0.0, 0.0, 1.0, 330.0, 290.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="356" height="112" x="-178.0" y="-56.0" rx="24" id="rect_58" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_59" transform="matrix(1.0, 0.0, 0.0, 1.0, 744.0, 324.0)" opacity="0.0" inkscape:label="ShapeLayer" style="fill-opacity:0.22;fill:rgb(243, 197, 72)">
+      <rect width="34" height="12" x="-17.0" y="22.0" rx="6" id="rect_60" style="fill-opacity:0.22;fill:rgb(243, 197, 72)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_61" transform="matrix(1.0, 0.0, 0.0, 1.0, 744.0, 324.0)" opacity="0.0" inkscape:label="ShapeLayer" style="fill-opacity:0.2;fill:rgb(32, 197, 199)">
+      <rect width="50" height="12" x="-25.0" y="0.0" rx="6" id="rect_62" style="fill-opacity:0.2;fill:rgb(32, 197, 199)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_63" transform="matrix(1.0, 0.0, 0.0, 1.0, 744.0, 324.0)" opacity="0.0" inkscape:label="ShapeLayer" style="fill-opacity:0.2;fill:rgb(43, 99, 190)">
+      <rect width="40" height="14" x="-20.0" y="-25.0" rx="7" id="rect_64" style="fill-opacity:0.2;fill:rgb(43, 99, 190)"/>
+   </g>
+   <g id="g_66">
+      <use xlink:href="#g_65" style="stroke:rgb(215, 227, 255);stroke-opacity:1.0;stroke-width:4;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_65" transform="matrix(1.0, 0.0, 0.0, 1.0, 744.0, 324.0)" opacity="0.0" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="88" height="88" x="-44.0" y="-44.0" rx="24" id="rect_67" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_68" transform="matrix(1.0, 0.0, 0.0, 1.0, 591.0, 350.0)" opacity="0.0" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(243, 197, 72)">
+      <ellipse rx="9.0" ry="9.0" cx="0" cy="0" id="ellipse_69" style="fill-opacity:1.0;fill:rgb(243, 197, 72)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_70" transform="matrix(1.0, 0.0, 0.0, 1.0, 593.0, 350.0)" opacity="0.0" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(243, 197, 72)">
+      <ellipse rx="9.0" ry="9.0" cx="0" cy="0" id="ellipse_71" style="fill-opacity:1.0;fill:rgb(243, 197, 72)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_72" transform="matrix(1.0, 0.0, 0.0, 1.0, 595.5, 350.0)" opacity="0.0" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(243, 197, 72)">
+      <ellipse rx="9.0" ry="9.0" cx="0" cy="0" id="ellipse_73" style="fill-opacity:1.0;fill:rgb(243, 197, 72)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_74" transform="matrix(1.0, 0.0, 0.0, 1.0, 930.0, 212.0)" inkscape:label="ShapeLayer" style="stroke:rgb(255, 255, 255);stroke-opacity:1.0;stroke-width:7;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round">
+      <path d="M -12,8 C -12,8 -3,18 -3,18 C -3,18 16,0 16,0 " style=""/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_75" transform="matrix(1.0, 0.0, 0.0, 1.0, 930.0, 212.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+      <rect width="32" height="26" x="-16.0" y="-17.0" rx="6" id="rect_76" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_77" transform="matrix(1.0, 0.0, 0.0, 1.0, 930.0, 212.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(43, 99, 190)">
+      <ellipse rx="36.0" ry="36.0" cx="0" cy="0" id="ellipse_78" style="fill-opacity:1.0;fill:rgb(43, 99, 190)"/>
+   </g>
+   <g id="g_80">
+      <use xlink:href="#g_79" style="stroke:rgb(215, 227, 255);stroke-opacity:1.0;stroke-width:4;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_79" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 350.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(252, 253, 255)">
+         <rect width="208" height="376" x="-104.0" y="-170.0" rx="42" id="rect_81" style="fill-opacity:1.0;fill:rgb(252, 253, 255)"/>
+         <rect width="230" height="430" x="-115.0" y="-215.0" rx="56" id="rect_82" style="fill-opacity:1.0;fill:rgb(252, 253, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_83" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 350.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(30, 41, 59)">
+      <rect width="96" height="16" x="-48.0" y="-190.0" rx="8" id="rect_84" style="fill-opacity:1.0;fill:rgb(30, 41, 59)"/>
+      <rect width="6" height="48" x="-134.0" y="-134.0" rx="3" id="rect_85" style="fill-opacity:1.0;fill:rgb(30, 41, 59)"/>
+      <rect width="248" height="448" x="-124.0" y="-224.0" rx="62" id="rect_86" style="fill-opacity:1.0;fill:rgb(30, 41, 59)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_87" transform="matrix(1.1575, 0.0, 0.0, 1.1575, 948.0, 500.0)" inkscape:label="ShapeLayer" style="stroke:rgb(255, 255, 255);stroke-opacity:1.0;stroke-width:8;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round">
+      <path d="M -14,2 C -14,2 -2,16 -2,16 C -2,16 18,-10 18,-10 " style=""/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_88" transform="matrix(1.1575, 0.0, 0.0, 1.1575, 948.0, 500.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(32, 197, 199)">
+      <ellipse rx="31.0" ry="31.0" cx="0" cy="0" id="ellipse_89" style="fill-opacity:1.0;fill:rgb(32, 197, 199)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_90" transform="matrix(0.9872727272727273, 0.0, 0.0, 0.9872727272727273, 893.1818181818181, 532.0)" opacity="0.9090909090909091" inkscape:label="ShapeLayer" style="fill-opacity:0.2;fill:rgb(32, 197, 199)">
+      <rect width="82" height="12" x="-55.0" y="22.0" rx="6" id="rect_91" style="fill-opacity:0.2;fill:rgb(32, 197, 199)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_92" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 532.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.1;fill:rgb(100, 116, 139)">
+      <rect width="110" height="12" x="-55.0" y="0.0" rx="6" id="rect_93" style="fill-opacity:0.1;fill:rgb(100, 116, 139)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_94" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 532.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.22;fill:rgb(43, 99, 190)">
+      <rect width="124" height="18" x="-62.0" y="-31.0" rx="9" id="rect_95" style="fill-opacity:0.22;fill:rgb(43, 99, 190)"/>
+   </g>
+   <g id="g_97">
+      <use xlink:href="#g_96" style="stroke:rgb(234, 241, 255);stroke-opacity:1.0;stroke-width:4;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_96" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 532.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="164" height="88" x="-82.0" y="-44.0" rx="28" id="rect_98" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_99" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 445.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.1;fill:rgb(30, 41, 59)">
+      <rect width="118" height="12" x="-45.0" y="-6.0" rx="6" id="rect_100" style="fill-opacity:0.1;fill:rgb(30, 41, 59)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_101" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 445.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.2;fill:rgb(243, 197, 72)">
+      <ellipse rx="9.0" ry="9.0" cx="-69.0" cy="0" id="ellipse_102" style="fill-opacity:0.2;fill:rgb(243, 197, 72)"/>
+   </g>
+   <g id="g_104">
+      <use xlink:href="#g_103" style="stroke:rgb(234, 241, 255);stroke-opacity:1.0;stroke-width:3;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_103" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 445.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="194" height="46" x="-97.0" y="-23.0" rx="23" id="rect_105" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_106" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 385.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.1;fill:rgb(30, 41, 59)">
+      <rect width="106" height="12" x="-39.0" y="-6.0" rx="6" id="rect_107" style="fill-opacity:0.1;fill:rgb(30, 41, 59)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_108" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 385.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.14;fill:rgb(43, 99, 190)">
+      <ellipse rx="9.0" ry="9.0" cx="-63.0" cy="0" id="ellipse_109" style="fill-opacity:0.14;fill:rgb(43, 99, 190)"/>
+   </g>
+   <g id="g_111">
+      <use xlink:href="#g_110" style="stroke:rgb(234, 241, 255);stroke-opacity:1.0;stroke-width:3;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_110" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 385.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="182" height="46" x="-91.0" y="-23.0" rx="23" id="rect_112" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_113" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 325.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.1;fill:rgb(30, 41, 59)">
+      <rect width="94" height="12" x="-33.0" y="-6.0" rx="6" id="rect_114" style="fill-opacity:0.1;fill:rgb(30, 41, 59)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_115" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 325.0)" inkscape:label="ShapeLayer" style="fill-opacity:0.16;fill:rgb(32, 197, 199)">
+      <ellipse rx="9.0" ry="9.0" cx="-57.0" cy="0" id="ellipse_116" style="fill-opacity:0.16;fill:rgb(32, 197, 199)"/>
+   </g>
+   <g id="g_118">
+      <use xlink:href="#g_117" style="stroke:rgb(234, 241, 255);stroke-opacity:1.0;stroke-width:3;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round"/>
+      <g inkscape:groupmode="layer" id="g_117" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 325.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(255, 255, 255)">
+         <rect width="170" height="46" x="-85.0" y="-23.0" rx="23" id="rect_119" style="fill-opacity:1.0;fill:rgb(255, 255, 255)"/>
+      </g>
+   </g>
+   <g inkscape:groupmode="layer" id="g_120" transform="matrix(1.0, 0.0, 0.0, 1.0, 890.0, 250.0)" inkscape:label="ShapeLayer" style="fill-opacity:1.0;fill:rgb(234, 241, 255)">
+      <rect width="72" height="10" x="-36.0" y="-5.0" rx="5" id="rect_121" style="fill-opacity:1.0;fill:rgb(234, 241, 255)"/>
+      <rect width="132" height="34" x="-66.0" y="-17.0" rx="17" id="rect_122" style="fill-opacity:1.0;fill:rgb(234, 241, 255)"/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_123" transform="matrix(1.0, 0.0, 0.0, 1.0, 640.0, 438.0)" opacity="0.25" inkscape:label="ShapeLayer" style="stroke:rgb(243, 197, 72);stroke-opacity:1.0;stroke-width:4;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round">
+      <path d="M 0,-10 C 0,-10 0,10 0,10 
+M -10,0 C -10,0 10,0 10,0 " style=""/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_124" transform="matrix(1.0, 0.0, 0.0, 1.0, 748.0, 392.0)" opacity="0.0" inkscape:label="ShapeLayer" style="stroke:rgb(243, 197, 72);stroke-opacity:1.0;stroke-width:4;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round">
+      <path d="M 0,-10 C 0,-10 0,10 0,10 
+M -10,0 C -10,0 10,0 10,0 " style=""/>
+   </g>
+   <g inkscape:groupmode="layer" id="g_125" transform="matrix(1.0, 0.0, 0.0, 1.0, 706.0, 258.0)" opacity="0.0" inkscape:label="ShapeLayer" style="stroke:rgb(243, 197, 72);stroke-opacity:1.0;stroke-width:4;stroke-miterlimit:0;stroke-linecap:round;stroke-linejoin:round">
+      <path d="M 0,-10 C 0,-10 0,10 0,10 
+M -10,0 C -10,0 10,0 10,0 " style=""/>
+   </g>
+</svg>

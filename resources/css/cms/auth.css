@@ -1,0 +1,8 @@
+@import '../shared/colorpalette.css';
+@import '../shared/ui.css';
+@import './layouts/guest.css';
+@import './pages/auth.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

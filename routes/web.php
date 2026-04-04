@@ -1,0 +1,84 @@
+<?php
+
+use App\Http\Controllers\Cms\DashboardController;
+use App\Http\Controllers\Cms\DashboardCustomerSiteController;
+use App\Http\Controllers\Cms\CustomerManagementController;
+use App\Http\Controllers\Cms\LeadManagementController;
+use App\Http\Controllers\Cms\PlanManagementController;
+use App\Http\Controllers\Cms\ProjectManagementController;
+use App\Http\Controllers\Cms\SiteFooterController;
+use App\Http\Controllers\Cms\SiteHeaderController;
+use App\Http\Controllers\Cms\SiteNewsletterController;
+use App\Http\Controllers\Cms\SitePublicationController;
+use App\Http\Controllers\Cms\SiteController as CmsSiteController;
+use App\Http\Controllers\Cms\SitePageController;
+use App\Http\Controllers\Cms\SiteSectionController;
+use App\Http\Controllers\Cms\SiteVisibilityController;
+use App\Http\Controllers\Cms\TenantAccessController;
+use App\Http\Controllers\Sales\LeadController;
+use App\Http\Controllers\Sales\SalesController;
+use App\Http\Controllers\Sites\SiteController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+Route::controller(SalesController::class)->group(function () {
+    Route::get('/', 'home')->name('home');
+    Route::get('/templates', 'templates')->name('templates');
+    Route::get('/custom-build', 'customBuild')->name('custom-build');
+    Route::get('/kunde-cms', 'cms')->name('sales.customer-cms');
+    Route::get('/kontakt', 'contact')->name('contact');
+});
+
+Route::redirect('/contact', '/kontakt');
+Route::post('/kontakt', [LeadController::class, 'store'])->middleware('throttle:6,1')->name('leads.store');
+Route::post('/contact', [LeadController::class, 'store'])->middleware('throttle:6,1');
+Route::get('/sites/{site:slug}', [SiteController::class, 'show'])->name('sites.show');
+Route::get('/sites/{site:slug}/{pageSlug}', [SiteController::class, 'show'])->name('sites.page');
+
+Route::redirect('/dashboard', '/cms');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/cms', DashboardController::class)->name('dashboard');
+    Route::get('/cms/customers', [CustomerManagementController::class, 'index'])->name('cms.customers.index');
+    Route::get('/cms/projects', [ProjectManagementController::class, 'index'])->name('cms.projects.index');
+    Route::post('/cms/projects/tenants/{tenant}', [ProjectManagementController::class, 'store'])->name('cms.projects.store');
+    Route::patch('/cms/projects/items/{projectFolderItem}', [ProjectManagementController::class, 'update'])->name('cms.projects.update');
+    Route::delete('/cms/projects/items/{projectFolderItem}', [ProjectManagementController::class, 'destroy'])->name('cms.projects.destroy');
+    Route::get('/cms/leads', [LeadManagementController::class, 'index'])->name('cms.leads.index');
+    Route::get('/cms/plans', [PlanManagementController::class, 'index'])->name('cms.plans.index');
+    Route::post('/cms/plans', [PlanManagementController::class, 'store'])->name('cms.plans.store');
+    Route::patch('/cms/plans/{plan}', [PlanManagementController::class, 'update'])->name('cms.plans.update');
+    Route::get('/cms/customer-sites/create', [DashboardCustomerSiteController::class, 'create'])->name('cms.dashboard.customer-sites.create');
+    Route::post('/cms/customer-sites', [DashboardCustomerSiteController::class, 'store'])->name('cms.dashboard.customer-sites.store');
+    Route::get('/cms/sites', [CmsSiteController::class, 'index'])->name('cms.sites.index');
+    Route::get('/cms/sites/{site}', [CmsSiteController::class, 'show'])->name('cms.sites.show');
+    Route::get('/cms/sites/{site}/global-content', [CmsSiteController::class, 'globalContent'])->name('cms.sites.global.show');
+    Route::get('/cms/sites/{site}/global-content/{section}', [CmsSiteController::class, 'globalSection'])->name('cms.sites.global.section');
+    Route::patch('/cms/sites/{site}/header', [SiteHeaderController::class, 'update'])->name('cms.sites.header.update');
+    Route::patch('/cms/sites/{site}/footer', [SiteFooterController::class, 'update'])->name('cms.sites.footer.update');
+    Route::patch('/cms/sites/{site}/newsletter', [SiteNewsletterController::class, 'update'])->name('cms.sites.newsletter.update');
+    Route::patch('/cms/sites/{site}/colors', [CmsSiteController::class, 'updateColors'])->name('cms.sites.colors.update');
+    Route::patch('/cms/sites/{site}/theme', [CmsSiteController::class, 'updateTheme'])->name('cms.sites.theme.update');
+    Route::patch('/cms/sites/{site}', [CmsSiteController::class, 'update'])->name('cms.sites.update');
+    Route::get('/cms/access', [TenantAccessController::class, 'index'])->name('cms.access.index');
+    Route::post('/cms/access/developers', [TenantAccessController::class, 'storeDeveloper'])->name('cms.access.developers.store');
+    Route::post('/cms/access/tenants/{tenant}/users', [TenantAccessController::class, 'store'])->name('cms.access.users.store');
+    Route::post('/cms/sites/{site}/pages', [SitePageController::class, 'store'])->name('cms.pages.store');
+    Route::get('/cms/sites/{site}/pages/{page}', [SitePageController::class, 'show'])->name('cms.pages.show');
+    Route::get('/cms/sites/{site}/pages/{page}/preview', [SitePageController::class, 'preview'])->name('cms.pages.preview');
+    Route::get('/cms/sites/{site}/pages/{page}/custom-code', [SitePageController::class, 'customCode'])->name('cms.pages.custom-code.show');
+    Route::get('/cms/sites/{site}/pages/{page}/settings', [SitePageController::class, 'settings'])->name('cms.pages.settings.show');
+    Route::post('/cms/sites/{site}/pages/{page}/sections', [SiteSectionController::class, 'store'])->name('cms.pages.sections.store');
+    Route::patch('/cms/sites/{site}/pages/{page}/sections/reorder', [SiteSectionController::class, 'reorder'])->name('cms.pages.sections.reorder');
+    Route::patch('/cms/sites/{site}/pages/{page}/sections/{section}/visibility', [SiteSectionController::class, 'visibility'])->name('cms.pages.sections.visibility');
+    Route::delete('/cms/sites/{site}/pages/{page}/sections/{section}', [SiteSectionController::class, 'destroy'])->name('cms.pages.sections.destroy');
+    Route::patch('/cms/sites/{site}/pages/{page}', [SitePageController::class, 'update'])->name('cms.pages.update');
+    Route::delete('/cms/sites/{site}/pages/{page}', [SitePageController::class, 'destroy'])->name('cms.pages.destroy');
+    Route::post('/cms/sites/{site}/publish', [SitePublicationController::class, 'store'])->name('cms.sites.publish');
+    Route::post('/cms/sites/{site}/visibility', [SiteVisibilityController::class, 'update'])->name('cms.sites.visibility.update');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';

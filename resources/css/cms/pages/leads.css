@@ -1,0 +1,116 @@
+@layer components {
+    .leads-page {
+        padding: 2.5rem 0;
+    }
+
+    .leads-page__surface {
+        display: grid;
+        gap: 1.5rem;
+        padding: 1.75rem;
+    }
+
+    .leads-page__header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px solid rgb(var(--color-text-rgb) / 0.08);
+    }
+
+    .leads-page__title {
+        margin-top: 0.55rem;
+        color: var(--color-ink);
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .leads-page__copy {
+        margin-top: 0.75rem;
+        color: var(--color-muted);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        max-width: 42rem;
+    }
+
+    .leads-page__list {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .leads-card {
+        display: grid;
+        gap: 0.95rem;
+        border: 1px solid var(--surface-border-strong);
+        border-radius: 1.4rem;
+        background: rgb(var(--color-primary-rgb) / 0.03);
+        padding: 1.15rem 1.2rem;
+    }
+
+    .leads-card__top {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.9rem;
+    }
+
+    .leads-card__name {
+        color: var(--color-ink);
+        font-size: 1.05rem;
+        font-weight: 600;
+    }
+
+    .leads-card__contact {
+        margin-top: 0.3rem;
+        color: var(--color-muted);
+        font-size: 0.94rem;
+        line-height: 1.6;
+    }
+
+    .leads-card__meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+    }
+
+    .leads-card__message {
+        color: var(--color-muted);
+        font-size: 0.95rem;
+        line-height: 1.75;
+    }
+
+    .leads-card__status {
+        border-radius: 999px;
+        padding: 0.45rem 0.8rem;
+        background: rgb(var(--color-text-rgb) / 0.08);
+        color: var(--color-muted);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .leads-card__status--new {
+        background: rgb(var(--color-accent-rgb) / 0.14);
+        color: var(--color-ink);
+    }
+
+    .leads-card__status--contacted {
+        background: rgb(var(--color-primary-rgb) / 0.12);
+        color: rgb(var(--color-primary-rgb) / 1);
+    }
+
+    .leads-card__status--closed {
+        background: rgb(var(--color-success-rgb) / 0.14);
+        color: rgb(var(--color-success-rgb) / 1);
+    }
+
+    .leads-page__empty {
+        border: 1px dashed rgb(var(--color-text-rgb) / 0.12);
+        border-radius: 1.4rem;
+        background: rgb(var(--color-primary-rgb) / 0.03);
+        padding: 1.4rem;
+    }
+}

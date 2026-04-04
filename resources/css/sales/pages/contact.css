@@ -1,0 +1,61 @@
+@layer components {
+    .contact-grid {
+        display: grid;
+        gap: 2rem;
+    }
+
+    .contact-copy {
+        display: grid;
+        gap: 1.25rem;
+        align-content: start;
+    }
+
+    .contact-copy__flash {
+        max-width: 32rem;
+    }
+
+    .contact-sidebar {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .contact-side-card {
+        padding: 1.5rem;
+    }
+
+    .contact-side-card__title {
+        color: var(--color-ink);
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .contact-side-card__copy {
+        margin-top: 0.75rem;
+        color: var(--color-muted);
+        font-size: 0.95rem;
+        line-height: 1.8;
+    }
+
+    .contact-form {
+        padding: 2rem;
+    }
+
+    .contact-form__note {
+        max-width: 24rem;
+        color: var(--color-muted);
+        font-size: 0.95rem;
+        line-height: 1.8;
+    }
+
+    @media (min-width: 768px) {
+        .contact-grid {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .contact-grid {
+            grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+        }
+    }
+}

@@ -1,0 +1,48 @@
+@layer components {
+    .cms-overview__grid {
+        display: grid;
+        gap: 2rem;
+    }
+
+    .cms-overview__intro {
+        padding: 2rem;
+    }
+
+    .cms-overview__copy {
+        margin-top: 1rem;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.95rem;
+        line-height: 1.8;
+    }
+
+    .cms-overview__features {
+        display: grid;
+        gap: 1.25rem;
+    }
+
+    .cms-overview__feature {
+        padding: 1.5rem;
+    }
+
+    .cms-overview__feature-title {
+        color: var(--color-ink);
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    @media (min-width: 768px) {
+        .cms-overview__grid {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        }
+
+        .cms-overview__features {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .cms-overview__grid {
+            grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+        }
+    }
+}

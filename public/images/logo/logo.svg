@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="plateweb-icon-g1" x1="4" y1="4" x2="508" y2="508" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F3D91"/>
+      <stop offset="0.58" stop-color="#2B63BE"/>
+      <stop offset="1" stop-color="#20C5C7"/>
+    </linearGradient>
+    <linearGradient id="plateweb-icon-g2" x1="4" y1="4" x2="508" y2="156" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#123B84"/>
+      <stop offset="1" stop-color="#11B7D9"/>
+    </linearGradient>
+    <radialGradient id="plateweb-icon-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(392 118) rotate(132) scale(188)">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="4" y="4" width="504" height="504" rx="124" fill="url(#plateweb-icon-g1)"/>
+  <rect x="4" y="4" width="504" height="138" rx="124" fill="url(#plateweb-icon-g2)"/>
+  <circle cx="392" cy="118" r="176" fill="url(#plateweb-icon-glow)"/>
+
+  <rect x="76" y="128" width="300" height="226" rx="48" fill="#FFFFFF" fill-opacity="0.17"/>
+  <rect x="100" y="152" width="252" height="34" rx="17" fill="#FFFFFF" fill-opacity="0.28"/>
+  <circle cx="125" cy="169" r="7" fill="#FFFFFF" fill-opacity="0.82"/>
+  <circle cx="149" cy="169" r="7" fill="#FFFFFF" fill-opacity="0.52"/>
+  <circle cx="173" cy="169" r="7" fill="#FFFFFF" fill-opacity="0.38"/>
+  <rect x="208" y="160" width="120" height="18" rx="9" fill="#FFFFFF" fill-opacity="0.34"/>
+
+  <rect x="102" y="208" width="86" height="120" rx="24" fill="#FFFFFF" fill-opacity="0.18"/>
+  <rect x="210" y="212" width="116" height="24" rx="12" fill="#FFFFFF" fill-opacity="0.34"/>
+  <rect x="210" y="252" width="96" height="18" rx="9" fill="#FFFFFF" fill-opacity="0.24"/>
+  <rect x="210" y="286" width="128" height="18" rx="9" fill="#FFFFFF" fill-opacity="0.22"/>
+  <rect x="210" y="320" width="84" height="18" rx="9" fill="#FFFFFF" fill-opacity="0.18"/>
+
+  <circle cx="374" cy="360" r="94" fill="#173F91"/>
+  <path d="M334 318L350 402L374 344L398 402L414 318" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

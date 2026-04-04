@@ -1,0 +1,11 @@
+@import '../shared/colorpalette.css';
+@import '../shared/ui.css';
+@import './themes/base.css';
+@import './themes/editorial.css';
+@import './themes/minimal.css';
+@import './themes/midnight.css';
+@import './themes/spotlight.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

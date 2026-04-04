@@ -1,0 +1,14 @@
+@import '../shared/colorpalette.css';
+@import '../shared/ui.css';
+@import './layouts/default.css';
+@import './header/navigation.css';
+@import './pages/home.css';
+@import './pages/templates.css';
+@import './pages/process.css';
+@import './pages/customer-cms.css';
+@import './pages/custom-build.css';
+@import './pages/contact.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

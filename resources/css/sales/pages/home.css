@@ -1,0 +1,416 @@
+@layer components {
+    .marketing-process-heading {
+        margin-bottom: 2rem;
+    }
+
+    .marketing-process-heading .section-heading__content {
+        max-width: none;
+    }
+
+    .marketing-process-heading__title {
+        max-width: 44ch;
+        font-family: var(--font-sans);
+        font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+        font-weight: 400;
+        line-height: 1.14;
+    }
+
+    .marketing-process-section {
+        background: rgb(var(--color-primary-rgb) / 0.12);
+    }
+
+    .marketing-process-section__shell {
+        width: min(1480px, 100%);
+        margin: 0 auto;
+        padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 3.5rem) clamp(3rem, 5vw, 4.5rem);
+    }
+
+    .marketing-hero {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .marketing-hero__surface {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        background:
+            radial-gradient(circle at 92% 10%, rgba(98, 198, 255, 0.18), transparent 22%),
+            radial-gradient(circle at 12% 100%, rgba(98, 198, 255, 0.12), transparent 22%),
+            #ffffff;
+    }
+
+    .marketing-hero__shell {
+        width: min(1480px, 100%);
+        margin: 0 auto;
+        padding: clamp(1.25rem, 2.6vw, 2.75rem) clamp(1.5rem, 3vw, 3.5rem) clamp(0.5rem, 1.4vw, 1.1rem);
+    }
+
+    .marketing-hero__grid {
+        display: grid;
+        gap: clamp(2rem, 4vw, 4.5rem);
+        align-items: start;
+    }
+
+    .marketing-hero__content {
+        display: grid;
+        gap: 1.5rem;
+        max-width: 42rem;
+    }
+
+    .marketing-hero__copy {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .marketing-hero__eyebrow {
+        color: var(--color-primary);
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.6;
+    }
+
+    .marketing-hero__title {
+        max-width: 42rem;
+        font-family: var(--font-sans);
+        font-size: clamp(2.2rem, 4.15vw, 3.75rem);
+        font-weight: 500;
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+    }
+
+    .marketing-hero__points {
+        display: grid;
+        gap: 0.9rem;
+        max-width: 36rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .marketing-hero__point {
+        position: relative;
+        padding-left: 1.35rem;
+        color: var(--color-muted);
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .marketing-hero__point::before {
+        content: "";
+        position: absolute;
+        top: 0.68rem;
+        left: 0;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 9999px;
+        background: var(--color-accent);
+        box-shadow: 0 0 0 4px rgb(var(--color-accent-rgb) / 0.12);
+    }
+
+    .marketing-hero__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-top: 0.5rem;
+    }
+
+    .marketing-hero__button {
+        min-height: 3.5rem;
+        padding-inline: 1.6rem;
+        border-radius: 9999px;
+    }
+
+    .marketing-hero__visual {
+        position: relative;
+        min-width: 0;
+        align-self: start;
+    }
+
+    .marketing-hero__device-scene {
+        position: relative;
+        min-height: clamp(22rem, 44vw, 35rem);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-top: clamp(1rem, 2vw, 1.75rem);
+        padding-left: clamp(3.5rem, 7vw, 7rem);
+    }
+
+    .marketing-hero__browser {
+        position: relative;
+        width: min(100%, 56rem);
+        padding: 1rem;
+        border-radius: 2rem;
+        background: #fff;
+        border: 1px solid rgba(219, 229, 241, 0.9);
+        box-shadow: 0 42px 90px rgba(15, 23, 42, 0.12);
+    }
+
+    .marketing-hero__browser-top {
+        display: flex;
+        gap: 0.45rem;
+        align-items: center;
+        margin-bottom: 0.9rem;
+    }
+
+    .marketing-hero__browser-top span {
+        width: 0.62rem;
+        height: 0.62rem;
+        border-radius: 9999px;
+        background: #ff5f57;
+    }
+
+    .marketing-hero__browser-top span:nth-child(2) {
+        background: #febc2e;
+    }
+
+    .marketing-hero__browser-top span:nth-child(3) {
+        background: #28c840;
+    }
+
+    .marketing-hero__browser-body {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 3420 / 1775;
+        border-radius: 1.45rem;
+        background: #edf5ff;
+    }
+
+    .marketing-hero__browser-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top left;
+    }
+
+    .marketing-hero__phone {
+        position: absolute;
+        top: 47%;
+        right: clamp(6.5rem, 15%, 10rem);
+        z-index: 2;
+        width: clamp(15rem, 31%, 18rem);
+        padding: 0.58rem;
+        border: 1px solid rgba(189, 204, 227, 0.42);
+        border-radius: 3rem;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 18%),
+            linear-gradient(180deg, #1c2f56 0%, #0b1630 100%);
+        box-shadow:
+            0 36px 80px rgba(15, 23, 42, 0.32),
+            0 12px 32px rgba(15, 23, 42, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.16),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+        transform: translateY(-50%);
+    }
+
+    .marketing-hero__phone::before,
+    .marketing-hero__phone::after {
+        content: "";
+        position: absolute;
+        top: 7rem;
+        width: 0.22rem;
+        border-radius: 9999px;
+        background: linear-gradient(180deg, rgba(217, 228, 244, 0.9), rgba(123, 142, 170, 0.82));
+        box-shadow: 0 0 0 1px rgba(9, 17, 34, 0.1);
+    }
+
+    .marketing-hero__phone::before {
+        left: -0.18rem;
+        height: 2.5rem;
+        box-shadow:
+            0 0 0 1px rgba(9, 17, 34, 0.1),
+            0 3rem 0 0 rgba(193, 206, 226, 0.85);
+    }
+
+    .marketing-hero__phone::after {
+        right: -0.18rem;
+        top: 8rem;
+        height: 3.5rem;
+    }
+
+    .marketing-hero__phone-notch {
+        position: absolute;
+        top: 0.95rem;
+        left: 50%;
+        z-index: 3;
+        width: 5.4rem;
+        height: 1.15rem;
+        border-radius: 9999px;
+        background: linear-gradient(180deg, #05070d 0%, #0f172a 100%);
+        box-shadow:
+            0 0.15rem 0.35rem rgba(15, 23, 42, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    .marketing-hero__phone-notch::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 0.7rem;
+        width: 0.42rem;
+        height: 0.42rem;
+        border-radius: 9999px;
+        background: radial-gradient(circle at 35% 35%, #ff7b72 0%, #a1121d 45%, #3f0610 100%);
+        transform: translateY(-50%);
+        opacity: 0.9;
+    }
+
+    .marketing-hero__phone-screen {
+        position: relative;
+        aspect-ratio: 220 / 480;
+        overflow: hidden;
+        border-radius: 2.42rem;
+        background: #fff;
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+            inset 0 -20px 30px rgba(5, 10, 20, 0.08);
+    }
+
+    .marketing-hero__phone-screen::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0.5rem;
+        width: 5rem;
+        height: 0.28rem;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.75);
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+
+    .marketing-hero__phone-media {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+    }
+
+    @media (min-width: 1024px) {
+        .marketing-hero__grid {
+            grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+        }
+
+        .marketing-hero__visual {
+            margin-right: -5.5rem;
+        }
+    }
+
+    @media (max-width: 1023px) {
+        .marketing-hero__content,
+        .marketing-hero__title,
+        .marketing-hero__points {
+            max-width: none;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .marketing-process-section__shell {
+            padding: 1.85rem 0.875rem 2.6rem;
+        }
+
+        .marketing-process-heading {
+            margin-bottom: 1.35rem;
+        }
+
+        .marketing-process-heading__title {
+            max-width: none;
+            font-size: clamp(1.65rem, 8vw, 2.2rem);
+            line-height: 1.08;
+        }
+
+        .marketing-hero__shell {
+            padding: 1.1rem 0.875rem 2.2rem;
+        }
+
+        .marketing-hero__grid {
+            gap: 1.6rem;
+        }
+
+        .marketing-hero__content {
+            gap: 1.2rem;
+        }
+
+        .marketing-hero__copy {
+            gap: 0.85rem;
+        }
+
+        .marketing-hero__eyebrow {
+            font-size: 0.94rem;
+            line-height: 1.45;
+        }
+
+        .marketing-hero__title {
+            font-size: clamp(2.1rem, 11vw, 3rem);
+            line-height: 0.98;
+        }
+
+        .marketing-hero__points {
+            gap: 0.75rem;
+        }
+
+        .marketing-hero__point {
+            padding-left: 1.2rem;
+            font-size: 0.96rem;
+            line-height: 1.55;
+        }
+
+        .marketing-hero__actions {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .marketing-hero__button {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .marketing-hero__device-scene {
+            min-height: 17.75rem;
+            padding-top: 0;
+            padding-left: 0;
+            justify-content: center;
+        }
+
+        .marketing-hero__browser {
+            width: min(100%, 24rem);
+            padding: 0.72rem;
+            border-radius: 1.25rem;
+        }
+
+        .marketing-hero__browser-body {
+            aspect-ratio: 3420 / 1775;
+            border-radius: 0.95rem;
+        }
+
+        .marketing-hero__phone {
+            width: 8.75rem;
+            top: 51%;
+            right: 0.25rem;
+            padding: 0.46rem;
+            border-radius: 2.2rem;
+            transform: translateY(-50%);
+        }
+
+        .marketing-hero__phone-notch {
+            top: 0.78rem;
+            width: 4.45rem;
+            height: 0.95rem;
+        }
+
+        .marketing-hero__phone-screen {
+            border-radius: 1.75rem;
+        }
+
+        .marketing-hero__phone-screen::after {
+            width: 3.8rem;
+            bottom: 0.42rem;
+        }
+    }
+}

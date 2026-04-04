@@ -1,0 +1,67 @@
+@layer components {
+    .customers-page {
+        padding: 2.5rem 0;
+    }
+
+    .customers-page__surface {
+        gap: 0;
+    }
+
+    .customers-page__panel {
+        padding: 2rem;
+    }
+
+    .customers-page__header {
+        display: grid;
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .customers-page__copy {
+        margin-top: 0.65rem;
+        max-width: 44rem;
+        color: var(--color-muted);
+        font-size: 0.96rem;
+        line-height: 1.7;
+    }
+
+    .customers-page__action {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        justify-self: flex-start;
+    }
+
+    .customers-page__action-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.45rem;
+        height: 1.45rem;
+        border-radius: 999px;
+        background: #22c55e;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1;
+        box-shadow: 0 10px 18px rgb(34 197 94 / 0.22);
+    }
+
+    .customers-page__meta-group {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem 0.8rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    @media (min-width: 1024px) {
+        .customers-page__header {
+            grid-template-columns: minmax(0, 1fr) auto;
+        }
+
+        .customers-page__action {
+            margin-top: 0.35rem;
+        }
+    }
+}

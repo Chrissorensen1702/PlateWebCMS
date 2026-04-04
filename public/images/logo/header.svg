@@ -1,0 +1,33 @@
+<svg width="660" height="120" viewBox="0 0 660 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="plateweb-wordmark-g1" x1="8" y1="10" x2="116" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F3D91"/>
+      <stop offset="0.58" stop-color="#2B63BE"/>
+      <stop offset="1" stop-color="#20C5C7"/>
+    </linearGradient>
+    <linearGradient id="plateweb-wordmark-g2" x1="8" y1="10" x2="116" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#123B84"/>
+      <stop offset="1" stop-color="#11B7D9"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(10 8) scale(0.96)">
+    <rect x="8" y="10" width="108" height="100" rx="24" fill="url(#plateweb-wordmark-g1)"/>
+    <rect x="8" y="10" width="108" height="28" rx="24" fill="url(#plateweb-wordmark-g2)"/>
+
+    <rect x="24" y="48" width="62" height="42" rx="10" fill="#FFFFFF2D"/>
+    <rect x="30" y="55" width="46" height="6" rx="3" fill="#FFFFFF57"/>
+    <circle cx="34" cy="24" r="4" fill="#FFFFFFA8"/>
+    <circle cx="48" cy="24" r="4" fill="#FFFFFF73"/>
+    <circle cx="62" cy="24" r="4" fill="#FFFFFF4A"/>
+    <rect x="32" y="67" width="18" height="15" rx="4" fill="#FFFFFF39"/>
+    <rect x="55" y="67" width="18" height="7" rx="3.5" fill="#FFFFFF44"/>
+    <rect x="55" y="77" width="14" height="5" rx="2.5" fill="#FFFFFF39"/>
+
+    <circle cx="88" cy="82" r="21" fill="#173F91"/>
+    <path d="M79 72L83 91L88 79L93 91L97 72" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="145" y="77" fill="#103A7E" font-family="Inter, Avenir Next, Segoe UI, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-1.1">Plate</text>
+  <text x="282" y="77" fill="#18BBC6" font-family="Inter, Avenir Next, Segoe UI, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-1.1">Web</text>
+</svg>

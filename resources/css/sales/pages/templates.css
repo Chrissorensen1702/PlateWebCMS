@@ -1,0 +1,135 @@
+@layer components {
+    .plans-grid,
+    .marketing-support-grid {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .plan-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 2rem;
+    }
+
+    .plan-card__header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .plan-card__kind {
+        color: var(--color-muted);
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+    }
+
+    .plan-card__name {
+        margin-top: 0.75rem;
+        color: var(--color-ink);
+        font-size: 1.6rem;
+        font-weight: 600;
+    }
+
+    .plan-card__tag {
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        padding: 0.35rem 0.75rem;
+        text-transform: uppercase;
+    }
+
+    .plan-card__tag--template {
+        background: rgb(var(--color-accent-rgb) / 0.18);
+        color: var(--color-accent-deep);
+    }
+
+    .plan-card__tag--custom {
+        background: rgb(var(--color-primary-rgb) / 0.16);
+        color: var(--color-forest);
+    }
+
+    .plan-card__headline {
+        margin-top: 1.25rem;
+        color: var(--color-ink);
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .plan-card__summary {
+        margin-top: 1rem;
+        color: var(--color-muted);
+        font-size: 0.95rem;
+        line-height: 1.8;
+    }
+
+    .plan-card__meta {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--surface-border);
+    }
+
+    .plan-card__meta-label {
+        color: var(--color-muted);
+        font-size: 0.75rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+    }
+
+    .plan-card__price {
+        margin-top: 0.5rem;
+        color: var(--color-ink);
+        font-size: 2rem;
+        font-weight: 600;
+    }
+
+    .plan-card__delivery {
+        margin-top: 0.5rem;
+        color: var(--color-ink);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .plan-card__features {
+        margin-top: 2rem;
+    }
+
+    .marketing-support-card {
+        padding: 2rem;
+    }
+
+    .marketing-support-card__title {
+        color: var(--color-ink);
+        font-size: 1.35rem;
+        font-weight: 600;
+    }
+
+    .marketing-support-card__copy {
+        margin-top: 0.9rem;
+        color: var(--color-muted);
+        font-size: 0.95rem;
+        line-height: 1.8;
+    }
+
+    @media (min-width: 768px) {
+        .plans-grid,
+        .marketing-support-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .plans-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+}
