@@ -166,10 +166,6 @@
                             <p class="package-card__headline" x-text="activePackage().headline">{{ $defaultPackage['headline'] ?? '' }}</p>
                             <p class="package-card__setup" x-text="activePackage().detail">1 lokation · 4 medarbejdere · 300 bookinger/år</p>
 
-                            <a href="{{ $defaultPackage['href'] ?? '#' }}" class="ui-button ui-button--ink package-card__action" x-bind:href="activePackage().href" x-text="activePackage().label">
-                                {{ $defaultPackage['label'] ?? 'Se løsning' }}
-                            </a>
-
                             <ul class="package-card__points" x-html="activePackagePointsMarkup()">
                                 @foreach (($defaultPackage['points'] ?? []) as $point)
                                     <li class="package-card__point">{{ $point }}</li>

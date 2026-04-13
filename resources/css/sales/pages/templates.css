@@ -661,11 +661,6 @@
         line-height: 1.45;
     }
 
-    .package-card__action {
-        width: 100%;
-        justify-content: center;
-    }
-
     .package-card__points {
         display: grid;
         gap: 0.65rem;
