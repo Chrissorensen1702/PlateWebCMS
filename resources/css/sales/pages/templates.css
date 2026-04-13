@@ -795,14 +795,16 @@
 
     .ui-card.package-card--launch,
     .ui-card.package-card--signature,
-    .ui-card.package-card--platebook {
+    .ui-card.package-card--platebook,
+    .ui-card.package-card--scale {
         background: linear-gradient(180deg, rgb(var(--color-surface-rgb) / 0.99), rgb(var(--color-surface-rgb) / 0.95));
     }
 
     .ui-card.package-card--scale {
-        background: var(--gradient-panel);
-        border-color: rgb(var(--color-primary-rgb) / 0.5);
-        box-shadow: 0 30px 70px rgb(var(--color-primary-rgb) / 0.2);
+        border-color: rgb(var(--color-primary-rgb) / 0.22);
+        box-shadow:
+            0 30px 70px rgb(var(--color-primary-rgb) / 0.14),
+            0 0 0 1px rgb(var(--color-accent-rgb) / 0.08);
     }
 
     .package-card--featured {
@@ -833,26 +835,6 @@
 
     .package-card--recommended.package-card--featured {
         transform: translateY(-1.2rem);
-    }
-
-    .package-card--scale .package-card__title,
-    .package-card--scale .package-card__price,
-    .package-card--scale .package-card__point,
-    .package-card--scale .package-card__badge {
-        color: white;
-    }
-
-    .package-card--scale .package-card__eyebrow,
-    .package-card--scale .package-card__price-note,
-    .package-card--scale .package-card__headline,
-    .package-card--scale .package-card__delivery,
-    .package-card--scale .package-card__setup {
-        color: rgb(255 255 255 / 0.82);
-    }
-
-    .package-card--scale .package-card__badge {
-        background: rgb(255 255 255 / 0.12);
-        border-color: rgb(255 255 255 / 0.16);
     }
 
     .package-card--scale .package-card__badge--star {
@@ -926,17 +908,6 @@
             opacity: 1;
             transform: scale(1.04);
         }
-    }
-
-    .package-card--scale .package-card__point::before {
-        background: white;
-        box-shadow: 0 0 0 4px rgb(255 255 255 / 0.12);
-    }
-
-    .package-card--scale .package-card__badge--recommended {
-        background: rgb(255 255 255 / 0.16);
-        border-color: rgb(255 255 255 / 0.24);
-        color: white;
     }
 
     .pricing-compare-section {
