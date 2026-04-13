@@ -37,7 +37,8 @@ const registerPricingGuide = () => {
         activePackage() {
             const key = this.activePackageKey();
             const packageMeta = this.packages[key] ?? {};
-            const pricing = this.calculatePackagePricing(packageMeta);
+            const visibleFields = this.packageVisibleFields(packageMeta);
+            const pricing = this.calculatePackagePricing(packageMeta, visibleFields);
 
             return {
                 key,
@@ -52,53 +53,123 @@ const registerPricingGuide = () => {
                 points: Array.isArray(packageMeta.points) ? packageMeta.points : [],
                 price: pricing.price,
                 priceNote: pricing.priceNote,
-                setupSummary: pricing.setupSummary,
+                detail: pricing.detail,
+                billingNote: pricing.billingNote,
+                visibleFields,
             };
         },
 
-        calculatePackagePricing(packageMeta) {
+        calculatePackagePricing(packageMeta, visibleFields) {
             const pricing = packageMeta.pricing ?? null;
-            const setupSummary = this.setupSummary();
+            const usageSummary = this.setupSummary(visibleFields);
 
-            if (! pricing || typeof pricing.base !== 'number') {
+            if (! pricing || typeof pricing !== 'object') {
                 return {
                     price: packageMeta.price ?? '',
                     priceNote: packageMeta.priceSuffix ?? '',
-                    setupSummary,
+                    detail: usageSummary,
+                    billingNote: 'Prisen bekræftes efter en kort gennemgang.',
                 };
             }
 
-            const modifiers = Object.entries(pricing.modifiers ?? {}).reduce((sum, [field, rule]) => {
-                return sum + this.priceModifierFor(field, rule);
-            }, 0);
+            switch (pricing.mode) {
+                case 'flat':
+                    return {
+                        price: this.formatPrice(pricing.amount, {
+                            prefix: pricing.prefix ?? '',
+                            suffix: pricing.suffix ?? 'kr.',
+                        }),
+                        priceNote: packageMeta.priceSuffix ?? '',
+                        detail: 'Fast pris på standard hjemmeside inkl. .dk-domæne.',
+                        billingNote: 'Starter har fast pris og bruger jeres valg som pejlemærke.',
+                    };
 
-            const total = Math.max(pricing.base + modifiers, 0);
-            const prefix = pricing.prefix ?? 'Fra';
-            const suffix = pricing.suffix ?? 'kr/måned';
+                case 'intro_booking_tiered': {
+                    const monthlyPrice = this.resolveTierPrice(this.bookings, pricing.tiers);
 
-            return {
-                price: `${prefix} ${this.formatNumber(total)} ${suffix}`,
-                priceNote: packageMeta.priceSuffix ?? '',
-                setupSummary,
+                    return {
+                        price: this.formatPrice(monthlyPrice, {
+                            prefix: pricing.prefix ?? '',
+                            suffix: pricing.suffix ?? 'kr./måned',
+                        }),
+                        priceNote: packageMeta.priceSuffix ?? '',
+                        detail: usageSummary,
+                        billingNote: '0 kr. de første 3 måneder. Derefter reguleres prisen primært af antal bookinger.',
+                    };
+                }
+
+                case 'booking_tiered': {
+                    const monthlyPrice = this.resolveTierPrice(this.bookings, pricing.tiers);
+
+                    return {
+                        price: this.formatPrice(monthlyPrice, {
+                            prefix: pricing.prefix ?? '',
+                            suffix: pricing.suffix ?? 'kr./måned',
+                        }),
+                        priceNote: packageMeta.priceSuffix ?? '',
+                        detail: usageSummary,
+                        billingNote: 'PlateBook skalerer primært efter antal bookinger.',
+                    };
+                }
+
+                case 'custom_quote':
+                    return {
+                        price: this.formatPrice(pricing.amount, {
+                            prefix: pricing.prefix ?? 'Fra',
+                            suffix: pricing.suffix ?? 'kr.',
+                        }),
+                        priceNote: packageMeta.priceSuffix ?? '',
+                        detail: 'Vi bruger jeres valg som pejlemærke og sender et konkret tilbud.',
+                        billingNote: 'Custom går direkte til tilbud og scope-afklaring.',
+                    };
+
+                default:
+                    return {
+                        price: packageMeta.price ?? '',
+                        priceNote: packageMeta.priceSuffix ?? '',
+                        detail: usageSummary,
+                        billingNote: 'Prisen bekræftes efter en kort gennemgang.',
+                    };
+            }
+        },
+
+        resolveTierPrice(value, tiers) {
+            const normalizedTiers = Array.isArray(tiers) ? tiers : [];
+
+            if (! normalizedTiers.length) {
+                return 0;
+            }
+
+            const numericValue = Number(value ?? 0);
+            const matchedTier = normalizedTiers.find((tier) => numericValue <= Number(tier?.up_to ?? 0));
+
+            return Number((matchedTier ?? normalizedTiers.at(-1))?.amount ?? 0);
+        },
+
+        packageVisibleFields(packageMeta) {
+            const visibleFields = Array.isArray(packageMeta.visibleFields) ? packageMeta.visibleFields : [];
+
+            return visibleFields.length
+                ? visibleFields
+                : ['locations', 'staff', 'bookings', 'sections'];
+        },
+
+        fieldVisible(field) {
+            return this.packageVisibleFields(this.packages[this.activePackageKey()] ?? {}).includes(String(field));
+        },
+
+        setupSummary(fields) {
+            const summaryMap = {
+                locations: `${this.sliderValue('locations')} lokationer`,
+                staff: `${this.sliderValue('staff')} medarbejdere`,
+                bookings: `${this.sliderValue('bookings')} bookinger/år`,
+                sections: `${this.sliderValue('sections')} sektioner`,
             };
-        },
 
-        priceModifierFor(field, rule) {
-            const value = Number(this[field] ?? 0);
-            const included = Number(rule?.included ?? 0);
-            const step = Math.max(Number(rule?.step ?? 1), 1);
-            const amount = Number(rule?.amount ?? 0);
-            const overflow = Math.max(value - included, 0);
-
-            return Math.ceil(overflow / step) * amount;
-        },
-
-        setupSummary() {
-            return [
-                `${this.sliderValue('locations')} lokationer`,
-                `${this.sliderValue('staff')} medarbejdere`,
-                `${this.sliderValue('bookings')} bookinger/år`,
-            ].join(' · ');
+            return (Array.isArray(fields) ? fields : Object.keys(summaryMap))
+                .filter((field) => summaryMap[field])
+                .map((field) => summaryMap[field])
+                .join(' · ');
         },
 
         isRecommended(packageKey) {
@@ -202,6 +273,12 @@ const registerPricingGuide = () => {
 
         formatNumber(value) {
             return new Intl.NumberFormat('da-DK').format(value);
+        },
+
+        formatPrice(value, { prefix = '', suffix = 'kr.' } = {}) {
+            const parts = [prefix, this.formatNumber(value), suffix].filter(Boolean);
+
+            return parts.join(' ');
         },
 
         escapeHtml(value) {

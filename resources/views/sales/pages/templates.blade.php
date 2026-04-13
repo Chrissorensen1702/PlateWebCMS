@@ -25,6 +25,7 @@
             'tone' => $package['tone'],
             'featured' => $package['featured'],
             'pricing' => $package['pricing'] ?? null,
+            'visibleFields' => $package['visible_fields'] ?? null,
         ],
     ])->all();
 
@@ -38,14 +39,14 @@
                 <div class="pricing-hero__lead">
                     <div class="pricing-hero__column pricing-hero__column--content">
                         <div class="pricing-hero__intro" data-reveal style="--reveal-delay: 40ms;">
-                            <p class="pricing-hero__eyebrow">Vejledende tilbud og gratis prøve</p>
+                            <p class="pricing-hero__eyebrow">Vælg pakke og se vejledende pris</p>
                             <h1 class="pricing-hero__title">
                                 <span class="pricing-hero__title-line">Få en pris der matcher</span>
                                 <span class="pricing-hero__title-line">jeres behov</span>
                             </h1>
                             <p class="pricing-hero__copy">
-                                Vælg den retning der passer bedst, få en vejledende pris med det samme og start i 30 dage
-                                gratis. Vi bekræfter den endelige løsning og pris bagefter.
+                                Vælg den retning der passer bedst, juster jeres setup og se hvordan prisen ændrer sig.
+                                For booking-løsninger vægter antal bookinger mest, mens custom går direkte til tilbud.
                             </p>
                         </div>
 
@@ -69,7 +70,7 @@
                                     </div>
 
                                     <div class="pricing-guide__metrics">
-                                        <div class="pricing-guide__field pricing-guide__field--slider" x-bind:style="sliderStyle('locations')">
+                                        <div class="pricing-guide__field pricing-guide__field--slider" x-cloak x-show="fieldVisible('locations')" x-bind:style="sliderStyle('locations')">
                                             <div class="pricing-guide__field-head">
                                                 <p class="pricing-guide__label">Antal lokationer</p>
                                                 <p class="pricing-guide__metric" x-text="sliderValue('locations')">1</p>
@@ -81,7 +82,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="pricing-guide__field pricing-guide__field--slider" x-bind:style="sliderStyle('staff')">
+                                        <div class="pricing-guide__field pricing-guide__field--slider" x-cloak x-show="fieldVisible('staff')" x-bind:style="sliderStyle('staff')">
                                             <div class="pricing-guide__field-head">
                                                 <p class="pricing-guide__label">Antal medarbejdere</p>
                                                 <p class="pricing-guide__metric" x-text="sliderValue('staff')">4</p>
@@ -93,7 +94,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="pricing-guide__field pricing-guide__field--slider" x-bind:style="sliderStyle('bookings')">
+                                        <div class="pricing-guide__field pricing-guide__field--slider" x-cloak x-show="fieldVisible('bookings')" x-bind:style="sliderStyle('bookings')">
                                             <div class="pricing-guide__field-head">
                                                 <p class="pricing-guide__label">Antal årlige bookinger</p>
                                                 <p class="pricing-guide__metric" x-text="sliderValue('bookings')">300</p>
@@ -105,7 +106,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="pricing-guide__field pricing-guide__field--slider" x-bind:style="sliderStyle('sections')">
+                                        <div class="pricing-guide__field pricing-guide__field--slider" x-cloak x-show="fieldVisible('sections')" x-bind:style="sliderStyle('sections')">
                                             <div class="pricing-guide__field-head">
                                                 <p class="pricing-guide__label">Antal sektioner på hjemmeside</p>
                                                 <p class="pricing-guide__metric" x-text="sliderValue('sections')">3</p>
@@ -129,12 +130,12 @@
                                             </div>
                                             <p class="pricing-guide__summary-price" x-text="activePackage().price">{{ $defaultPackage['price'] ?? '' }}</p>
                                         </div>
-                                        <p class="pricing-guide__summary-detail" x-text="activePackage().setupSummary">1 lokation · 4 medarbejdere · 300 bookinger/år</p>
+                                        <p class="pricing-guide__summary-detail" x-text="activePackage().detail">1 lokation · 4 medarbejdere · 300 bookinger/år</p>
                                     </div>
 
                                     <div class="pricing-guide__footer-actions">
                                         <a class="ui-button ui-button--ink pricing-guide__jump" x-bind:href="activePackage().href" x-text="activePackage().label" href="{{ $defaultPackage['href'] ?? '#' }}">{{ $defaultPackage['label'] ?? 'Se løsning' }}</a>
-                                        <p class="pricing-billing-note">Prisen justeres efter lokationer, medarbejdere og bookinger · ekskl. moms.</p>
+                                        <p class="pricing-billing-note" x-text="activePackage().billingNote">Prisen justeres efter behov og brug · ekskl. moms.</p>
                                     </div>
                                 </div>
                             </div>
@@ -163,7 +164,7 @@
                             </div>
 
                             <p class="package-card__headline" x-text="activePackage().headline">{{ $defaultPackage['headline'] ?? '' }}</p>
-                            <p class="package-card__setup" x-text="activePackage().setupSummary">1 lokation · 4 medarbejdere · 300 bookinger/år</p>
+                            <p class="package-card__setup" x-text="activePackage().detail">1 lokation · 4 medarbejdere · 300 bookinger/år</p>
 
                             <a href="{{ $defaultPackage['href'] ?? '#' }}" class="ui-button ui-button--ink package-card__action" x-bind:href="activePackage().href" x-text="activePackage().label">
                                 {{ $defaultPackage['label'] ?? 'Se løsning' }}

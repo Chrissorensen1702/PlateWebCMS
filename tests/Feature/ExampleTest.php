@@ -96,6 +96,6 @@ class ExampleTest extends TestCase
             ])
             ->assertSeeText('Download via Safari')
             ->assertSeeText('Download via Chrome');
-        $this->get('/kontakt')->assertOk()->assertSeeText('Start med et vejledende tilbud og 30 dages gratis prøve.');
+        $this->get('/kontakt')->assertOk()->assertSeeText('Start med et vejledende tilbud og den pakke der passer bedst.');
     }
 }

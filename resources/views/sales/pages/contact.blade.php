@@ -13,12 +13,12 @@
                 <div class="section-heading">
                     <div class="section-heading__content">
                         <p class="section-heading__kicker">Kontakt</p>
-                        <h1 class="section-heading__title">Start med et vejledende tilbud og 30 dages gratis prøve.</h1>
+                        <h1 class="section-heading__title">Start med et vejledende tilbud og den pakke der passer bedst.</h1>
                     </div>
 
                     <p class="section-heading__copy">
                         Brug formularen som næste skridt fra prissiden. Vi tager udgangspunkt i den løsning du har valgt,
-                        lader dig komme hurtigt i gang og bekræfter den endelige retning bagefter.
+                        afklarer pris og scope hurtigt og bekræfter den endelige retning bagefter.
                     </p>
                 </div>
 
