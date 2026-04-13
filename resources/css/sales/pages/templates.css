@@ -854,6 +854,10 @@
         margin: 0;
     }
 
+    .package-card--scale .package-card__heading {
+        margin-top: 2.35rem;
+    }
+
     @keyframes package-card-badge-intro {
         0% {
             opacity: 0;
@@ -1233,6 +1237,10 @@
 
         .package-card__badge--star .package-card__badge-text {
             transform: rotate(-5deg);
+        }
+
+        .package-card--scale .package-card__heading {
+            margin-top: 2rem;
         }
 
         .package-card__badge--star::after {
