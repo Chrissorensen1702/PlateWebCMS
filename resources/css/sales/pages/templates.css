@@ -604,9 +604,11 @@
         isolation: isolate;
         display: grid;
         place-items: center;
-        min-width: 7rem;
-        min-height: 7rem;
-        padding: 1.15rem;
+        width: 6.8rem;
+        height: 6.8rem;
+        min-width: 0;
+        min-height: 0;
+        padding: 1rem;
         border: 0;
         border-radius: 0;
         background:
@@ -621,25 +623,33 @@
         text-shadow: 0 1px 0 rgb(255 255 255 / 0.22);
         clip-path: polygon(
             50% 0%,
-            61% 14%,
-            78% 5%,
-            81% 24%,
-            100% 28%,
-            90% 45%,
-            100% 61%,
-            82% 68%,
-            86% 88%,
-            67% 84%,
+            60% 10%,
+            73% 4%,
+            79% 17%,
+            93% 14%,
+            90% 28%,
+            100% 36%,
+            96% 50%,
+            100% 64%,
+            90% 72%,
+            93% 86%,
+            79% 83%,
+            73% 96%,
+            60% 90%,
             55% 100%,
-            40% 86%,
-            22% 95%,
-            18% 74%,
-            0% 70%,
-            10% 51%,
-            0% 33%,
-            18% 25%,
-            15% 6%,
-            34% 15%
+            40% 90%,
+            27% 96%,
+            21% 83%,
+            7% 86%,
+            10% 72%,
+            0% 64%,
+            4% 50%,
+            0% 36%,
+            10% 28%,
+            7% 14%,
+            21% 17%,
+            27% 4%,
+            40% 10%
         );
         box-shadow:
             0 34px 58px rgb(58 40 5 / 0.34),
@@ -839,6 +849,15 @@
             linear-gradient(150deg, #fff0ae 0%, #f7d26c 42%, #d9982a 100%);
         border-color: transparent;
         color: #5d3a00;
+    }
+
+    .package-card--scale .package-card__top {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 4;
+        min-height: 0;
+        margin: 0;
     }
 
     @keyframes package-card-badge-intro {
@@ -1223,8 +1242,8 @@
         }
 
         .package-card__badge--star {
-            min-width: 6.1rem;
-            min-height: 6.1rem;
+            width: 5.9rem;
+            height: 5.9rem;
             font-size: 0.64rem;
             transform: rotate(6deg);
         }
