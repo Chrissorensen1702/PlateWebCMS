@@ -119,29 +119,22 @@
                                     </div>
                                 </div>
 
-                                <div class="pricing-guide__result" aria-live="polite">
-                                    <div class="pricing-guide__result-copywrap">
-                                        <p class="pricing-guide__result-eyebrow">Anbefalet tilbud</p>
-                                        <div class="pricing-guide__result-meta">
-                                            <div class="pricing-guide__result-priceblock">
-                                                <p class="pricing-guide__result-title" x-text="recommendation().title">{{ $defaultPackage['title'] ?? '' }}</p>
-                                                <p class="pricing-guide__result-copy" x-text="recommendation().reason">Det bedste match, hvis I vil samle hjemmeside, indhold og booking i én løsning og starte med et vejledende tilbud.</p>
+                                <div class="pricing-guide__footer">
+                                    <div class="pricing-guide__summary" aria-live="polite">
+                                        <p class="pricing-guide__summary-eyebrow">Vejledende pris</p>
+                                        <div class="pricing-guide__summary-meta">
+                                            <div class="pricing-guide__summary-copy">
+                                                <p class="pricing-guide__summary-title" x-text="recommendation().title">{{ $defaultPackage['title'] ?? '' }}</p>
+                                                <p class="pricing-guide__summary-note" x-text="recommendation().priceNote">{{ $defaultPackage['price_suffix'] ?? '' }}</p>
                                             </div>
-                                            <div class="pricing-guide__result-priceblock pricing-guide__result-priceblock--right">
-                                                <p class="pricing-guide__result-price" x-text="recommendation().price">{{ $defaultPackage['price'] ?? '' }}</p>
-                                                <p class="pricing-guide__result-note" x-text="recommendation().priceNote">{{ $defaultPackage['price_suffix'] ?? '' }}</p>
-                                            </div>
+                                            <p class="pricing-guide__summary-price" x-text="recommendation().price">{{ $defaultPackage['price'] ?? '' }}</p>
                                         </div>
                                     </div>
 
-                                    <p class="pricing-guide__result-trial">
-                                        30 dages gratis prøve. Ingen binding før vi har bekræftet den endelige løsning.
-                                    </p>
-                                </div>
-
-                                <div class="pricing-guide__footer">
-                                    <a class="ui-button ui-button--ink pricing-guide__jump" x-bind:href="recommendation().href" x-text="recommendation().label" href="{{ $defaultPackage['href'] ?? '#' }}">{{ $defaultPackage['label'] ?? 'Se løsning' }}</a>
-                                    <p class="pricing-billing-note">Alle priser er vejledende og ekskl. moms.</p>
+                                    <div class="pricing-guide__footer-actions">
+                                        <a class="ui-button ui-button--ink pricing-guide__jump" x-bind:href="recommendation().href" x-text="recommendation().label" href="{{ $defaultPackage['href'] ?? '#' }}">{{ $defaultPackage['label'] ?? 'Se løsning' }}</a>
+                                        <p class="pricing-billing-note">Alle priser er vejledende og ekskl. moms.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

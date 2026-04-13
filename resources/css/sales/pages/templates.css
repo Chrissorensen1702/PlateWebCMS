@@ -359,92 +359,83 @@
         line-height: 1;
     }
 
-    .pricing-guide__result {
+    .pricing-guide__footer {
         display: grid;
-        gap: 0.6rem;
-        padding: 0.85rem;
-        border-radius: 1rem;
-        background: linear-gradient(135deg, rgb(var(--color-header-ink-rgb) / 0.98), rgb(var(--color-primary-rgb) / 0.94));
-        color: white;
-        box-shadow: 0 16px 36px rgb(var(--color-primary-rgb) / 0.18);
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: stretch;
+        gap: 0.75rem;
     }
 
-    .pricing-guide__result-copywrap {
+    .pricing-guide__summary {
         display: grid;
         gap: 0.35rem;
+        padding: 0.85rem 0.95rem;
+        border: 1px solid rgb(var(--color-primary-rgb) / 0.1);
+        border-radius: 1rem;
+        background:
+            linear-gradient(180deg, rgb(var(--color-surface-rgb) / 0.96), rgb(var(--color-surface-rgb) / 0.84)),
+            rgb(var(--color-surface-rgb) / 0.92);
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 0.7),
+            0 12px 24px rgb(var(--color-header-ink-rgb) / 0.05);
     }
 
-    .pricing-guide__result-eyebrow,
-    .pricing-guide__result-title,
-    .pricing-guide__result-copy,
-    .pricing-guide__result-price,
-    .pricing-guide__result-note {
+    .pricing-guide__summary-eyebrow,
+    .pricing-guide__summary-title,
+    .pricing-guide__summary-note,
+    .pricing-guide__summary-price,
+    .pricing-billing-note {
         margin: 0;
     }
 
-    .pricing-guide__result-eyebrow {
-        color: rgb(255 255 255 / 0.74);
-        font-size: 0.72rem;
+    .pricing-guide__summary-eyebrow {
+        color: rgb(var(--color-primary-rgb) / 0.82);
+        font-size: 0.69rem;
         font-weight: 700;
         letter-spacing: 0.18em;
         text-transform: uppercase;
     }
 
-    .pricing-guide__result-title {
-        font-size: 1.2rem;
-        font-weight: 800;
-        line-height: 1;
-        letter-spacing: -0.04em;
-    }
-
-    .pricing-guide__result-copy {
-        color: rgb(255 255 255 / 0.82);
-        font-size: 0.82rem;
-        line-height: 1.45;
-    }
-
-    .pricing-guide__result-meta {
+    .pricing-guide__summary-meta {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
         gap: 0.75rem;
         align-items: center;
     }
 
-    .pricing-guide__result-priceblock {
+    .pricing-guide__summary-copy {
         display: grid;
         gap: 0.15rem;
     }
 
-    .pricing-guide__result-priceblock--right {
-        justify-items: end;
-        text-align: right;
+    .pricing-guide__summary-title {
+        color: rgb(var(--color-header-ink-rgb) / 0.96);
+        font-size: 0.98rem;
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
     }
 
-    .pricing-guide__result-price {
+    .pricing-guide__summary-note {
+        color: rgb(var(--color-text-rgb) / 0.58);
+        font-size: 0.7rem;
+        line-height: 1.4;
+    }
+
+    .pricing-guide__summary-price {
+        color: rgb(var(--color-header-ink-rgb) / 0.98);
         font-size: 1.05rem;
         font-weight: 800;
         line-height: 1;
         letter-spacing: -0.04em;
+        text-align: right;
     }
 
-    .pricing-guide__result-note {
-        color: rgb(255 255 255 / 0.68);
-        font-size: 0.7rem;
-        line-height: 1.45;
-    }
-
-    .pricing-guide__result-trial {
-        margin: 0;
-        color: rgb(255 255 255 / 0.72);
-        font-size: 0.73rem;
-        line-height: 1.45;
-    }
-
-    .pricing-guide__footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
+    .pricing-guide__footer-actions {
+        display: grid;
+        align-content: end;
+        justify-items: stretch;
+        gap: 0.4rem;
     }
 
     .pricing-guide__jump {
@@ -539,7 +530,6 @@
     }
 
     .pricing-billing-note {
-        margin: 0 0 0.3rem;
         text-align: right;
         color: var(--color-muted);
         font-size: 0.76rem;
@@ -1009,23 +999,25 @@
             font-size: 0.8rem;
         }
 
-        .pricing-guide__result {
+        .pricing-guide__footer {
+            grid-template-columns: 1fr;
+        }
+
+        .pricing-guide__summary {
             padding: 0.8rem;
         }
 
-        .pricing-guide__result-meta {
+        .pricing-guide__summary-meta {
             grid-template-columns: 1fr;
             align-items: start;
         }
 
-        .pricing-guide__result-priceblock--right {
-            justify-items: start;
+        .pricing-guide__summary-price {
             text-align: left;
         }
 
-        .pricing-guide__footer {
-            display: grid;
-            justify-items: stretch;
+        .pricing-guide__footer-actions {
+            width: 100%;
         }
 
         .pricing-guide__jump {
