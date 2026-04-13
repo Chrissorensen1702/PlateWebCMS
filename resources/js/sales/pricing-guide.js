@@ -26,68 +26,83 @@ const registerPricingGuide = () => {
             }
         },
 
-        recommendation() {
-            const key = this.recommendedKey();
+        activePackageKey() {
+            if (this.packages[this.journey]) {
+                return this.journey;
+            }
+
+            return Object.keys(this.packages)[0] ?? 'scale';
+        },
+
+        activePackage() {
+            const key = this.activePackageKey();
             const packageMeta = this.packages[key] ?? {};
+            const pricing = this.calculatePackagePricing(packageMeta);
 
             return {
                 key,
                 title: packageMeta.title ?? 'Scale',
-                price: packageMeta.price ?? '',
-                priceNote: packageMeta.priceSuffix ?? '',
+                badge: packageMeta.badge ?? '',
+                headline: packageMeta.headline ?? '',
+                delivery: packageMeta.delivery ?? '',
                 href: packageMeta.href ?? '#',
                 label: packageMeta.label ?? 'Se løsning',
-                reason: this.recommendationReason(key),
+                tone: packageMeta.tone ?? key,
+                featured: Boolean(packageMeta.featured),
+                points: Array.isArray(packageMeta.points) ? packageMeta.points : [],
+                price: pricing.price,
+                priceNote: pricing.priceNote,
+                setupSummary: pricing.setupSummary,
             };
         },
 
-        recommendedKey() {
-            if (this.journey === 'signature') {
-                return 'signature';
+        calculatePackagePricing(packageMeta) {
+            const pricing = packageMeta.pricing ?? null;
+            const setupSummary = this.setupSummary();
+
+            if (! pricing || typeof pricing.base !== 'number') {
+                return {
+                    price: packageMeta.price ?? '',
+                    priceNote: packageMeta.priceSuffix ?? '',
+                    setupSummary,
+                };
             }
 
-            if (this.journey === 'platebook') {
-                if (this.complexityScore() >= 8 || this.locations >= 5 || this.staff >= 35 || this.bookings >= 2500) {
-                    return 'signature';
-                }
+            const modifiers = Object.entries(pricing.modifiers ?? {}).reduce((sum, [field, rule]) => {
+                return sum + this.priceModifierFor(field, rule);
+            }, 0);
 
-                return 'platebook';
-            }
+            const total = Math.max(pricing.base + modifiers, 0);
+            const prefix = pricing.prefix ?? 'Fra';
+            const suffix = pricing.suffix ?? 'kr/måned';
 
-            if (this.journey === 'launch') {
-                if (this.complexityScore() >= 9 || this.locations >= 5 || this.staff >= 30 || this.sections >= 5) {
-                    return 'signature';
-                }
-
-                if (this.complexityScore() >= 4 || this.locations >= 2 || this.staff >= 8 || this.bookings >= 600 || this.sections >= 3) {
-                    return 'scale';
-                }
-
-                return 'launch';
-            }
-
-            if (this.complexityScore() >= 10 || this.locations >= 6 || this.staff >= 50 || this.bookings >= 4000 || this.sections >= 5) {
-                return 'signature';
-            }
-
-            return 'scale';
+            return {
+                price: `${prefix} ${this.formatNumber(total)} ${suffix}`,
+                priceNote: packageMeta.priceSuffix ?? '',
+                setupSummary,
+            };
         },
 
-        complexityScore() {
-            return (
-                this.scoreThresholds(this.locations, [2, 4, 7]) +
-                this.scoreThresholds(this.staff, [8, 24, 60]) +
-                this.scoreThresholds(this.bookings, [500, 1500, 3500]) +
-                this.scoreThresholds(this.sections, [2, 4, 5])
-            );
+        priceModifierFor(field, rule) {
+            const value = Number(this[field] ?? 0);
+            const included = Number(rule?.included ?? 0);
+            const step = Math.max(Number(rule?.step ?? 1), 1);
+            const amount = Number(rule?.amount ?? 0);
+            const overflow = Math.max(value - included, 0);
+
+            return Math.ceil(overflow / step) * amount;
         },
 
-        scoreThresholds(value, thresholds) {
-            return thresholds.reduce((score, threshold) => score + (value >= threshold ? 1 : 0), 0);
+        setupSummary() {
+            return [
+                `${this.sliderValue('locations')} lokationer`,
+                `${this.sliderValue('staff')} medarbejdere`,
+                `${this.sliderValue('bookings')} bookinger/år`,
+            ].join(' · ');
         },
 
         isRecommended(packageKey) {
-            return this.recommendedKey() === String(packageKey);
+            return this.activePackageKey() === String(packageKey);
         },
 
         planRecommendationClasses(packageKey) {
@@ -100,6 +115,24 @@ const registerPricingGuide = () => {
             return {
                 'pricing-compare__value--recommended': this.isRecommended(packageKey),
             };
+        },
+
+        packageCardClassList() {
+            const activePackage = this.activePackage();
+            const classNames = [`package-card--${activePackage.tone ?? activePackage.key}`];
+
+            if (activePackage.featured) {
+                classNames.push('package-card--featured');
+            }
+
+            return classNames.join(' ');
+        },
+
+        activePackagePointsMarkup() {
+            return this.activePackage()
+                .points
+                .map((point) => `<li class="package-card__point">${this.escapeHtml(point)}</li>`)
+                .join('');
         },
 
         sliderMin(field) {
@@ -171,22 +204,13 @@ const registerPricingGuide = () => {
             return new Intl.NumberFormat('da-DK').format(value);
         },
 
-        recommendationReason(packageKey) {
-            const setupSummary = `${this.sliderValue('locations')} lokationer, ${this.sliderValue('staff')} medarbejdere og ca. ${this.sliderValue('bookings')} bookinger om året.`;
-
-            if (packageKey === 'platebook') {
-                return `Det passer bedst, hvis I vil beholde den nuværende hjemmeside og kun koble booking på. ${setupSummary}`;
-            }
-
-            if (packageKey === 'launch') {
-                return `Det letteste spor, hvis I vil hurtigt online med en enkel løsning. ${setupSummary}`;
-            }
-
-            if (packageKey === 'signature') {
-                return `Jeres setup peger mod en mere fleksibel løsning med flere behov og mere frihed i opsætningen. ${setupSummary}`;
-            }
-
-            return `Det bedste match, hvis hjemmeside og booking skal spille sammen fra start uden at blive helt custom. ${setupSummary}`;
+        escapeHtml(value) {
+            return String(value)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#39;');
         },
     }));
 

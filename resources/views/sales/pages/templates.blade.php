@@ -24,11 +24,11 @@
             'points' => $package['points'],
             'tone' => $package['tone'],
             'featured' => $package['featured'],
+            'pricing' => $package['pricing'] ?? null,
         ],
     ])->all();
 
     $defaultPackage = collect($packages)->firstWhere('key', 'scale') ?? collect($packages)->first();
-    $launchPackage = collect($packages)->firstWhere('key', 'launch') ?? $defaultPackage;
 @endphp
 
 @section('main-content')
@@ -124,16 +124,17 @@
                                         <p class="pricing-guide__summary-eyebrow">Vejledende pris</p>
                                         <div class="pricing-guide__summary-meta">
                                             <div class="pricing-guide__summary-copy">
-                                                <p class="pricing-guide__summary-title" x-text="recommendation().title">{{ $defaultPackage['title'] ?? '' }}</p>
-                                                <p class="pricing-guide__summary-note" x-text="recommendation().priceNote">{{ $defaultPackage['price_suffix'] ?? '' }}</p>
+                                                <p class="pricing-guide__summary-title" x-text="activePackage().title">{{ $defaultPackage['title'] ?? '' }}</p>
+                                                <p class="pricing-guide__summary-note" x-text="activePackage().priceNote">{{ $defaultPackage['price_suffix'] ?? '' }}</p>
                                             </div>
-                                            <p class="pricing-guide__summary-price" x-text="recommendation().price">{{ $defaultPackage['price'] ?? '' }}</p>
+                                            <p class="pricing-guide__summary-price" x-text="activePackage().price">{{ $defaultPackage['price'] ?? '' }}</p>
                                         </div>
+                                        <p class="pricing-guide__summary-detail" x-text="activePackage().setupSummary">1 lokation · 4 medarbejdere · 300 bookinger/år</p>
                                     </div>
 
                                     <div class="pricing-guide__footer-actions">
-                                        <a class="ui-button ui-button--ink pricing-guide__jump" x-bind:href="recommendation().href" x-text="recommendation().label" href="{{ $defaultPackage['href'] ?? '#' }}">{{ $defaultPackage['label'] ?? 'Se løsning' }}</a>
-                                        <p class="pricing-billing-note">Alle priser er vejledende og ekskl. moms.</p>
+                                        <a class="ui-button ui-button--ink pricing-guide__jump" x-bind:href="activePackage().href" x-text="activePackage().label" href="{{ $defaultPackage['href'] ?? '#' }}">{{ $defaultPackage['label'] ?? 'Se løsning' }}</a>
+                                        <p class="pricing-billing-note">Prisen justeres efter lokationer, medarbejdere og bookinger · ekskl. moms.</p>
                                     </div>
                                 </div>
                             </div>
@@ -141,29 +142,35 @@
                     </div>
 
                     <div class="pricing-hero__column pricing-hero__column--offer" data-reveal style="--reveal-delay: 180ms;">
-                        <article id="pricing-package-launch" class="ui-card ui-card--hover package-card package-card--launch pricing-hero__offer-card">
+                        <article
+                            id="pricing-package-scale"
+                            class="ui-card ui-card--hover package-card pricing-hero__offer-card"
+                            x-bind:id="`pricing-package-${activePackage().key}`"
+                            x-bind:class="packageCardClassList()"
+                        >
                             <div class="package-card__top">
-                                <span class="package-card__badge">{{ $launchPackage['badge'] ?? '' }}</span>
+                                <span class="package-card__badge" x-text="activePackage().badge">{{ $defaultPackage['badge'] ?? '' }}</span>
                             </div>
 
                             <div class="package-card__heading">
-                                <h2 class="package-card__title">{{ $launchPackage['title'] ?? '' }}</h2>
+                                <h2 class="package-card__title" x-text="activePackage().title">{{ $defaultPackage['title'] ?? '' }}</h2>
 
                                 <div class="package-card__price-block">
-                                    <p class="package-card__price">{{ $launchPackage['price'] ?? '' }}</p>
-                                    <p class="package-card__price-note">{{ $launchPackage['price_suffix'] ?? '' }}</p>
-                                    <p class="package-card__delivery">{{ $launchPackage['delivery'] ?? '' }}</p>
+                                    <p class="package-card__price" x-text="activePackage().price">{{ $defaultPackage['price'] ?? '' }}</p>
+                                    <p class="package-card__price-note" x-text="activePackage().priceNote">{{ $defaultPackage['price_suffix'] ?? '' }}</p>
+                                    <p class="package-card__delivery" x-text="activePackage().delivery">{{ $defaultPackage['delivery'] ?? '' }}</p>
                                 </div>
                             </div>
 
-                            <p class="package-card__headline">{{ $launchPackage['headline'] ?? '' }}</p>
+                            <p class="package-card__headline" x-text="activePackage().headline">{{ $defaultPackage['headline'] ?? '' }}</p>
+                            <p class="package-card__setup" x-text="activePackage().setupSummary">1 lokation · 4 medarbejdere · 300 bookinger/år</p>
 
-                            <a href="{{ $launchPackage['href'] ?? '#' }}" class="ui-button ui-button--ink package-card__action">
-                                {{ $launchPackage['label'] ?? 'Se løsning' }}
+                            <a href="{{ $defaultPackage['href'] ?? '#' }}" class="ui-button ui-button--ink package-card__action" x-bind:href="activePackage().href" x-text="activePackage().label">
+                                {{ $defaultPackage['label'] ?? 'Se løsning' }}
                             </a>
 
-                            <ul class="package-card__points">
-                                @foreach (($launchPackage['points'] ?? []) as $point)
+                            <ul class="package-card__points" x-html="activePackagePointsMarkup()">
+                                @foreach (($defaultPackage['points'] ?? []) as $point)
                                     <li class="package-card__point">{{ $point }}</li>
                                 @endforeach
                             </ul>

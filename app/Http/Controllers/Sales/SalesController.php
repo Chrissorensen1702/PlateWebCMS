@@ -252,6 +252,16 @@ class SalesController extends Controller
                 'delivery' => $launch?->build_time ?? 'Hurtig levering',
                 'price_suffix' => 'vejledende · ekskl. moms',
                 'annual_suffix' => 'ved årlig betaling · vejledende · ekskl. moms',
+                'pricing' => [
+                    'base' => 99,
+                    'prefix' => 'Fra',
+                    'suffix' => 'kr/måned',
+                    'modifiers' => [
+                        'locations' => ['included' => 1, 'step' => 1, 'amount' => 12],
+                        'staff' => ['included' => 4, 'step' => 4, 'amount' => 9],
+                        'bookings' => ['included' => 300, 'step' => 250, 'amount' => 8],
+                    ],
+                ],
                 'points' => [
                     'Professionel hjemmeside',
                     'Kunde-CMS til indhold',
@@ -273,6 +283,16 @@ class SalesController extends Controller
                 'delivery' => $scale?->build_time ?? 'Efter aftale',
                 'price_suffix' => 'vejledende · ekskl. moms',
                 'annual_suffix' => 'ved årlig betaling · vejledende · ekskl. moms',
+                'pricing' => [
+                    'base' => 129,
+                    'prefix' => 'Fra',
+                    'suffix' => 'kr/måned',
+                    'modifiers' => [
+                        'locations' => ['included' => 1, 'step' => 1, 'amount' => 18],
+                        'staff' => ['included' => 6, 'step' => 5, 'amount' => 12],
+                        'bookings' => ['included' => 400, 'step' => 350, 'amount' => 10],
+                    ],
+                ],
                 'points' => [
                     'Booking direkte på hjemmesiden',
                     'Flere sider og stærkere branding',
@@ -289,11 +309,21 @@ class SalesController extends Controller
                 'title' => 'Custom',
                 'badge' => 'Skræddersyet',
                 'headline' => 'Når design, funktioner og oplevelse skal formes mere frit omkring virksomheden og det udtryk du vil stå med.',
-                'price' => 'Vejledende efter behov',
-                'annual_price' => 'Vejledende efter behov',
+                'price' => 'Fra 249 kr/måned',
+                'annual_price' => 'Fra 199 kr/måned',
                 'delivery' => $signature?->build_time ?? 'Efter tilbud',
-                'price_suffix' => 'bekræftes efter gennemgang',
-                'annual_suffix' => 'bekræftes efter gennemgang',
+                'price_suffix' => 'vejledende · bekræftes efter gennemgang · ekskl. moms',
+                'annual_suffix' => 'ved årlig betaling · bekræftes efter gennemgang · ekskl. moms',
+                'pricing' => [
+                    'base' => 249,
+                    'prefix' => 'Fra',
+                    'suffix' => 'kr/måned',
+                    'modifiers' => [
+                        'locations' => ['included' => 1, 'step' => 1, 'amount' => 26],
+                        'staff' => ['included' => 8, 'step' => 5, 'amount' => 18],
+                        'bookings' => ['included' => 500, 'step' => 400, 'amount' => 14],
+                    ],
+                ],
                 'points' => [
                     'Custom design og struktur',
                     'Særlige funktioner efter behov',
@@ -315,6 +345,16 @@ class SalesController extends Controller
                 'delivery' => 'Afhænger af setup',
                 'price_suffix' => 'vejledende · ekskl. moms',
                 'annual_suffix' => 'ved årlig betaling · vejledende · ekskl. moms',
+                'pricing' => [
+                    'base' => 49,
+                    'prefix' => 'Fra',
+                    'suffix' => 'kr/måned',
+                    'modifiers' => [
+                        'locations' => ['included' => 1, 'step' => 1, 'amount' => 10],
+                        'staff' => ['included' => 4, 'step' => 4, 'amount' => 8],
+                        'bookings' => ['included' => 300, 'step' => 250, 'amount' => 9],
+                    ],
+                ],
                 'points' => [
                     'Booking på eksisterende side',
                     'Vagtplan og medarbejdere samlet',
