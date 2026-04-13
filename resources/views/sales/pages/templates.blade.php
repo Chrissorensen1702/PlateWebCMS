@@ -150,7 +150,11 @@
                             x-bind:class="packageCardClassList()"
                         >
                             <div class="package-card__top">
-                                <span class="package-card__badge" x-text="activePackage().badge">{{ $defaultPackage['badge'] ?? '' }}</span>
+                                <span
+                                    class="package-card__badge"
+                                    x-bind:class="{ 'package-card__badge--star': activePackage().key === 'scale' }"
+                                    x-text="activePackage().badge"
+                                >{{ $defaultPackage['badge'] ?? '' }}</span>
                             </div>
 
                             <div class="package-card__heading">
