@@ -86,13 +86,14 @@ const registerPricingGuide = () => {
 
                 case 'intro_booking_tiered': {
                     const monthlyPrice = this.resolveTierPrice(this.bookings, pricing.tiers);
+                    const recurringPrice = this.formatPrice(monthlyPrice, {
+                        prefix: pricing.recurring_prefix ?? '',
+                        suffix: pricing.suffix ?? 'kr./måned',
+                    });
 
                     return {
-                        price: this.formatPrice(monthlyPrice, {
-                            prefix: pricing.prefix ?? '',
-                            suffix: pricing.suffix ?? 'kr./måned',
-                        }),
-                        priceNote: packageMeta.priceSuffix ?? '',
+                        price: pricing.intro_label ?? '0 kr. de første 3 måneder',
+                        priceNote: `derefter ${recurringPrice} · vejledende · ekskl. moms`,
                         detail: usageSummary,
                         billingNote: '0 kr. de første 3 måneder. Derefter reguleres prisen primært af antal bookinger.',
                     };
