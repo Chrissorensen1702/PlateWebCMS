@@ -25,6 +25,22 @@
     backdrop-filter: blur(18px);
 }
 
+.site-theme--minimal .site-theme-header--bg-light {
+    background: rgb(255 255 255 / 0.94);
+    border-bottom-color: rgb(15 23 32 / 0.08);
+}
+
+.site-theme--minimal .site-theme-header--bg-dark {
+    background: rgb(17 24 39 / 0.92);
+    border-bottom-color: rgb(255 255 255 / 0.12);
+}
+
+.site-theme--minimal .site-theme-header--bg-transparent {
+    background: transparent;
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+}
+
 .minimal-header {
     display: flex;
     flex-wrap: wrap;
@@ -100,6 +116,72 @@
 .minimal-nav__link--active {
     background: #fff;
     color: #111827;
+}
+
+.site-theme--minimal .site-theme-header--bg-dark .minimal-brand {
+    color: #f9fafb;
+}
+
+.site-theme--minimal .site-theme-header--bg-dark .minimal-brand__copy small {
+    color: rgb(255 255 255 / 0.62);
+}
+
+.site-theme--minimal .site-theme-header--bg-dark .minimal-brand__mark {
+    background: #f9fafb;
+}
+
+.site-theme--minimal .site-theme-header--bg-dark .minimal-nav__link {
+    color: rgb(255 255 255 / 0.74);
+}
+
+.site-theme--minimal .site-theme-header--bg-dark .minimal-nav__link:hover,
+.site-theme--minimal .site-theme-header--bg-dark .minimal-nav__link--active {
+    background: rgb(255 255 255 / 0.08);
+    color: #ffffff;
+}
+
+.site-theme--minimal .site-theme-header--text-dark .minimal-brand {
+    color: #111827;
+}
+
+.site-theme--minimal .site-theme-header--text-dark .minimal-brand__copy small {
+    color: #66717b;
+}
+
+.site-theme--minimal .site-theme-header--text-dark .minimal-brand__mark {
+    background: #111827;
+}
+
+.site-theme--minimal .site-theme-header--text-dark .minimal-nav__link {
+    color: #52606d;
+}
+
+.site-theme--minimal .site-theme-header--text-dark .minimal-nav__link:hover,
+.site-theme--minimal .site-theme-header--text-dark .minimal-nav__link--active {
+    background: #fff;
+    color: #111827;
+}
+
+.site-theme--minimal .site-theme-header--text-light .minimal-brand {
+    color: #f9fafb;
+}
+
+.site-theme--minimal .site-theme-header--text-light .minimal-brand__copy small {
+    color: rgb(255 255 255 / 0.62);
+}
+
+.site-theme--minimal .site-theme-header--text-light .minimal-brand__mark {
+    background: #f9fafb;
+}
+
+.site-theme--minimal .site-theme-header--text-light .minimal-nav__link {
+    color: rgb(255 255 255 / 0.74);
+}
+
+.site-theme--minimal .site-theme-header--text-light .minimal-nav__link:hover,
+.site-theme--minimal .site-theme-header--text-light .minimal-nav__link--active {
+    background: rgb(255 255 255 / 0.08);
+    color: #ffffff;
 }
 
 .site-theme--minimal .site-theme-main {

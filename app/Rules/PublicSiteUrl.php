@@ -18,6 +18,6 @@ class PublicSiteUrl implements ValidationRule
             return;
         }
 
-        $fail('Indtast et gyldigt link med /sti, #anker, https://, mailto: eller tel:.');
+        $fail('Indtast et gyldigt link med /sti, #anker, www.eksempel.dk, https://, mailto: eller tel:.');
     }
 }

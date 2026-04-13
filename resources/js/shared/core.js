@@ -440,4 +440,6 @@ document.addEventListener('alpine:init', () => {
     }));
 });
 
-Alpine.start();
+export function startAlpine() {
+    Alpine.start();
+}

@@ -1,6 +1,19 @@
 @php
     $data = $area->data ?? [];
     $sectionTone = $data['section_tone'] ?? 'default';
+    $localCtaHref = \App\Support\Http\PublicSiteUrl::sanitize($data['cta_href'] ?? null);
+    $localCtaLabel = trim((string) ($data['cta_label'] ?? ''));
+    $usesLocalCta = $localCtaLabel !== '' && $localCtaHref !== null;
+    $bookingFallbackEnabled = $site->usesBookingInContactSections();
+    $ctaHref = $usesLocalCta
+        ? $localCtaHref
+        : ($bookingFallbackEnabled ? $site->resolvedBookingUrl() : null);
+    $ctaLabel = $usesLocalCta
+        ? $localCtaLabel
+        : ($bookingFallbackEnabled ? $site->resolvedBookingCtaLabel('Book tid') : null);
+    $ctaTarget = $bookingFallbackEnabled && ! $usesLocalCta && $site->bookingShouldOpenInNewTab()
+        ? '_blank'
+        : null;
     $mapEmbedRaw = trim((string) ($data['map_embed_url'] ?? ''));
 
     if ($mapEmbedRaw !== '' && preg_match('/src=[\"\']([^\"\']+)[\"\']/i', $mapEmbedRaw, $matches) === 1) {
@@ -28,6 +41,12 @@
 
                 @if (! empty($data['copy']))
                     <p class="ui-copy">{{ $data['copy'] }}</p>
+                @endif
+
+                @if ($ctaLabel && $ctaHref)
+                    <a href="{{ $ctaHref }}" class="ui-button ui-button--light" @if($ctaTarget) target="{{ $ctaTarget }}" rel="noreferrer" @endif>
+                        {{ $ctaLabel }}
+                    </a>
                 @endif
             </div>
 

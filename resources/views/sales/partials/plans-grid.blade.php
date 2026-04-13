@@ -1,46 +1,38 @@
-<div class="plans-grid">
-    @foreach ($plans as $plan)
-        <article class="ui-card ui-card--hover plan-card">
-            <div class="plan-card__header">
-                <div>
-                    <p class="plan-card__kind">{{ $plan->kind }}</p>
-                    <h3 class="plan-card__name">{{ $plan->name }}</h3>
-                </div>
-
-                @if ($plan->is_custom)
-                    <span class="plan-card__tag plan-card__tag--custom">Flex</span>
-                @else
-                    <span class="plan-card__tag plan-card__tag--template">Template</span>
-                @endif
+<div class="pricing-grid">
+    @foreach ($packages as $package)
+        <article id="pricing-package-{{ $package['key'] }}" class="ui-card ui-card--hover package-card package-card--{{ $package['tone'] }}{{ $package['featured'] ? ' package-card--featured' : '' }}" x-bind:class="packageCardClasses('{{ $package['key'] }}')">
+            <div class="package-card__top">
+                <span class="package-card__badge">{{ $package['badge'] }}</span>
+                <span class="package-card__badge package-card__badge--recommended" x-cloak x-show="isRecommended('{{ $package['key'] }}')" x-transition.opacity.duration.250ms>Anbefalet</span>
             </div>
 
-            <p class="plan-card__headline">{{ $plan->headline }}</p>
-            <p class="plan-card__summary">{{ $plan->summary }}</p>
+            <div class="package-card__heading">
+                <h2 class="package-card__title">{{ $package['title'] }}</h2>
 
-            <div class="plan-card__meta">
-                <div>
-                    <p class="plan-card__meta-label">Fra pris</p>
-                    <p class="plan-card__price">
-                        {{ $plan->price_from ? number_format($plan->price_from, 0, ',', '.') . ' kr' : 'Efter tilbud' }}
-                    </p>
-                </div>
-
-                <div>
-                    <p class="plan-card__meta-label">Levering</p>
-                    <p class="plan-card__delivery">{{ $plan->build_time }}</p>
+                <div class="package-card__price-block">
+                    <p
+                        class="package-card__price"
+                        x-text="annualBilling ? {{ Illuminate\Support\Js::from($package['annual_price']) }} : {{ Illuminate\Support\Js::from($package['price']) }}"
+                    >{{ $package['price'] }}</p>
+                    <p
+                        class="package-card__price-note"
+                        x-text="annualBilling ? {{ Illuminate\Support\Js::from($package['annual_suffix']) }} : {{ Illuminate\Support\Js::from($package['price_suffix']) }}"
+                    >{{ $package['price_suffix'] }}</p>
+                    <p class="package-card__delivery">{{ $package['delivery'] }}</p>
                 </div>
             </div>
 
-            <div class="plan-card__features">
-                <ul class="ui-list">
-                    @foreach ($plan->features ?? [] as $feature)
-                        <li class="ui-list__item">
-                            <span class="ui-list__dot"></span>
-                            <span>{{ $feature }}</span>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
+            <p class="package-card__headline">{{ $package['headline'] }}</p>
+
+            <a href="{{ $package['href'] }}" class="ui-button {{ $package['featured'] ? 'ui-button--light' : 'ui-button--ink' }} package-card__action">
+                {{ $package['label'] }}
+            </a>
+
+            <ul class="package-card__points">
+                @foreach ($package['points'] as $point)
+                    <li class="package-card__point">{{ $point }}</li>
+                @endforeach
+            </ul>
         </article>
     @endforeach
 </div>

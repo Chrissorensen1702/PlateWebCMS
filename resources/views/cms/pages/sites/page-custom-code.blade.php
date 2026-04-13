@@ -14,7 +14,7 @@
                     Åbn designer
                 </a>
 
-                <a href="{{ $page->sourcePage ? ($page->sourcePage->is_home ? route('sites.show', $site) : route('sites.page', [$site, $page->sourcePage->slug])) : route('sites.show', $site) }}" class="ui-button ui-button--ink">
+                <a href="{{ $page->sourcePage ? ($page->sourcePage->is_home ? route('sites.show', $site) : route('sites.page', [$site, $page->sourcePage->slug])) : route('sites.show', $site) }}" class="ui-button ui-button--ink" target="_blank" rel="noreferrer">
                     Se preview
                 </a>
 
@@ -35,12 +35,6 @@
 
     <div class="site-editor-page">
         <div class="ui-shell">
-            @if (session('status'))
-                <div class="ui-status">
-                    {{ session('status') }}
-                </div>
-            @endif
-
             <form id="site-page-custom-code-form" method="POST" action="{{ route('cms.pages.update', [$site, $page]) }}" class="site-page-draft-form">
                 @csrf
                 @method('PATCH')

@@ -5,6 +5,9 @@
 @section('content')
     @php
         $header = $site->headerSettings;
+        $bookingInHeader = $site->usesBookingInHeader();
+        $bookingUrl = $site->resolvedBookingUrl();
+        $bookingTarget = $bookingInHeader && $site->bookingShouldOpenInNewTab() ? '_blank' : null;
         $pageLayoutMode = \App\Support\Sites\SitePageLayoutModes::normalize($page->layout_mode ?? \App\Support\Sites\SitePageLayoutModes::STRUCTURED);
         $usesCustomMain = \App\Support\Sites\SitePageLayoutModes::usesCustomMain($pageLayoutMode) && filled($page->custom_html);
         $usesCustomFull = \App\Support\Sites\SitePageLayoutModes::usesCustomFull($pageLayoutMode) && filled($page->custom_html);
@@ -14,15 +17,30 @@
         $tagline = $showTagline ? ($header?->tagline ?: 'Campaign & conversion mode') : null;
         $logoUrl = $header?->logo_url;
         $logoAlt = $header?->logo_alt ?: ($brandName ?: $site->name);
-        $showHeaderCta = $header ? (bool) $header->show_cta : true;
-        $headerCtaLabel = $header?->cta_label ?: 'Kom i gang';
-        $headerCtaHref = \App\Support\Http\PublicSiteUrl::sanitize($header?->cta_href) ?: '/kontakt';
+        $headerBackgroundStyle = \App\Models\SiteHeaderSetting::normalizeBackgroundStyle($header?->background_style);
+        $headerTextColorStyle = \App\Models\SiteHeaderSetting::normalizeTextColorStyle($header?->text_color_style);
+        $headerShadowStyle = \App\Models\SiteHeaderSetting::normalizeShadowStyle($header?->shadow_style);
+        $headerStickyMode = \App\Models\SiteHeaderSetting::normalizeStickyMode($header?->sticky_mode);
+        $headerClasses = collect([
+            'site-theme-header',
+            $headerBackgroundStyle !== \App\Models\SiteHeaderSetting::BACKGROUND_AUTO ? "site-theme-header--bg-{$headerBackgroundStyle}" : null,
+            $headerTextColorStyle !== \App\Models\SiteHeaderSetting::TEXT_AUTO ? "site-theme-header--text-{$headerTextColorStyle}" : null,
+            $headerShadowStyle !== \App\Models\SiteHeaderSetting::SHADOW_AUTO ? "site-theme-header--shadow-{$headerShadowStyle}" : null,
+            $headerStickyMode !== \App\Models\SiteHeaderSetting::STICKY_AUTO ? "site-theme-header--mode-{$headerStickyMode}" : null,
+        ])->filter()->implode(' ');
+        $showHeaderCta = $bookingInHeader || ($header ? (bool) $header->show_cta : true);
+        $headerCtaLabel = $bookingInHeader
+            ? $site->resolvedBookingCtaLabel($header?->cta_label ?: 'Book tid')
+            : ($header?->cta_label ?: 'Kom i gang');
+        $headerCtaHref = $bookingInHeader
+            ? $bookingUrl
+            : (\App\Support\Http\PublicSiteUrl::sanitize($header?->cta_href) ?: '/kontakt');
     @endphp
 
     @if ($usesCustomFull)
         @include('sites.shared.custom-page', ['page' => $page])
     @else
-        <header class="site-theme-header">
+        <header class="{{ $headerClasses }}">
             <div class="ui-shell spotlight-header">
                 <a href="{{ route('sites.show', $site) }}" class="spotlight-brand">
                     @if ($logoUrl)
@@ -63,7 +81,7 @@
                     @endif
 
                     @if ($showHeaderCta && $headerCtaLabel && $headerCtaHref)
-                        <a href="{{ $headerCtaHref }}" class="ui-button ui-button--accent spotlight-header__cta">
+                        <a href="{{ $headerCtaHref }}" class="ui-button ui-button--accent spotlight-header__cta" @if($bookingTarget) target="{{ $bookingTarget }}" rel="noreferrer" @endif>
                             {{ $headerCtaLabel }}
                         </a>
                     @endif

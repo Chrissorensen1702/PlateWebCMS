@@ -1,1 +1,3 @@
-import '../shared/core';
+import { startAlpine } from '../shared/core';
+
+startAlpine();

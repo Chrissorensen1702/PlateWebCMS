@@ -22,6 +22,12 @@ class PublicSiteUrl
             return $normalized;
         }
 
+        $hostLikeUrl = self::sanitizeHostLikeUrl($normalized);
+
+        if ($hostLikeUrl !== null) {
+            return $hostLikeUrl;
+        }
+
         if (! preg_match('/^([a-z][a-z0-9+\-.]*):/i', $normalized, $matches)) {
             return null;
         }
@@ -34,6 +40,27 @@ class PublicSiteUrl
             'tel' => self::sanitizeTelephone($normalized),
             default => null,
         };
+    }
+
+    private static function sanitizeHostLikeUrl(string $value): ?string
+    {
+        if (preg_match('/\s/u', $value)) {
+            return null;
+        }
+
+        $lowercaseValue = strtolower($value);
+
+        if (str_contains($value, '://') || str_starts_with($lowercaseValue, 'mailto:') || str_starts_with($lowercaseValue, 'tel:')) {
+            return null;
+        }
+
+        if (! str_contains($value, '.')) {
+            return null;
+        }
+
+        $candidate = 'https://'.$value;
+
+        return filter_var($candidate, FILTER_VALIDATE_URL) ? $candidate : null;
     }
 
     private static function sanitizeMailto(string $value): ?string

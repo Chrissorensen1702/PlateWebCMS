@@ -32,9 +32,9 @@
     <div class="ui-field">
         <label for="plan_id" class="ui-field__label">Interesse</label>
         <select id="plan_id" name="plan_id" class="ui-field__control">
-            <option value="">Vaelg en pakke</option>
+            <option value="">Vaelg en loesning</option>
             @foreach ($plans as $plan)
-                <option value="{{ $plan->id }}" @selected(old('plan_id') == $plan->id)>{{ $plan->name }}</option>
+                <option value="{{ $plan->id }}" @selected(old('plan_id', $selectedPlanId ?? null) == $plan->id)>{{ $plan->name }}</option>
             @endforeach
         </select>
         @error('plan_id')
@@ -44,7 +44,7 @@
 
     <div class="ui-field">
         <label for="message" class="ui-field__label">Projektbeskrivelse</label>
-        <textarea id="message" name="message" rows="5" class="ui-field__control ui-field__control--textarea" required>{{ old('message') }}</textarea>
+        <textarea id="message" name="message" rows="5" class="ui-field__control ui-field__control--textarea" required>{{ old('message', $defaultLeadMessage ?? '') }}</textarea>
         @error('message')
             <p class="ui-field__error">{{ $message }}</p>
         @enderror
@@ -52,11 +52,11 @@
 
     <div class="ui-form-actions">
         <p class="contact-form__note">
-            Perfekt til at starte pipeline for templates, custom builds og fremtidig kundeoprettelse direkte fra samme system.
+            Brug formularen til at starte en gratis proeveperiode eller faa et vejledende tilbud bekraeftet, foer noget bliver endeligt.
         </p>
 
         <button type="submit" class="ui-button ui-button--accent">
-            Send forespoergsel
+            Start dialogen
         </button>
     </div>
 </form>

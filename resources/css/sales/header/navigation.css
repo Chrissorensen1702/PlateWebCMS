@@ -5,14 +5,38 @@
         gap: 2rem;
     }
 
+    .marketing-nav__dropdown {
+        position: relative;
+    }
+
     .marketing-nav__link {
         position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
         color: var(--color-muted);
         font-size: 0.875rem;
         font-weight: 500;
         text-decoration: none;
         padding-bottom: 0.5rem;
         transition: color 0.2s ease;
+    }
+
+    .marketing-nav__dropdown-trigger {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        font-family: inherit;
+        padding-inline: 0;
+    }
+
+    .marketing-nav__dropdown-icon {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-right: 1.5px solid currentColor;
+        border-bottom: 1.5px solid currentColor;
+        transform: rotate(45deg) translateY(-0.08rem);
+        transition: transform 0.2s ease;
     }
 
     .marketing-nav__link::after {
@@ -38,6 +62,60 @@
     .marketing-nav__link--active::after {
         opacity: 1;
         transform: scaleX(1);
+    }
+
+    .marketing-nav__dropdown-menu {
+        position: absolute;
+        top: calc(100% + 0.85rem);
+        left: 50%;
+        z-index: 10;
+        min-width: 13rem;
+        display: grid;
+        gap: 0.25rem;
+        padding: 0.65rem;
+        border: 1px solid rgb(var(--color-primary-rgb) / 0.12);
+        border-radius: 1.1rem;
+        background: rgb(var(--color-surface-rgb) / 0.98);
+        box-shadow:
+            0 22px 48px rgb(var(--color-ink-rgb) / 0.14),
+            inset 0 1px 0 rgb(255 255 255 / 0.72);
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, 0.5rem);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .marketing-nav__dropdown:hover .marketing-nav__dropdown-menu,
+    .marketing-nav__dropdown:focus-within .marketing-nav__dropdown-menu {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, 0);
+    }
+
+    .marketing-nav__dropdown:hover .marketing-nav__dropdown-icon,
+    .marketing-nav__dropdown:focus-within .marketing-nav__dropdown-icon {
+        transform: rotate(225deg) translateY(-0.02rem);
+    }
+
+    .marketing-nav__dropdown-link {
+        display: flex;
+        align-items: center;
+        min-height: 2.75rem;
+        padding: 0.7rem 0.9rem;
+        border-radius: 0.9rem;
+        color: var(--color-ink);
+        font-size: 0.92rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .marketing-nav__dropdown-link:hover,
+    .marketing-nav__dropdown-link:focus-visible,
+    .marketing-nav__dropdown-link--active {
+        background: rgb(var(--color-primary-rgb) / 0.08);
+        color: rgb(var(--color-primary-rgb) / 1);
+        outline: none;
     }
 
     @media (min-width: 768px) {

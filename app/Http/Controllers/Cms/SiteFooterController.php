@@ -64,7 +64,7 @@ class SiteFooterController extends Controller
         $redirectTo = LocalRedirect::sanitize($validated['redirect_to'] ?? null);
 
         return redirect()
-            ->to($redirectTo ?? route('cms.sites.global.section', [$site, 'header']))
+            ->to($redirectTo ?? route('cms.sites.global.section', [$site, 'footer']))
             ->with('status', 'Footeren er opdateret.');
     }
 

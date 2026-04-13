@@ -44,7 +44,7 @@
     .cms-nav__left {
         display: flex;
         align-items: center;
-        gap: 0.35rem;
+        gap: 0;
         flex-shrink: 0;
     }
 
@@ -109,6 +109,39 @@
         display: none;
         align-items: center;
         flex-shrink: 0;
+    }
+
+    .cms-nav__plan-chip {
+        display: grid;
+        gap: 0.12rem;
+        min-height: 2.55rem;
+        padding: 0.5rem 0.8rem;
+        border: 1px solid rgb(var(--color-primary-rgb) / 0.09);
+        border-radius: 1rem;
+        background: rgb(var(--color-surface-rgb) / 0.62);
+        color: var(--color-ink);
+        box-shadow: none;
+        line-height: 1.1;
+        white-space: nowrap;
+    }
+
+    .cms-nav__plan-chip--desktop {
+        display: none;
+        margin-left: -2.55rem;
+    }
+
+    .cms-nav__plan-label {
+        color: var(--color-muted);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .cms-nav__plan-value {
+        color: var(--color-ink);
+        font-size: 0.88rem;
+        font-weight: 700;
     }
 
     .cms-nav-dropdown__trigger {
@@ -206,6 +239,10 @@
         padding-top: 0.25rem;
     }
 
+    .cms-nav__mobile-plan {
+        padding-top: 0.35rem;
+    }
+
     .cms-nav__mobile-external-tools {
         display: grid;
         gap: 0.5rem;
@@ -246,6 +283,17 @@
         letter-spacing: 0.08em;
         padding: 0.35rem 1rem 0.2rem;
         text-transform: uppercase;
+    }
+
+    .cms-nav__mobile-plan-value {
+        margin: 0 1rem;
+        border-left: 4px solid rgb(var(--color-primary-rgb) / 0.14);
+        border-radius: 0.85rem;
+        background: rgb(var(--color-surface-rgb) / 0.62);
+        color: var(--color-ink);
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.8rem 1rem;
     }
 
     .cms-nav__mobile-logout {
@@ -365,6 +413,10 @@
         .cms-nav__links,
         .cms-nav__user {
             display: flex;
+        }
+
+        .cms-nav__plan-chip--desktop {
+            display: grid;
         }
 
         .cms-nav__toggle {

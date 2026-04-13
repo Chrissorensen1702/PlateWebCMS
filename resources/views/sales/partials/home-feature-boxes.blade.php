@@ -1,6 +1,11 @@
 <div class="home-feature-grid">
     @foreach ($features as $feature)
-        <article class="ui-card home-feature-card home-feature-card--{{ $loop->iteration }}" data-reveal style="--reveal-delay: {{ 100 + ($loop->index * 90) }}ms;">
+        <article
+            @if (! empty($feature['id'] ?? null)) id="{{ $feature['id'] }}" @endif
+            class="ui-card home-feature-card home-feature-card--{{ $loop->iteration }}"
+            data-reveal
+            style="--reveal-delay: {{ 100 + ($loop->index * 90) }}ms;"
+        >
             <div class="home-feature-card__header">
                 @if (($feature['logo'] ?? null) === 'platebook')
                     <span class="home-feature-card__logo home-feature-card__logo--platebook" aria-hidden="true">

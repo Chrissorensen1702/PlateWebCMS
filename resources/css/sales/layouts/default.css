@@ -1,8 +1,27 @@
 @layer components {
     .marketing-body {
         position: relative;
+        --font-display: "Sora", sans-serif;
         background: var(--color-cream);
         color: var(--color-ink);
+    }
+
+    .marketing-body--home {
+        background:
+            radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.78), transparent 32%),
+            radial-gradient(circle at 16% 10%, rgba(117, 199, 255, 0.18), transparent 32%),
+            radial-gradient(circle at 85% 8%, rgba(163, 214, 255, 0.22), transparent 28%),
+            linear-gradient(180deg, #d8ecff 0%, #edf5fb 46rem, var(--color-cream) 46rem);
+        background-repeat: no-repeat;
+    }
+
+    .marketing-body--mobile-app {
+        background:
+            radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.78), transparent 32%),
+            radial-gradient(circle at 16% 10%, rgba(117, 199, 255, 0.18), transparent 32%),
+            radial-gradient(circle at 85% 8%, rgba(163, 214, 255, 0.22), transparent 28%),
+            linear-gradient(180deg, #d8ecff 0%, #edf5fb 46rem, var(--color-cream) 46rem);
+        background-repeat: no-repeat;
     }
 
     .marketing-body__glow {
@@ -24,12 +43,18 @@
     }
 
     .marketing-header {
-        position: sticky;
-        top: 0;
+        position: relative;
         z-index: 40;
-        border-bottom: 1px solid var(--surface-border);
-        background: rgb(var(--harbor-frost-rgb) / 0.86);
-        backdrop-filter: blur(18px);
+        border-bottom: 0;
+        background: rgb(216 236 255 / 0.94);
+        backdrop-filter: blur(14px);
+        box-shadow: none;
+    }
+
+    .marketing-body--home .marketing-header,
+    .marketing-body--mobile-app .marketing-header {
+        background: transparent;
+        backdrop-filter: none;
     }
 
     .marketing-header__inner {
@@ -49,6 +74,18 @@
         display: flex;
         align-items: center;
         gap: 0.75rem;
+    }
+
+    .marketing-header__login-button {
+        min-height: 3rem;
+        padding-inline: 1.2rem;
+        border-color: rgb(var(--color-primary-rgb) / 0.24);
+        background: rgb(255 255 255 / 0.84);
+        box-shadow:
+            0 14px 30px rgb(var(--color-ink-rgb) / 0.08),
+            inset 0 1px 0 rgb(255 255 255 / 0.8);
+        color: var(--color-ink);
+        font-weight: 700;
     }
 
     .marketing-header__mobile-actions,
@@ -150,6 +187,22 @@
         margin: 0 auto;
         padding-left: clamp(0.5rem, 1vw, 1rem);
         padding-right: clamp(0.5rem, 1vw, 1rem);
+    }
+
+    @media (min-width: 768px) {
+        .marketing-header__inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        }
+
+        .marketing-header__inner > .brand-lockup {
+            justify-self: start;
+        }
+
+        .marketing-header__actions {
+            justify-self: end;
+            justify-content: flex-end;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -312,6 +365,18 @@
             padding-top: 1.1rem;
         }
 
+        .marketing-mobile-nav__group {
+            border-radius: 1rem;
+        }
+
+        .marketing-mobile-nav__group > summary {
+            list-style: none;
+        }
+
+        .marketing-mobile-nav__group > summary::-webkit-details-marker {
+            display: none;
+        }
+
         .marketing-mobile-nav__link {
             display: flex;
             align-items: center;
@@ -331,6 +396,43 @@
         .marketing-mobile-nav__link--active {
             border-color: rgb(var(--color-primary-rgb) / 0.16);
             background: rgb(var(--color-primary-rgb) / 0.08);
+        }
+
+        .marketing-mobile-nav__group-icon {
+            width: 0.65rem;
+            height: 0.65rem;
+            border-right: 1.5px solid currentColor;
+            border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg) translateY(-0.1rem);
+            transition: transform 0.2s ease;
+        }
+
+        .marketing-mobile-nav__group[open] .marketing-mobile-nav__group-icon {
+            transform: rotate(225deg) translateY(-0.02rem);
+        }
+
+        .marketing-mobile-nav__sublinks {
+            display: grid;
+            gap: 0.4rem;
+            padding: 0.55rem 0.4rem 0 1rem;
+        }
+
+        .marketing-mobile-nav__sublink {
+            display: flex;
+            align-items: center;
+            min-height: 2.9rem;
+            padding: 0.65rem 0.9rem;
+            border-radius: 0.9rem;
+            color: var(--color-muted);
+            font-size: 0.96rem;
+            font-weight: 500;
+            text-decoration: none;
+            background: rgb(var(--color-primary-rgb) / 0.04);
+        }
+
+        .marketing-mobile-nav__sublink--active {
+            color: var(--color-ink);
+            background: rgb(var(--color-primary-rgb) / 0.1);
         }
 
         .marketing-mobile-nav__footer {

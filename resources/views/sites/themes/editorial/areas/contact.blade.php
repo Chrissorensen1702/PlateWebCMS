@@ -3,7 +3,19 @@
     $layoutStyle = $data['layout_style'] ?? 'split';
     $sectionTone = $data['section_tone'] ?? 'default';
     $showPhone = ($data['show_phone'] ?? '1') !== '0';
-    $ctaHref = \App\Support\Http\PublicSiteUrl::sanitize($data['cta_href'] ?? null);
+    $localCtaHref = \App\Support\Http\PublicSiteUrl::sanitize($data['cta_href'] ?? null);
+    $localCtaLabel = trim((string) ($data['cta_label'] ?? ''));
+    $usesLocalCta = $localCtaLabel !== '' && $localCtaHref !== null;
+    $bookingFallbackEnabled = $site->usesBookingInContactSections();
+    $ctaHref = $usesLocalCta
+        ? $localCtaHref
+        : ($bookingFallbackEnabled ? $site->resolvedBookingUrl() : null);
+    $ctaLabel = $usesLocalCta
+        ? $localCtaLabel
+        : ($bookingFallbackEnabled ? $site->resolvedBookingCtaLabel('Book tid') : null);
+    $ctaTarget = $bookingFallbackEnabled && ! $usesLocalCta && $site->bookingShouldOpenInNewTab()
+        ? '_blank'
+        : null;
 @endphp
 
 <section id="{{ $area->area_key }}" class="site-section site-section--compact">
@@ -33,9 +45,9 @@
                         <a href="tel:{{ preg_replace('/\\s+/', '', $data['phone']) }}" class="editorial-contact__link">{{ $data['phone'] }}</a>
                     @endif
 
-                    @if (! empty($data['cta_label']) && $ctaHref)
-                        <a href="{{ $ctaHref }}" class="ui-button ui-button--accent editorial-contact__button">
-                            {{ $data['cta_label'] }}
+                    @if ($ctaLabel && $ctaHref)
+                        <a href="{{ $ctaHref }}" class="ui-button ui-button--accent editorial-contact__button" @if($ctaTarget) target="{{ $ctaTarget }}" rel="noreferrer" @endif>
+                            {{ $ctaLabel }}
                         </a>
                     @endif
                 </div>

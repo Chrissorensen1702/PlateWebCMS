@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Site;
+use App\Models\SiteHeaderSetting;
 use App\Rules\PublicSiteUrl;
 use App\Support\Http\LocalRedirect;
 use App\Support\Http\PublicSiteUrl as PublicSiteUrlSanitizer;
@@ -32,6 +33,10 @@ class SiteHeaderController extends Controller
             'cta_label' => ['nullable', 'string', 'max:255'],
             'cta_href' => ['nullable', 'string', 'max:255', new PublicSiteUrl()],
             'show_cta' => ['nullable', 'boolean'],
+            'background_style' => ['nullable', 'string', 'in:'.implode(',', array_keys(SiteHeaderSetting::backgroundOptions()))],
+            'text_color_style' => ['nullable', 'string', 'in:'.implode(',', array_keys(SiteHeaderSetting::textColorOptions()))],
+            'shadow_style' => ['nullable', 'string', 'in:'.implode(',', array_keys(SiteHeaderSetting::shadowOptions()))],
+            'sticky_mode' => ['nullable', 'string', 'in:'.implode(',', array_keys(SiteHeaderSetting::stickyOptions()))],
             'redirect_to' => ['nullable', 'string'],
         ]);
 
@@ -68,6 +73,10 @@ class SiteHeaderController extends Controller
             'cta_label' => $this->nullableText($validated['cta_label'] ?? null),
             'cta_href' => PublicSiteUrlSanitizer::sanitize($validated['cta_href'] ?? null),
             'show_cta' => (bool) ($validated['show_cta'] ?? false),
+            'background_style' => SiteHeaderSetting::normalizeBackgroundStyle($validated['background_style'] ?? null),
+            'text_color_style' => SiteHeaderSetting::normalizeTextColorStyle($validated['text_color_style'] ?? null),
+            'shadow_style' => SiteHeaderSetting::normalizeShadowStyle($validated['shadow_style'] ?? null),
+            'sticky_mode' => SiteHeaderSetting::normalizeStickyMode($validated['sticky_mode'] ?? null),
         ]);
 
         $site->headerSettings()->save($settings);

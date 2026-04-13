@@ -8,6 +8,7 @@ use App\Http\Controllers\Cms\PlanManagementController;
 use App\Http\Controllers\Cms\ProjectManagementController;
 use App\Http\Controllers\Cms\SiteFooterController;
 use App\Http\Controllers\Cms\SiteHeaderController;
+use App\Http\Controllers\Cms\SiteBookingController;
 use App\Http\Controllers\Cms\SiteNewsletterController;
 use App\Http\Controllers\Cms\SitePublicationController;
 use App\Http\Controllers\Cms\SiteController as CmsSiteController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Sales\LeadController;
 use App\Http\Controllers\Sales\SalesController;
 use App\Http\Controllers\Sites\SiteController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Site;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(SalesController::class)->group(function () {
@@ -26,6 +28,7 @@ Route::controller(SalesController::class)->group(function () {
     Route::get('/templates', 'templates')->name('templates');
     Route::get('/custom-build', 'customBuild')->name('custom-build');
     Route::get('/kunde-cms', 'cms')->name('sales.customer-cms');
+    Route::get('/mobilapp', 'mobileApp')->name('sales.mobile-app');
     Route::get('/kontakt', 'contact')->name('contact');
 });
 
@@ -54,8 +57,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/cms/sites/{site}', [CmsSiteController::class, 'show'])->name('cms.sites.show');
     Route::get('/cms/sites/{site}/global-content', [CmsSiteController::class, 'globalContent'])->name('cms.sites.global.show');
     Route::get('/cms/sites/{site}/global-content/{section}', [CmsSiteController::class, 'globalSection'])->name('cms.sites.global.section');
+    Route::get('/cms/sites/{site}/header', fn (Site $site) => redirect()->route('cms.sites.global.section', [$site, 'header']));
+    Route::get('/cms/sites/{site}/footer', fn (Site $site) => redirect()->route('cms.sites.global.section', [$site, 'footer']));
+    Route::get('/cms/sites/{site}/booking', fn (Site $site) => redirect()->route('cms.sites.global.section', [$site, 'booking']));
+    Route::get('/cms/sites/{site}/newsletter', fn (Site $site) => redirect()->route('cms.sites.global.section', [$site, 'newsletter']));
+    Route::get('/cms/sites/{site}/colors', fn (Site $site) => redirect()->route('cms.sites.global.section', [$site, 'colors']));
+    Route::get('/cms/sites/{site}/theme', fn (Site $site) => redirect()->route('cms.sites.global.section', [$site, 'theme']));
     Route::patch('/cms/sites/{site}/header', [SiteHeaderController::class, 'update'])->name('cms.sites.header.update');
     Route::patch('/cms/sites/{site}/footer', [SiteFooterController::class, 'update'])->name('cms.sites.footer.update');
+    Route::patch('/cms/sites/{site}/booking', [SiteBookingController::class, 'update'])->name('cms.sites.booking.update');
     Route::patch('/cms/sites/{site}/newsletter', [SiteNewsletterController::class, 'update'])->name('cms.sites.newsletter.update');
     Route::patch('/cms/sites/{site}/colors', [CmsSiteController::class, 'updateColors'])->name('cms.sites.colors.update');
     Route::patch('/cms/sites/{site}/theme', [CmsSiteController::class, 'updateTheme'])->name('cms.sites.theme.update');

@@ -550,6 +550,171 @@ class SitePreviewTest extends TestCase
         $response->assertDontSee('aria-label="Instagram"', false);
     }
 
+    public function test_booking_settings_can_drive_header_cta_on_public_site(): void
+    {
+        $tenant = Tenant::query()->create([
+            'name' => 'Booking Header Tenant',
+            'slug' => 'booking-header-tenant',
+            'status' => 'active',
+        ]);
+
+        $site = Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'name' => 'Booking Header Site',
+            'slug' => 'booking-header-site',
+            'theme' => 'minimal',
+            'status' => 'ready',
+            'is_online' => true,
+        ]);
+
+        $site->bookingSettings()->create([
+            'is_enabled' => true,
+            'connection_mode' => 'existing',
+            'booking_url' => 'https://booking.example.test/header-site',
+            'cta_label' => 'Book tid nu',
+            'use_on_website' => true,
+            'show_in_header' => true,
+            'open_in_new_tab' => true,
+        ]);
+
+        $homePage = $site->pages()->create([
+            'name' => 'Forside',
+            'slug' => 'home',
+            'title' => 'Booking Header Site Forside',
+            'is_home' => true,
+            'is_published' => true,
+            'sort_order' => 1,
+        ]);
+
+        $hero = $homePage->areas()->create([
+            'key' => 'hero',
+            'type' => 'hero',
+            'sort_order' => 1,
+        ]);
+
+        $hero->syncData([
+            'title' => 'Booking Header Demo',
+            'copy' => 'Global booking-CTA skal kunne drive headeren.',
+        ]);
+
+        $response = $this->get('/sites/booking-header-site');
+
+        $response->assertOk();
+        $response->assertSee('Book tid nu');
+        $response->assertSee('https://booking.example.test/header-site');
+        $response->assertSee('target="_blank"', false);
+    }
+
+    public function test_header_appearance_settings_are_reflected_on_public_site(): void
+    {
+        $tenant = Tenant::query()->create([
+            'name' => 'Header Appearance Tenant',
+            'slug' => 'header-appearance-tenant',
+            'status' => 'active',
+        ]);
+
+        $site = Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'name' => 'Header Appearance Site',
+            'slug' => 'header-appearance-site',
+            'theme' => 'minimal',
+            'status' => 'ready',
+            'is_online' => true,
+        ]);
+
+        $site->headerSettings()->create([
+            'show_brand_name' => true,
+            'show_cta' => true,
+            'cta_label' => 'Kontakt os',
+            'cta_href' => '/contact',
+            'background_style' => 'dark',
+            'text_color_style' => 'light',
+            'shadow_style' => 'strong',
+            'sticky_mode' => 'static',
+        ]);
+
+        $homePage = $site->pages()->create([
+            'name' => 'Forside',
+            'slug' => 'home',
+            'title' => 'Header Appearance Site Forside',
+            'is_home' => true,
+            'is_published' => true,
+            'sort_order' => 1,
+        ]);
+
+        $hero = $homePage->areas()->create([
+            'key' => 'hero',
+            'type' => 'hero',
+            'sort_order' => 1,
+        ]);
+
+        $hero->syncData([
+            'title' => 'Header Appearance Demo',
+            'copy' => 'Den globale header skal kunne tage baggrund, skygge og sticky-valg med ud pa sitet.',
+        ]);
+
+        $response = $this->get('/sites/header-appearance-site');
+
+        $response->assertOk();
+        $response->assertSee('site-theme-header--bg-dark', false);
+        $response->assertSee('site-theme-header--text-light', false);
+        $response->assertSee('site-theme-header--shadow-strong', false);
+        $response->assertSee('site-theme-header--mode-static', false);
+    }
+
+    public function test_base_contact_section_can_fall_back_to_global_booking_cta(): void
+    {
+        $tenant = Tenant::query()->create([
+            'name' => 'Booking Contact Tenant',
+            'slug' => 'booking-contact-tenant',
+            'status' => 'active',
+        ]);
+
+        $site = Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'name' => 'Booking Contact Site',
+            'slug' => 'booking-contact-site',
+            'theme' => 'base',
+            'status' => 'ready',
+            'is_online' => true,
+        ]);
+
+        $site->bookingSettings()->create([
+            'is_enabled' => true,
+            'connection_mode' => 'existing',
+            'booking_url' => 'https://booking.example.test/contact-site',
+            'cta_label' => 'Book din tid',
+            'use_on_website' => true,
+            'show_in_contact_sections' => true,
+        ]);
+
+        $homePage = $site->pages()->create([
+            'name' => 'Forside',
+            'slug' => 'home',
+            'title' => 'Booking Contact Site Forside',
+            'is_home' => true,
+            'is_published' => true,
+            'sort_order' => 1,
+        ]);
+
+        $contact = $homePage->areas()->create([
+            'key' => 'contact',
+            'type' => 'contact',
+            'sort_order' => 1,
+        ]);
+
+        $contact->syncData([
+            'title' => 'Kontakt os',
+            'copy' => 'Den globale bookingknap skal kunne falde tilbage her.',
+        ]);
+
+        $response = $this->get('/sites/booking-contact-site');
+
+        $response->assertOk();
+        $response->assertSee('Book din tid');
+        $response->assertSee('https://booking.example.test/contact-site');
+    }
+
     public function test_footer_can_hide_fallback_contact_fields(): void
     {
         $tenant = Tenant::query()->create([

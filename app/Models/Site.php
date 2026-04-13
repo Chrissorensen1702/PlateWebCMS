@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\Http\PublicSiteUrl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -92,6 +93,11 @@ class Site extends Model
         return $this->hasOne(SiteNewsletterSetting::class);
     }
 
+    public function bookingSettings(): HasOne
+    {
+        return $this->hasOne(SiteBookingSetting::class);
+    }
+
     public function scopeVisibleTo(Builder $query, User $user): void
     {
         if (! $user->isDeveloper()) {
@@ -128,5 +134,46 @@ class Site extends Model
         ]);
 
         $this->unsetRelation('domains');
+    }
+
+    public function resolvedBookingUrl(): ?string
+    {
+        return PublicSiteUrl::sanitize($this->bookingSettings?->booking_url);
+    }
+
+    public function resolvedBookingDashboardUrl(): ?string
+    {
+        return PublicSiteUrl::sanitize($this->bookingSettings?->dashboard_url);
+    }
+
+    public function resolvedBookingCtaLabel(string $fallback = 'Book tid'): string
+    {
+        $label = trim((string) ($this->bookingSettings?->cta_label ?? ''));
+
+        return $label !== '' ? $label : $fallback;
+    }
+
+    public function usesBookingOnWebsite(): bool
+    {
+        $settings = $this->bookingSettings;
+
+        return (bool) ($settings?->is_enabled)
+            && (bool) ($settings?->use_on_website)
+            && $this->resolvedBookingUrl() !== null;
+    }
+
+    public function usesBookingInHeader(): bool
+    {
+        return $this->usesBookingOnWebsite() && (bool) ($this->bookingSettings?->show_in_header);
+    }
+
+    public function usesBookingInContactSections(): bool
+    {
+        return $this->usesBookingOnWebsite() && (bool) ($this->bookingSettings?->show_in_contact_sections);
+    }
+
+    public function bookingShouldOpenInNewTab(): bool
+    {
+        return $this->usesBookingOnWebsite() && (bool) ($this->bookingSettings?->open_in_new_tab);
     }
 }

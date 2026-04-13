@@ -25,6 +25,13 @@
                     <x-application-header-logo class="brand-lockup__wordmark" />
                 </a>
 
+                @if (! empty($navPlanChip))
+                    <div class="cms-nav__plan-chip cms-nav__plan-chip--desktop" aria-label="Nuværende plan">
+                        <span class="cms-nav__plan-label">{{ $navPlanChip['label'] }}</span>
+                        <strong class="cms-nav__plan-value">{{ $navPlanChip['value'] }}</strong>
+                    </div>
+                @endif
+
                 @if ($externalTools !== [])
                     <div class="cms-nav__external-tools" aria-label="Eksterne værktøjer">
                         @foreach ($externalTools as $tool)
@@ -212,6 +219,13 @@
                     <x-responsive-nav-link :href="route('cms.access.index')" :active="request()->routeIs('cms.access.*')">
                         {{ __('Adgange') }}
                     </x-responsive-nav-link>
+                </div>
+            @endif
+
+            @if (! empty($navPlanChip))
+                <div class="cms-nav__mobile-plan">
+                    <p class="cms-nav__mobile-group-title">{{ $navPlanChip['label'] }}</p>
+                    <div class="cms-nav__mobile-plan-value">{{ $navPlanChip['value'] }}</div>
                 </div>
             @endif
 

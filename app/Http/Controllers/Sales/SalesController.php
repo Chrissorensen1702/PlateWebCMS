@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use Illuminate\Support\Collection;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class SalesController extends Controller
@@ -31,6 +32,7 @@ class SalesController extends Controller
                 [
                     'emoji' => '📅',
                     'logo' => 'platebook',
+                    'id' => 'produkt-bookingsystem',
                     'title' => 'Bookingsystem',
                     'points' => [
                         'Integreret booking på din hjemmeside',
@@ -88,22 +90,11 @@ class SalesController extends Controller
 
     public function templates(): View
     {
+        $plans = $this->plans();
+
         return view('sales.pages.templates', [
-            'plans' => $this->plans()->where('is_custom', false)->values(),
-            'notes' => [
-                [
-                    'title' => 'God til hurtige launches',
-                    'copy' => 'Template-pakker fungerer bedst, naar kunden vil hurtigt i luften med et professionelt udtryk og et kontrolleret CMS.',
-                ],
-                [
-                    'title' => 'Let at saelge og gentage',
-                    'copy' => 'Du kan genbruge samme sideopbygning, samme indholdsblokke og samme onboarding, saa leveringen bliver mere effektiv.',
-                ],
-                [
-                    'title' => 'Nemt at opgradere senere',
-                    'copy' => 'En templateside kan senere udvides med flere sider, flere sektioner eller loeftes til et mere custom spor.',
-                ],
-            ],
+            'packages' => $this->packageShowcase($plans),
+            'comparisonRows' => $this->packageComparisonRows(),
         ]);
     }
 
@@ -157,22 +148,46 @@ class SalesController extends Controller
         ]);
     }
 
-    public function contact(): View
+    public function mobileApp(): View
     {
+        return view('sales.pages.mobile-app');
+    }
+
+    public function contact(Request $request): View
+    {
+        $plans = $this->plans();
+        $selectedPlanId = $request->integer('plan_id') ?: null;
+        $selectedPackage = (string) $request->query('package', '');
+        $trialIntent = $request->boolean('trial');
+
+        $defaultLeadMessage = match ($selectedPackage) {
+            'launch' => 'Jeg vil gerne starte 30 dages gratis prøve på en enkel hjemmeside-løsning og høre om den vejledende pris.',
+            'scale' => 'Jeg vil gerne starte 30 dages gratis prøve på hjemmeside + booking og høre om den vejledende pris.',
+            'platebook' => 'Jeg vil gerne starte 30 dages gratis prøve på PlateBook til min eksisterende hjemmeside.',
+            'signature' => 'Jeg vil gerne have et vejledende tilbud og høre, hvordan et skræddersyet setup kan starte op.',
+            default => '',
+        };
+
+        if ($trialIntent && $defaultLeadMessage === '') {
+            $defaultLeadMessage = 'Jeg vil gerne høre mere om 30 dages gratis prøve og få bekræftet den løsning, der passer bedst til min forretning.';
+        }
+
         return view('sales.pages.contact', [
-            'plans' => $this->plans(),
+            'plans' => $plans,
+            'selectedPlanId' => $selectedPlanId,
+            'defaultLeadMessage' => $defaultLeadMessage,
             'contactPoints' => [
                 [
-                    'title' => 'Template eller custom?',
-                    'copy' => 'Du behoever ikke kende den praecise pakke endnu. Beskriv bare projektet, saa finder vi den rigtige retning sammen.',
+                    'title' => 'Start med et vejledende tilbud',
+                    'copy' => 'Du kan tage udgangspunkt i den anbefalede loesning, starte dialogen og faa prisen bekraeftet efter en hurtig gennemgang.',
                 ],
                 [
-                    'title' => 'Klar til lead-pipeline',
-                    'copy' => 'Alle forespoergsler bliver gemt i databasen, saa salgssiden og CMS-projektet allerede arbejder sammen.',
+                    'title' => '30 dages gratis proeve',
+                    'copy' => 'Vi kan bruge formularen som startpunkt for en gratis proeveperiode, saa du kan komme i gang uden at vaere laast fast fra dag et.',
                 ],
                 [
-                    'title' => 'Godt sted at starte dialogen',
-                    'copy' => 'Formularen er oplagt til at samle scope, budgetforventning og hvilke sektioner kunden gerne vil kunne redigere selv.',
+                    'title' => 'Endelig loesning bagefter',
+                    'copy' => 'Naar vi har gennemgaaet behovet, bekraefter vi den endelige retning og pris, saa forventninger og levering passer sammen.',
                 ],
             ],
         ]);
@@ -213,4 +228,203 @@ class SalesController extends Controller
             ],
         ];
     }
+
+    /**
+     * @param  Collection<int, Plan>  $plans
+     * @return array<int, array<string, mixed>>
+     */
+    private function packageShowcase(Collection $plans): array
+    {
+        $templatePlans = $plans->where('is_custom', false)->values();
+        $launch = $templatePlans->get(0);
+        $scale = $templatePlans->get(1);
+        $signature = $plans->firstWhere('is_custom', true);
+
+        return [
+            [
+                'key' => 'launch',
+                'eyebrow' => 'Til dig der vil hurtigt i gang',
+                'title' => 'Starter',
+                'badge' => 'Hurtig start',
+                'headline' => 'Et enkelt og professionelt startpunkt, når du vil hurtigt online med en side, der er nem at arbejde videre med.',
+                'price' => 'Fra 99 kr/måned',
+                'annual_price' => 'Fra 69 kr/måned',
+                'delivery' => $launch?->build_time ?? 'Hurtig levering',
+                'price_suffix' => 'vejledende · ekskl. moms',
+                'annual_suffix' => 'ved årlig betaling · vejledende · ekskl. moms',
+                'points' => [
+                    'Professionel hjemmeside',
+                    'Kunde-CMS til indhold',
+                    'Domæne og DNS opsætning',
+                ],
+                'href' => route('contact', ['plan_id' => $launch?->id, 'package' => 'launch', 'trial' => 1]),
+                'label' => 'Start 30 dages prøve',
+                'tone' => 'launch',
+                'featured' => false,
+            ],
+            [
+                'key' => 'scale',
+                'eyebrow' => 'Til virksomheder i vækst',
+                'title' => 'Scale',
+                'badge' => 'Mest populære',
+                'headline' => 'Når du vil have mere branding, mere indhold og booking tænkt direkte ind i løsningen fra start.',
+                'price' => 'Fra 129 kr/måned',
+                'annual_price' => 'Fra 90 kr/måned',
+                'delivery' => $scale?->build_time ?? 'Efter aftale',
+                'price_suffix' => 'vejledende · ekskl. moms',
+                'annual_suffix' => 'ved årlig betaling · vejledende · ekskl. moms',
+                'points' => [
+                    'Booking direkte på hjemmesiden',
+                    'Flere sider og stærkere branding',
+                    'Leadflow og tydelige CTA’er',
+                ],
+                'href' => route('contact', ['plan_id' => $scale?->id, 'package' => 'scale', 'trial' => 1]),
+                'label' => 'Start 30 dages prøve',
+                'tone' => 'scale',
+                'featured' => true,
+            ],
+            [
+                'key' => 'signature',
+                'eyebrow' => 'Til skræddersyede projekter',
+                'title' => 'Custom',
+                'badge' => 'Skræddersyet',
+                'headline' => 'Når design, funktioner og oplevelse skal formes mere frit omkring virksomheden og det udtryk du vil stå med.',
+                'price' => 'Vejledende efter behov',
+                'annual_price' => 'Vejledende efter behov',
+                'delivery' => $signature?->build_time ?? 'Efter tilbud',
+                'price_suffix' => 'bekræftes efter gennemgang',
+                'annual_suffix' => 'bekræftes efter gennemgang',
+                'points' => [
+                    'Custom design og struktur',
+                    'Særlige funktioner efter behov',
+                    'Tæt sparring gennem forløbet',
+                ],
+                'href' => route('contact', ['plan_id' => $signature?->id, 'package' => 'signature', 'trial' => 1]),
+                'label' => 'Få vejledende tilbud',
+                'tone' => 'signature',
+                'featured' => false,
+            ],
+            [
+                'key' => 'platebook',
+                'eyebrow' => 'Til dig med eksisterende hjemmeside',
+                'title' => 'PlateBook',
+                'badge' => 'Booking only',
+                'headline' => 'Et selvstændigt bookingsystem, hvis du vil beholde din nuværende hjemmeside og tilføje booking uden at bygge alt om.',
+                'price' => 'Fra 49 kr/måned',
+                'annual_price' => 'Fra 34 kr/måned',
+                'delivery' => 'Afhænger af setup',
+                'price_suffix' => 'vejledende · ekskl. moms',
+                'annual_suffix' => 'ved årlig betaling · vejledende · ekskl. moms',
+                'points' => [
+                    'Booking på eksisterende side',
+                    'Vagtplan og medarbejdere samlet',
+                    'Aktivitetslog og overblik',
+                ],
+                'href' => route('contact', ['package' => 'platebook', 'trial' => 1]),
+                'label' => 'Start 30 dages prøve',
+                'tone' => 'platebook',
+                'featured' => false,
+            ],
+        ];
+    }
+
+    /**
+     * @return array<int, array{label: string, values: array<string, bool|string>}>
+     */
+    private function packageComparisonRows(): array
+    {
+        return [
+            [
+                'label' => 'Professionel hjemmeside',
+                'values' => [
+                    'launch' => true,
+                    'scale' => true,
+                    'signature' => true,
+                    'platebook' => false,
+                ],
+            ],
+            [
+                'label' => 'Kunde-CMS til indhold',
+                'values' => [
+                    'launch' => true,
+                    'scale' => true,
+                    'signature' => true,
+                    'platebook' => false,
+                ],
+            ],
+            [
+                'label' => 'Booking integreret på siden',
+                'values' => [
+                    'launch' => false,
+                    'scale' => true,
+                    'signature' => true,
+                    'platebook' => true,
+                ],
+            ],
+            [
+                'label' => 'Farver og branding',
+                'values' => [
+                    'launch' => 'Basis',
+                    'scale' => 'Udvidet',
+                    'signature' => 'Fri',
+                    'platebook' => false,
+                ],
+            ],
+            [
+                'label' => 'Domæne og DNS opsætning',
+                'values' => [
+                    'launch' => true,
+                    'scale' => true,
+                    'signature' => true,
+                    'platebook' => 'Tilvalg',
+                ],
+            ],
+            [
+                'label' => 'Medarbejdere og kompetencer',
+                'values' => [
+                    'launch' => false,
+                    'scale' => true,
+                    'signature' => true,
+                    'platebook' => true,
+                ],
+            ],
+            [
+                'label' => 'Simpel vagtplan',
+                'values' => [
+                    'launch' => false,
+                    'scale' => true,
+                    'signature' => true,
+                    'platebook' => true,
+                ],
+            ],
+            [
+                'label' => 'Aktivitetslog og drifts-overblik',
+                'values' => [
+                    'launch' => false,
+                    'scale' => true,
+                    'signature' => true,
+                    'platebook' => true,
+                ],
+            ],
+            [
+                'label' => 'Statistik og indsigt',
+                'values' => [
+                    'launch' => false,
+                    'scale' => true,
+                    'signature' => true,
+                    'platebook' => true,
+                ],
+            ],
+            [
+                'label' => 'Særlige funktioner efter behov',
+                'values' => [
+                    'launch' => false,
+                    'scale' => 'Tilvalg',
+                    'signature' => true,
+                    'platebook' => false,
+                ],
+            ],
+        ];
+    }
+
 }

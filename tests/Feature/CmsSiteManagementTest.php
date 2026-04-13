@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -48,6 +49,9 @@ class CmsSiteManagementTest extends TestCase
         $response->assertSee('Demo Site');
         $response->assertSee('Globalt website indhold');
         $response->assertSee('Websitekonfiguration');
+        $response->assertSee('Style');
+        $response->assertSee('Integration og synlighed');
+        $response->assertSee('Abonnement');
         $this->assertDatabaseHas('site_page_drafts', [
             'site_id' => $site->id,
             'slug' => 'home',
@@ -596,6 +600,27 @@ class CmsSiteManagementTest extends TestCase
         $response->assertOk();
         $response->assertSee('Website-theme');
         $response->assertSee('Themevalg');
+    }
+
+    public function test_legacy_global_module_urls_redirect_to_global_content_pages(): void
+    {
+        $client = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $tenant = $this->tenantForUser($client, 'legacy-global-tenant', 'Legacy Global Tenant', 'editor');
+
+        $site = Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'name' => 'Legacy Global Module Demo',
+            'slug' => 'legacy-global-module-demo',
+            'theme' => 'base',
+            'status' => 'ready',
+        ]);
+
+        $this->actingAs($client)
+            ->get("/cms/sites/{$site->id}/header")
+            ->assertRedirect("/cms/sites/{$site->id}/global-content/header");
     }
 
     public function test_clients_cannot_view_other_tenants_site_editor(): void
@@ -1763,6 +1788,10 @@ class CmsSiteManagementTest extends TestCase
                 'cta_label' => 'Book behandling',
                 'cta_href' => '/kontakt',
                 'show_cta' => '1',
+                'background_style' => 'dark',
+                'text_color_style' => 'light',
+                'shadow_style' => 'strong',
+                'sticky_mode' => 'sticky',
                 'logo_upload' => UploadedFile::fake()->image('header-logo.png', 600, 240),
                 'redirect_to' => "/cms/sites/{$site->id}/global-content#header",
             ])
@@ -1778,8 +1807,44 @@ class CmsSiteManagementTest extends TestCase
         $this->assertSame('Book behandling', $settings->cta_label);
         $this->assertSame('/kontakt', $settings->cta_href);
         $this->assertTrue($settings->show_cta);
+        $this->assertSame('dark', $settings->background_style);
+        $this->assertSame('light', $settings->text_color_style);
+        $this->assertSame('strong', $settings->shadow_style);
+        $this->assertSame('sticky', $settings->sticky_mode);
         $this->assertNotNull($settings->logo_path);
         Storage::disk('public')->assertExists($settings->logo_path);
+    }
+
+    public function test_editors_can_save_external_header_links_without_scheme(): void
+    {
+        $client = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $tenant = $this->tenantForUser($client, 'header-link-tenant', 'Header Link Tenant', 'editor');
+
+        $site = Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'name' => 'Header Link Demo',
+            'slug' => 'header-link-demo',
+            'theme' => 'minimal',
+            'status' => 'ready',
+        ]);
+
+        $this->actingAs($client)
+            ->patch("/cms/sites/{$site->id}/header", [
+                'cta_label' => 'Gaa til PlateBook',
+                'cta_href' => 'www.platebook.dk',
+                'show_cta' => '1',
+                'redirect_to' => "/cms/sites/{$site->id}/global-content/header",
+            ])
+            ->assertRedirect("/cms/sites/{$site->id}/global-content/header");
+
+        $settings = $site->fresh()->headerSettings;
+
+        $this->assertNotNull($settings);
+        $this->assertSame('https://www.platebook.dk', $settings->cta_href);
+        $this->assertTrue($settings->show_cta);
     }
 
     public function test_editors_can_update_global_footer_content(): void
@@ -1826,9 +1891,9 @@ class CmsSiteManagementTest extends TestCase
                 'show_contact_address' => '1',
                 'contact_cvr' => '12345678',
                 'show_contact_cvr' => '0',
-                'redirect_to' => "/cms/sites/{$site->id}/global-content/header",
+                'redirect_to' => "/cms/sites/{$site->id}/global-content/footer",
             ])
-            ->assertRedirect("/cms/sites/{$site->id}/global-content/header");
+            ->assertRedirect("/cms/sites/{$site->id}/global-content/footer");
 
         $settings = $site->fresh()->footerSettings;
 
@@ -1876,13 +1941,13 @@ class CmsSiteManagementTest extends TestCase
         ])->all();
 
         $this->actingAs($client)
-            ->from("/cms/sites/{$site->id}/global-content/header")
+            ->from("/cms/sites/{$site->id}/global-content/footer")
             ->patch("/cms/sites/{$site->id}/footer", [
                 'navigation_links' => $tooManyLinks,
                 'information_links' => $tooManyLinks,
-                'redirect_to' => "/cms/sites/{$site->id}/global-content/header",
+                'redirect_to' => "/cms/sites/{$site->id}/global-content/footer",
             ])
-            ->assertRedirect("/cms/sites/{$site->id}/global-content/header")
+            ->assertRedirect("/cms/sites/{$site->id}/global-content/footer")
             ->assertSessionHasErrors([
                 'navigation_links',
                 'information_links',
@@ -1917,7 +1982,7 @@ class CmsSiteManagementTest extends TestCase
             ->assertSessionHasErrors(['cta_href'], null, 'updateSiteHeader');
 
         $this->actingAs($client)
-            ->from("/cms/sites/{$site->id}/global-content/header")
+            ->from("/cms/sites/{$site->id}/global-content/footer")
             ->patch("/cms/sites/{$site->id}/footer", [
                 'navigation_links' => [
                     ['label' => 'Ondt link', 'href' => 'javascript:alert(1)'],
@@ -1931,9 +1996,9 @@ class CmsSiteManagementTest extends TestCase
                         'href' => 'javascript:alert(2)',
                     ],
                 ],
-                'redirect_to' => "/cms/sites/{$site->id}/global-content/header",
+                'redirect_to' => "/cms/sites/{$site->id}/global-content/footer",
             ])
-            ->assertRedirect("/cms/sites/{$site->id}/global-content/header")
+            ->assertRedirect("/cms/sites/{$site->id}/global-content/footer")
             ->assertSessionHasErrors([
                 'navigation_links.0.href',
                 'information_links.0.href',
@@ -1980,6 +2045,167 @@ class CmsSiteManagementTest extends TestCase
             'delivery_mode' => 'cms',
             'consent_text' => 'Ja tak, jeg vil gerne modtage nyheder og relevante tilbud på e-mail.',
         ]);
+    }
+
+    public function test_editors_can_link_an_existing_booking_system_with_reference_code(): void
+    {
+        config()->set('services.bookingsystem.base_url', 'http://localhost/bookingsystem/public');
+
+        $client = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $tenant = $this->tenantForUser($client, 'booking-tenant', 'Booking Tenant', 'editor');
+
+        $site = Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'name' => 'Booking Demo',
+            'slug' => 'booking-demo',
+            'theme' => 'base',
+            'status' => 'ready',
+        ]);
+
+        $this->actingAs($client)
+            ->patch("/cms/sites/{$site->id}/booking", [
+                'is_enabled' => '1',
+                'connection_mode' => 'existing',
+                'booking_reference' => 'salon-maane',
+                'submit_action' => 'save',
+                'redirect_to' => "/cms/sites/{$site->id}/global-content/booking",
+            ])
+            ->assertRedirect("/cms/sites/{$site->id}/global-content/booking");
+
+        $this->assertDatabaseHas('site_booking_settings', [
+            'site_id' => $site->id,
+            'is_enabled' => true,
+            'connection_mode' => 'existing',
+            'booking_reference' => 'salon-maane',
+            'dashboard_url' => 'http://localhost/bookingsystem/public/login',
+            'booking_url' => null,
+            'owner_name' => null,
+            'owner_email' => null,
+            'cta_label' => null,
+            'use_on_website' => false,
+            'show_in_header' => false,
+            'show_in_contact_sections' => false,
+            'open_in_new_tab' => false,
+        ]);
+    }
+
+    public function test_editors_can_provision_a_booking_account_from_cms(): void
+    {
+        config()->set('services.bookingsystem.base_url', 'http://localhost/bookingsystem/public');
+        config()->set('services.bookingsystem.integration_token', 'cms-secret');
+        config()->set('services.bookingsystem.provision_endpoint', '/integrations/cms/booking-accounts');
+
+        Http::fake([
+            'http://localhost/bookingsystem/public/integrations/cms/booking-accounts' => Http::response([
+                'tenant_id' => 12,
+                'tenant_slug' => 'north-studio',
+                'owner_user_id' => 41,
+                'owner_email' => 'mia@example.test',
+                'location_id' => 1,
+                'location_slug' => 'hovedafdeling',
+                'dashboard_url' => 'http://localhost/bookingsystem/public/login',
+                'app_url' => 'http://localhost/bookingsystem/public/app',
+                'booking_url' => 'http://localhost/bookingsystem/public/book-tid?tenant=north-studio&location_id=1',
+                'verification_email_sent' => true,
+                'message' => 'Bookingkonto og ejerlogin er oprettet.',
+            ], 201),
+        ]);
+
+        $client = User::factory()->create([
+            'role' => 'client',
+            'name' => 'Mia Jensen',
+            'email' => 'mia@example.test',
+        ]);
+
+        $tenant = $this->tenantForUser($client, 'north-studio', 'North Studio', 'owner');
+        $tenant->update([
+            'company_email' => 'hello@northstudio.test',
+            'phone' => '+45 11 22 33 44',
+        ]);
+
+        $site = Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'name' => 'North Studio',
+            'slug' => 'north-studio',
+            'theme' => 'base',
+            'status' => 'ready',
+        ]);
+
+        $this->actingAs($client)
+            ->patch("/cms/sites/{$site->id}/booking", [
+                'is_enabled' => '1',
+                'connection_mode' => 'create',
+                'submit_action' => 'provision',
+                'redirect_to' => "/cms/sites/{$site->id}/global-content/booking",
+            ])
+            ->assertRedirect("/cms/sites/{$site->id}/global-content/booking")
+            ->assertSessionHas('status', 'Bookingsystemet er aktiveret og koblet til sitet.');
+
+        Http::assertSent(function (\Illuminate\Http\Client\Request $request) use ($client): bool {
+            return $request->url() === 'http://localhost/bookingsystem/public/integrations/cms/booking-accounts'
+                && $request->hasHeader('X-CMS-INTEGRATION-TOKEN', 'cms-secret')
+                && $request['tenant_name'] === 'North Studio'
+                && $request['tenant_slug'] === 'north-studio'
+                && $request['company_email'] === 'hello@northstudio.test'
+                && $request['phone'] === '+45 11 22 33 44'
+                && $request['site_name'] === 'North Studio'
+                && $request['owner_name'] === 'Mia Jensen'
+                && $request['owner_email'] === 'mia@example.test'
+                && $request['owner_password_hash'] === $client->getAuthPassword();
+        });
+
+        $this->assertDatabaseHas('site_booking_settings', [
+            'site_id' => $site->id,
+            'is_enabled' => true,
+            'connection_mode' => 'existing',
+            'booking_reference' => 'north-studio',
+            'booking_url' => 'http://localhost/bookingsystem/public/book-tid?tenant=north-studio&location_id=1',
+            'dashboard_url' => 'http://localhost/bookingsystem/public/login',
+            'owner_name' => 'Mia Jensen',
+            'owner_email' => 'mia@example.test',
+            'cta_label' => null,
+            'use_on_website' => false,
+            'show_in_header' => false,
+            'show_in_contact_sections' => false,
+            'open_in_new_tab' => false,
+        ]);
+
+        $settings = $site->fresh()->bookingSettings;
+
+        $this->assertNotNull($settings);
+        $this->assertNotNull($settings->provisioned_at);
+    }
+
+    public function test_booking_reference_is_required_when_linking_an_existing_booking_system(): void
+    {
+        $client = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $tenant = $this->tenantForUser($client, 'booking-validation-tenant', 'Booking Validation Tenant', 'editor');
+
+        $site = Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'name' => 'Booking Validation Demo',
+            'slug' => 'booking-validation-demo',
+            'theme' => 'base',
+            'status' => 'ready',
+        ]);
+
+        $this->actingAs($client)
+            ->from("/cms/sites/{$site->id}/global-content/booking")
+            ->patch("/cms/sites/{$site->id}/booking", [
+                'is_enabled' => '1',
+                'connection_mode' => 'existing',
+                'booking_reference' => '',
+                'submit_action' => 'save',
+                'redirect_to' => "/cms/sites/{$site->id}/global-content/booking",
+            ])
+            ->assertRedirect("/cms/sites/{$site->id}/global-content/booking")
+            ->assertSessionHasErrors(['booking_reference'], null, 'updateSiteBooking');
     }
 
     public function test_editors_can_upload_svg_logo_for_global_header(): void

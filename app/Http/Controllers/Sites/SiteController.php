@@ -15,7 +15,7 @@ class SiteController extends Controller
      */
     public function show(Request $request, Site $site, ?string $pageSlug = null): View
     {
-        $site->loadMissing(['headerSettings', 'footerSettings', 'colorSettings', 'tenant']);
+        $site->loadMissing(['headerSettings', 'footerSettings', 'colorSettings', 'bookingSettings', 'tenant']);
 
         if (! $site->is_online) {
             $viewer = $request->user();

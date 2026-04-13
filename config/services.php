@@ -58,4 +58,10 @@ return [
         ],
     ],
 
+    'bookingsystem' => [
+        'base_url' => env('BOOKINGSYSTEM_URL'),
+        'integration_token' => env('BOOKINGSYSTEM_CMS_TOKEN'),
+        'provision_endpoint' => env('BOOKINGSYSTEM_PROVISION_ENDPOINT', '/integrations/cms/booking-accounts'),
+    ],
+
 ];

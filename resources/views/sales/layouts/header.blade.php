@@ -1,13 +1,51 @@
+@php
+    $productLinks = [
+        [
+            'label' => 'Websitebuilder',
+            'href' => route('templates'),
+            'active' => request()->routeIs('templates'),
+        ],
+        [
+            'label' => 'Kunde-CMS',
+            'href' => route('sales.customer-cms'),
+            'active' => request()->routeIs('sales.customer-cms'),
+        ],
+        [
+            'label' => 'Bookingsystem',
+            'href' => route('home').'#produkt-bookingsystem',
+            'active' => false,
+        ],
+    ];
+
+    $productsActive = collect($productLinks)->contains(fn (array $link) => $link['active']);
+    $mobileAppHref = route('sales.mobile-app');
+@endphp
+
 <div class="marketing-header__inner">
     <a href="{{ route('home') }}" class="brand-lockup">
         <x-application-header-logo class="brand-lockup__wordmark" />
     </a>
 
     <nav class="marketing-nav">
-        <a href="{{ route('templates') }}" class="marketing-nav__link{{ request()->routeIs('templates') ? ' marketing-nav__link--active' : '' }}">Vores priser</a>
-        <a href="{{ route('sales.customer-cms') }}" class="marketing-nav__link{{ request()->routeIs('sales.customer-cms') ? ' marketing-nav__link--active' : '' }}">Kunde-CMS</a>
-        <a href="{{ route('custom-build') }}" class="marketing-nav__link{{ request()->routeIs('custom-build') ? ' marketing-nav__link--active' : '' }}">Custom build</a>
-        <a href="{{ route('contact') }}" class="marketing-nav__link{{ request()->routeIs('contact') ? ' marketing-nav__link--active' : '' }}">Kontakt</a>
+        <div class="marketing-nav__dropdown">
+            <button type="button" class="marketing-nav__link marketing-nav__dropdown-trigger{{ $productsActive ? ' marketing-nav__link--active' : '' }}">
+                <span>Produkter</span>
+                <span class="marketing-nav__dropdown-icon" aria-hidden="true"></span>
+            </button>
+
+            <div class="marketing-nav__dropdown-menu" aria-label="Produkter">
+                @foreach ($productLinks as $link)
+                    <a href="{{ $link['href'] }}" class="marketing-nav__dropdown-link{{ $link['active'] ? ' marketing-nav__dropdown-link--active' : '' }}">
+                        {{ $link['label'] }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
+        <a href="{{ route('templates') }}" class="marketing-nav__link{{ request()->routeIs('templates') ? ' marketing-nav__link--active' : '' }}">Priser</a>
+        <a href="{{ $mobileAppHref }}" class="marketing-nav__link{{ request()->routeIs('sales.mobile-app') ? ' marketing-nav__link--active' : '' }}">Mobilapp</a>
+        <a href="{{ route('home') }}#hvorfor-vaelge-os" class="marketing-nav__link">Hvorfor vælge os</a>
+        <a href="{{ route('contact') }}" class="marketing-nav__link{{ request()->routeIs('contact') ? ' marketing-nav__link--active' : '' }}">Kontakt os</a>
     </nav>
 
     <div class="marketing-header__actions">
@@ -16,10 +54,7 @@
                 Gå til CMS-modul
             </a>
         @else
-            <a href="{{ route('contact') }}" class="ui-button ui-button--ink">
-                Prøv 30 dage gratis
-            </a>
-            <a href="{{ route('login') }}" class="ui-button ui-button--outline">
+            <a href="{{ route('login') }}" class="ui-button ui-button--outline marketing-header__login-button">
                 Kundelogin
             </a>
         @endauth
@@ -31,7 +66,7 @@
                 CMS-modul
             </a>
         @else
-            <a href="{{ route('login') }}" class="ui-button ui-button--outline marketing-header__mobile-login">
+            <a href="{{ route('login') }}" class="ui-button ui-button--outline marketing-header__login-button marketing-header__mobile-login">
                 Kundelogin
             </a>
         @endauth
@@ -67,20 +102,31 @@
         </div>
 
         <nav class="marketing-mobile-nav__links" aria-label="Mobil navigation">
-            <a href="{{ route('templates') }}" class="marketing-mobile-nav__link{{ request()->routeIs('templates') ? ' marketing-mobile-nav__link--active' : '' }}">Vores priser</a>
-            <a href="{{ route('sales.customer-cms') }}" class="marketing-mobile-nav__link{{ request()->routeIs('sales.customer-cms') ? ' marketing-mobile-nav__link--active' : '' }}">Kunde-CMS</a>
-            <a href="{{ route('custom-build') }}" class="marketing-mobile-nav__link{{ request()->routeIs('custom-build') ? ' marketing-mobile-nav__link--active' : '' }}">Custom build</a>
-            <a href="{{ route('contact') }}" class="marketing-mobile-nav__link{{ request()->routeIs('contact') ? ' marketing-mobile-nav__link--active' : '' }}">Kontakt</a>
+            <details class="marketing-mobile-nav__group">
+                <summary class="marketing-mobile-nav__link{{ $productsActive ? ' marketing-mobile-nav__link--active' : '' }}">
+                    <span>Produkter</span>
+                    <span class="marketing-mobile-nav__group-icon" aria-hidden="true"></span>
+                </summary>
+
+                <div class="marketing-mobile-nav__sublinks">
+                    @foreach ($productLinks as $link)
+                        <a href="{{ $link['href'] }}" class="marketing-mobile-nav__sublink{{ $link['active'] ? ' marketing-mobile-nav__sublink--active' : '' }}" data-mobile-nav-close>
+                            {{ $link['label'] }}
+                        </a>
+                    @endforeach
+                </div>
+            </details>
+
+            <a href="{{ route('templates') }}" class="marketing-mobile-nav__link{{ request()->routeIs('templates') ? ' marketing-mobile-nav__link--active' : '' }}" data-mobile-nav-close>Priser</a>
+            <a href="{{ $mobileAppHref }}" class="marketing-mobile-nav__link{{ request()->routeIs('sales.mobile-app') ? ' marketing-mobile-nav__link--active' : '' }}" data-mobile-nav-close>Mobilapp</a>
+            <a href="{{ route('home') }}#hvorfor-vaelge-os" class="marketing-mobile-nav__link" data-mobile-nav-close>Hvorfor vælge os</a>
+            <a href="{{ route('contact') }}" class="marketing-mobile-nav__link{{ request()->routeIs('contact') ? ' marketing-mobile-nav__link--active' : '' }}" data-mobile-nav-close>Kontakt os</a>
         </nav>
 
         <div class="marketing-mobile-nav__footer">
             @auth
                 <a href="{{ route('dashboard') }}" class="ui-button ui-button--ink marketing-mobile-nav__cta">
                     Gå til CMS-modul
-                </a>
-            @else
-                <a href="{{ route('contact') }}" class="ui-button ui-button--ink marketing-mobile-nav__cta">
-                    Prøv 30 dage gratis
                 </a>
             @endauth
         </div>

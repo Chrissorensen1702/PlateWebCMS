@@ -31,6 +31,22 @@
     backdrop-filter: blur(18px);
 }
 
+.site-theme--spotlight .site-theme-header--bg-light {
+    background: rgb(255 248 232 / 0.94);
+    border-bottom-color: rgb(255 127 80 / 0.18);
+}
+
+.site-theme--spotlight .site-theme-header--bg-dark {
+    background: rgb(45 34 70 / 0.92);
+    border-bottom-color: rgb(255 255 255 / 0.12);
+}
+
+.site-theme--spotlight .site-theme-header--bg-transparent {
+    background: transparent;
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+}
+
 .spotlight-header {
     display: flex;
     flex-wrap: wrap;
@@ -107,6 +123,63 @@
 .spotlight-nav__link--active {
     background: #fff;
     transform: translateY(-1px);
+}
+
+.site-theme--spotlight .site-theme-header--bg-dark .spotlight-brand {
+    color: #fff7f0;
+}
+
+.site-theme--spotlight .site-theme-header--bg-dark .spotlight-brand__copy small {
+    color: rgb(255 221 196 / 0.76);
+}
+
+.site-theme--spotlight .site-theme-header--bg-dark .spotlight-nav__link {
+    background: rgb(255 255 255 / 0.06);
+    color: rgb(255 232 214 / 0.78);
+}
+
+.site-theme--spotlight .site-theme-header--bg-dark .spotlight-nav__link:hover,
+.site-theme--spotlight .site-theme-header--bg-dark .spotlight-nav__link--active {
+    background: rgb(255 255 255 / 0.12);
+    color: #ffffff;
+}
+
+.site-theme--spotlight .site-theme-header--text-dark .spotlight-brand {
+    color: #341f58;
+}
+
+.site-theme--spotlight .site-theme-header--text-dark .spotlight-brand__copy small {
+    color: #7a5d96;
+}
+
+.site-theme--spotlight .site-theme-header--text-dark .spotlight-nav__link {
+    background: rgb(255 255 255 / 0.7);
+    color: #674989;
+}
+
+.site-theme--spotlight .site-theme-header--text-dark .spotlight-nav__link:hover,
+.site-theme--spotlight .site-theme-header--text-dark .spotlight-nav__link--active {
+    background: #fff;
+    color: #341f58;
+}
+
+.site-theme--spotlight .site-theme-header--text-light .spotlight-brand {
+    color: #fff7f0;
+}
+
+.site-theme--spotlight .site-theme-header--text-light .spotlight-brand__copy small {
+    color: rgb(255 221 196 / 0.76);
+}
+
+.site-theme--spotlight .site-theme-header--text-light .spotlight-nav__link {
+    background: rgb(255 255 255 / 0.06);
+    color: rgb(255 232 214 / 0.78);
+}
+
+.site-theme--spotlight .site-theme-header--text-light .spotlight-nav__link:hover,
+.site-theme--spotlight .site-theme-header--text-light .spotlight-nav__link--active {
+    background: rgb(255 255 255 / 0.12);
+    color: #ffffff;
 }
 
 .spotlight-header__cta {

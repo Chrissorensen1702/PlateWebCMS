@@ -12,12 +12,6 @@
 
     <div class="site-editor-page">
         <div class="ui-shell">
-            @if (session('status'))
-                <div class="ui-status">
-                    {{ session('status') }}
-                </div>
-            @endif
-
             @php
                 $updateErrors = $errors->getBag('updatePage');
                 $livePage = $page->sourcePage;

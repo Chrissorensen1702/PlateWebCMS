@@ -16,16 +16,19 @@
             'label' => 'Kunde',
             'title' => $tenant->name,
             'copy' => 'Dette website er knyttet til kunden i tenant-strukturen.',
+            'compact' => $tenant->name,
         ] : null,
         $primaryContact?->name ? [
             'label' => 'Kontaktperson',
             'title' => $primaryContact->name,
             'copy' => $primaryContact->email ?: 'Ingen email tilfoejet endnu.',
+            'compact' => $primaryContact->name,
         ] : null,
         $tenantMeta !== '' ? [
             'label' => 'Virksomhedsinfo',
             'title' => 'Kundeoplysninger',
             'copy' => $tenantMeta,
+            'compact' => $tenantMeta,
         ] : null,
     ])->filter()->values();
     $showBackButton = $showBackButton ?? true;
@@ -34,19 +37,21 @@
     $hasSummaryActions = $showBackButton || (! empty($saveFormId) && $canUpdateSite) || $showPreviewButton || ($showPublishButton && $canUpdateSite);
     $visibilityRedirectTo = $visibilityRedirectTo ?? url()->current();
     $siteRenameModalName = "site-rename-{$site->id}";
+    $summaryVariant = $summaryVariant ?? 'default';
 @endphp
 
-<section class="ui-card site-editor-summary">
-    <div class="site-editor-summary__layout">
-        <div class="site-editor-summary__content">
-            <p class="site-editor-summary__eyebrow">Website overview</p>
-            <div class="site-editor-summary__title-row">
-                <h3 class="site-editor-summary__title">{{ $site->name }}</h3>
+@if ($summaryVariant === 'dashboard')
+    <div class="site-editor-toolbar site-editor-toolbar--compact site-editor-toolbar--site-dashboard">
+        <div class="site-editor-toolbar__content site-editor-toolbar__content--site-dashboard">
+            <p class="site-editor-toolbar__eyebrow">Website</p>
+
+            <div class="site-editor-toolbar__site-row">
+                <h2 class="site-editor-toolbar__title">{{ $site->name }}</h2>
 
                 @if ($canUpdateSite)
                     <button
                         type="button"
-                        class="site-editor-summary__rename-trigger"
+                        class="site-editor-toolbar__rename-trigger"
                         x-data=""
                         x-on:click="$dispatch('open-modal', '{{ $siteRenameModalName }}')"
                     >
@@ -54,103 +59,189 @@
                     </button>
                 @endif
             </div>
-            <p class="site-editor-summary__lede">
-                Hold styr paa website, sider og globale indstillinger for {{ $tenant?->name ?? 'denne kunde' }} fra et samlet overblik.
-            </p>
-
-            @if ($summaryDetails->isNotEmpty())
-                <div class="site-editor-summary__details">
-                    @foreach ($summaryDetails as $detail)
-                        <article class="site-editor-summary__detail">
-                            <span class="site-editor-summary__detail-label">{{ $detail['label'] }}</span>
-                            <strong class="site-editor-summary__detail-title">{{ $detail['title'] }}</strong>
-                            <p class="site-editor-summary__detail-copy">{{ $detail['copy'] }}</p>
-                        </article>
-                    @endforeach
-                </div>
-            @endif
-
-            @if (! $canUpdateSite)
-                <p class="site-editor-summary__copy site-editor-summary__copy--notice">
-                    Du har laeseadgang til dette tenant-site. Preview er aabent, men redigering er laast for dit login.
-                </p>
-            @endif
         </div>
 
-        <aside class="site-editor-summary__stats">
-            @foreach ($summaryStats as $stat)
-                <article class="site-editor-summary__stat{{ ! empty($stat['tone']) ? ' site-editor-summary__stat--' . $stat['tone'] : '' }}">
-                    <div class="site-editor-summary__stat-header">
-                        <span class="site-editor-summary__stat-label">{{ $stat['label'] }}</span>
+        <div class="site-editor-toolbar__actions site-editor-toolbar__actions--site-dashboard">
+            <div class="site-editor-toolbar__status{{ $site->is_online ? ' site-editor-toolbar__status--online' : ' site-editor-toolbar__status--offline' }}">
+                <div class="site-editor-toolbar__status-copy">
+                    <span class="site-editor-toolbar__status-label">Status</span>
+                    <strong class="site-editor-toolbar__status-value">{{ $site->is_online ? 'Online' : 'Offline' }}</strong>
+                </div>
 
-                        @if (($stat['label'] ?? null) === 'Online' && $canUpdateSite)
-                            <form method="POST" action="{{ route('cms.sites.visibility.update', $site) }}" class="site-editor-summary__stat-toggle-form">
+                @if ($canUpdateSite)
+                    <form method="POST" action="{{ route('cms.sites.visibility.update', $site) }}" class="site-editor-toolbar__status-form">
+                        @csrf
+                        <input type="hidden" name="redirect_to" value="{{ $visibilityRedirectTo }}">
+                        <input type="hidden" name="is_online" value="{{ $site->is_online ? 0 : 1 }}">
+                        <button
+                            type="submit"
+                            class="site-editor-summary__toggle{{ $site->is_online ? ' site-editor-summary__toggle--on' : '' }}"
+                            role="switch"
+                            aria-checked="{{ $site->is_online ? 'true' : 'false' }}"
+                            aria-label="{{ $site->is_online ? 'Saet website offline' : 'Saet website online' }}"
+                        >
+                            <span class="site-editor-summary__toggle-track">
+                                <span class="site-editor-summary__toggle-thumb"></span>
+                            </span>
+                        </button>
+                    </form>
+                @endif
+            </div>
+
+            @if ($showBackButton)
+                <a href="{{ $backHref ?? route('cms.sites.index') }}" class="ui-button ui-button--outline">{{ $backLabel ?? 'Tilbage til sider' }}</a>
+            @endif
+
+            @if (! empty($saveFormId) && $canUpdateSite)
+                <button type="submit" form="{{ $saveFormId }}" class="ui-button ui-button--accent">
+                    Gem kladde
+                </button>
+            @endif
+
+            @if ($showPreviewButton)
+                <a href="{{ route('sites.show', $site) }}" class="ui-button ui-button--ink" target="_blank" rel="noreferrer">Se preview</a>
+            @endif
+
+            @if ($showPublishButton && $canUpdateSite)
+                @if (! empty($saveFormId))
+                    <button
+                        type="submit"
+                        form="{{ $saveFormId }}"
+                        name="publish_after_save"
+                        value="1"
+                        class="ui-button ui-button--success"
+                    >
+                        OFFENTLIGGOER
+                    </button>
+                @else
+                    <form method="POST" action="{{ route('cms.sites.publish', $site) }}">
+                        @csrf
+                        <input type="hidden" name="redirect_to" value="{{ $publishRedirectTo ?? url()->current() }}">
+                        <button type="submit" class="ui-button ui-button--success">
+                            OFFENTLIGGOER
+                        </button>
+                    </form>
+                @endif
+            @endif
+        </div>
+    </div>
+@else
+    <section class="ui-card site-editor-summary">
+        <div class="site-editor-summary__layout">
+            <div class="site-editor-summary__content">
+                <p class="site-editor-summary__eyebrow">Website overview</p>
+                <div class="site-editor-summary__title-row">
+                    <h3 class="site-editor-summary__title">{{ $site->name }}</h3>
+
+                    @if ($canUpdateSite)
+                        <button
+                            type="button"
+                            class="site-editor-summary__rename-trigger"
+                            x-data=""
+                            x-on:click="$dispatch('open-modal', '{{ $siteRenameModalName }}')"
+                        >
+                            Aendre navn
+                        </button>
+                    @endif
+                </div>
+                <p class="site-editor-summary__lede">
+                    Hold styr paa website, sider og globale indstillinger for {{ $tenant?->name ?? 'denne kunde' }} fra et samlet overblik.
+                </p>
+
+                @if ($summaryDetails->isNotEmpty())
+                    <div class="site-editor-summary__details">
+                        @foreach ($summaryDetails as $detail)
+                            <article class="site-editor-summary__detail">
+                                <span class="site-editor-summary__detail-label">{{ $detail['label'] }}</span>
+                                <strong class="site-editor-summary__detail-title">{{ $detail['title'] }}</strong>
+                                <p class="site-editor-summary__detail-copy">{{ $detail['copy'] }}</p>
+                            </article>
+                        @endforeach
+                    </div>
+                @endif
+
+                @if (! $canUpdateSite)
+                    <p class="site-editor-summary__copy site-editor-summary__copy--notice">
+                        Du har laeseadgang til dette tenant-site. Preview er aabent, men redigering er laast for dit login.
+                    </p>
+                @endif
+            </div>
+
+            <aside class="site-editor-summary__stats">
+                @foreach ($summaryStats as $stat)
+                    <article class="site-editor-summary__stat{{ ! empty($stat['tone']) ? ' site-editor-summary__stat--' . $stat['tone'] : '' }}">
+                        <div class="site-editor-summary__stat-header">
+                            <span class="site-editor-summary__stat-label">{{ $stat['label'] }}</span>
+
+                            @if (($stat['label'] ?? null) === 'Online' && $canUpdateSite)
+                                <form method="POST" action="{{ route('cms.sites.visibility.update', $site) }}" class="site-editor-summary__stat-toggle-form">
+                                    @csrf
+                                    <input type="hidden" name="redirect_to" value="{{ $visibilityRedirectTo }}">
+                                    <input type="hidden" name="is_online" value="{{ $site->is_online ? 0 : 1 }}">
+                                    <button
+                                        type="submit"
+                                        class="site-editor-summary__toggle{{ $site->is_online ? ' site-editor-summary__toggle--on' : '' }}"
+                                        role="switch"
+                                        aria-checked="{{ $site->is_online ? 'true' : 'false' }}"
+                                        aria-label="{{ $site->is_online ? 'Saet website offline' : 'Saet website online' }}"
+                                    >
+                                        <span class="site-editor-summary__toggle-track">
+                                            <span class="site-editor-summary__toggle-thumb"></span>
+                                        </span>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+
+                        <strong class="site-editor-summary__stat-value">{{ $stat['value'] }}</strong>
+                    </article>
+                @endforeach
+            </aside>
+        </div>
+
+        @if ($hasSummaryActions)
+            <div class="site-editor-summary__footer">
+                <div class="site-editor-summary__actions">
+                    @if ($showBackButton)
+                        <a href="{{ $backHref ?? route('cms.sites.index') }}" class="ui-button ui-button--outline">{{ $backLabel ?? 'Tilbage til sider' }}</a>
+                    @endif
+
+                    @if (! empty($saveFormId) && $canUpdateSite)
+                        <button type="submit" form="{{ $saveFormId }}" class="ui-button ui-button--accent">
+                            Gem kladde
+                        </button>
+                    @endif
+
+                    @if ($showPreviewButton)
+                        <a href="{{ route('sites.show', $site) }}" class="ui-button ui-button--ink" target="_blank" rel="noreferrer">Se preview</a>
+                    @endif
+
+                    @if ($showPublishButton && $canUpdateSite)
+                        @if (! empty($saveFormId))
+                            <button
+                                type="submit"
+                                form="{{ $saveFormId }}"
+                                name="publish_after_save"
+                                value="1"
+                                class="ui-button ui-button--success"
+                            >
+                                OFFENTLIGGOER
+                            </button>
+                        @else
+                            <form method="POST" action="{{ route('cms.sites.publish', $site) }}">
                                 @csrf
-                                <input type="hidden" name="redirect_to" value="{{ $visibilityRedirectTo }}">
-                                <input type="hidden" name="is_online" value="{{ $site->is_online ? 0 : 1 }}">
-                                <button
-                                    type="submit"
-                                    class="site-editor-summary__toggle{{ $site->is_online ? ' site-editor-summary__toggle--on' : '' }}"
-                                    role="switch"
-                                    aria-checked="{{ $site->is_online ? 'true' : 'false' }}"
-                                    aria-label="{{ $site->is_online ? 'Saet website offline' : 'Saet website online' }}"
-                                >
-                                    <span class="site-editor-summary__toggle-track">
-                                        <span class="site-editor-summary__toggle-thumb"></span>
-                                    </span>
+                                <input type="hidden" name="redirect_to" value="{{ $publishRedirectTo ?? url()->current() }}">
+                                <button type="submit" class="ui-button ui-button--success">
+                                    OFFENTLIGGOER
                                 </button>
                             </form>
                         @endif
-                    </div>
-
-                    <strong class="site-editor-summary__stat-value">{{ $stat['value'] }}</strong>
-                </article>
-            @endforeach
-        </aside>
-    </div>
-
-    @if ($hasSummaryActions)
-        <div class="site-editor-summary__footer">
-            <div class="site-editor-summary__actions">
-                @if ($showBackButton)
-                    <a href="{{ $backHref ?? route('cms.sites.index') }}" class="ui-button ui-button--outline">{{ $backLabel ?? 'Tilbage til sider' }}</a>
-                @endif
-
-                @if (! empty($saveFormId) && $canUpdateSite)
-                    <button type="submit" form="{{ $saveFormId }}" class="ui-button ui-button--accent">
-                        Gem kladde
-                    </button>
-                @endif
-
-                @if ($showPreviewButton)
-                    <a href="{{ route('sites.show', $site) }}" class="ui-button ui-button--ink">Se preview</a>
-                @endif
-
-                @if ($showPublishButton && $canUpdateSite)
-                    @if (! empty($saveFormId))
-                        <button
-                            type="submit"
-                            form="{{ $saveFormId }}"
-                            name="publish_after_save"
-                            value="1"
-                            class="ui-button ui-button--success"
-                        >
-                            OFFENTLIGGOER
-                        </button>
-                    @else
-                        <form method="POST" action="{{ route('cms.sites.publish', $site) }}">
-                            @csrf
-                            <input type="hidden" name="redirect_to" value="{{ $publishRedirectTo ?? url()->current() }}">
-                            <button type="submit" class="ui-button ui-button--success">
-                                OFFENTLIGGOER
-                            </button>
-                        </form>
                     @endif
-                @endif
+                </div>
             </div>
-        </div>
-    @endif
-</section>
+        @endif
+    </section>
+@endif
 
 @if ($canUpdateSite)
     <x-modal name="{{ $siteRenameModalName }}" :show="$errors->getBag('updateSite')->isNotEmpty()" maxWidth="lg" focusable>

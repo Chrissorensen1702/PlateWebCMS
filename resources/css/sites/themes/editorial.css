@@ -38,6 +38,35 @@
     backdrop-filter: none;
 }
 
+.site-theme--editorial .site-theme-header--mode-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.site-theme--editorial .site-theme-header--mode-static {
+    position: relative;
+    top: auto;
+}
+
+.site-theme--editorial .site-theme-header--bg-light {
+    background: rgb(255 255 255 / 0.82);
+    border-bottom: 1px solid var(--editorial-border);
+    backdrop-filter: blur(18px);
+}
+
+.site-theme--editorial .site-theme-header--bg-dark {
+    background: rgb(67 53 48 / 0.92);
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(18px);
+}
+
+.site-theme--editorial .site-theme-header--bg-transparent {
+    background: transparent;
+    border-bottom: 0;
+    backdrop-filter: none;
+}
+
 .site-theme--editorial .site-theme-header__inner {
     display: flex;
     align-items: center;
@@ -113,6 +142,60 @@
 .site-theme--editorial .site-theme-nav__link--active {
     background: rgb(255 255 255 / 0.7);
     color: var(--editorial-deep);
+}
+
+.site-theme--editorial .site-theme-header--bg-dark .site-theme-brand {
+    color: #fff8f4;
+}
+
+.site-theme--editorial .site-theme-header--bg-dark .site-theme-brand__copy small {
+    color: rgb(255 240 234 / 0.72);
+}
+
+.site-theme--editorial .site-theme-header--bg-dark .site-theme-nav__link {
+    color: rgb(255 240 234 / 0.74);
+}
+
+.site-theme--editorial .site-theme-header--bg-dark .site-theme-nav__link:hover,
+.site-theme--editorial .site-theme-header--bg-dark .site-theme-nav__link--active {
+    background: rgb(255 255 255 / 0.1);
+    color: #ffffff;
+}
+
+.site-theme--editorial .site-theme-header--text-dark .site-theme-brand {
+    color: var(--editorial-deep);
+}
+
+.site-theme--editorial .site-theme-header--text-dark .site-theme-brand__copy small {
+    color: var(--editorial-taupe);
+}
+
+.site-theme--editorial .site-theme-header--text-dark .site-theme-nav__link {
+    color: var(--editorial-taupe);
+}
+
+.site-theme--editorial .site-theme-header--text-dark .site-theme-nav__link:hover,
+.site-theme--editorial .site-theme-header--text-dark .site-theme-nav__link--active {
+    background: rgb(255 255 255 / 0.7);
+    color: var(--editorial-deep);
+}
+
+.site-theme--editorial .site-theme-header--text-light .site-theme-brand {
+    color: #fff8f4;
+}
+
+.site-theme--editorial .site-theme-header--text-light .site-theme-brand__copy small {
+    color: rgb(255 240 234 / 0.72);
+}
+
+.site-theme--editorial .site-theme-header--text-light .site-theme-nav__link {
+    color: rgb(255 240 234 / 0.74);
+}
+
+.site-theme--editorial .site-theme-header--text-light .site-theme-nav__link:hover,
+.site-theme--editorial .site-theme-header--text-light .site-theme-nav__link--active {
+    background: rgb(255 255 255 / 0.1);
+    color: #ffffff;
 }
 
 .site-theme--editorial .site-theme-booking {

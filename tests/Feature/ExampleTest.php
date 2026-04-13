@@ -27,7 +27,20 @@ class ExampleTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('Saelg templates og custom builds fra samme platform.');
+        $response->assertSeeTextInOrder([
+            'Hjemmeside, booking og betaling',
+            'samlet ét sted',
+        ]);
+        $response->assertSeeText([
+            'Produkter',
+            'Websitebuilder',
+            'Kunde-CMS',
+            'Bookingsystem',
+            'Priser',
+            'Mobilapp',
+            'Hvorfor vælge os',
+            'Kontakt os',
+        ]);
     }
 
     public function test_public_marketing_pages_can_be_rendered(): void
@@ -67,9 +80,22 @@ class ExampleTest extends TestCase
             $plan->syncFeatures($features);
         }
 
-        $this->get('/templates')->assertOk()->assertSee('Template-pakker der er hurtige at saelge og levere.');
+        $this->get('/templates')
+            ->assertOk()
+            ->assertSeeTextInOrder([
+                'Få en pris der matcher',
+                'jeres behov',
+            ]);
         $this->get('/custom-build')->assertOk()->assertSee('Custom builds med et skraeddersyet udtryk og samme CMS-kerne.');
         $this->get('/kunde-cms')->assertOk()->assertSee('Kundelogin og CMS som en stabil del af leverancen.');
-        $this->get('/kontakt')->assertOk()->assertSee('Lad os finde den rigtige pakke til projektet.');
+        $this->get('/mobilapp')
+            ->assertOk()
+            ->assertSeeTextInOrder([
+                'Hele dit',
+                'lige ved hånden.',
+            ])
+            ->assertSeeText('Download via Safari')
+            ->assertSeeText('Download via Chrome');
+        $this->get('/kontakt')->assertOk()->assertSeeText('Start med et vejledende tilbud og 30 dages gratis prøve.');
     }
 }

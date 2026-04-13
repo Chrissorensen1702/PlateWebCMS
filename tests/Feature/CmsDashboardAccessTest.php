@@ -65,6 +65,48 @@ class CmsDashboardAccessTest extends TestCase
         $response->assertSee('Gaa til site-editor');
     }
 
+    public function test_dashboard_can_show_global_plan_chip_for_single_visible_site(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $tenant = Tenant::query()->create([
+            'name' => 'Plan Tenant',
+            'slug' => 'plan-tenant',
+            'status' => 'active',
+        ]);
+
+        $tenant->users()->attach($user->id, ['role' => 'owner']);
+
+        $plan = Plan::query()->create([
+            'name' => 'Template Pro',
+            'slug' => 'template-pro',
+            'kind' => 'template',
+            'headline' => 'Template Pro',
+            'summary' => 'En stærk plan.',
+            'price_from' => 2999,
+            'build_time' => '2 uger',
+            'is_active' => true,
+            'sort_order' => 1,
+        ]);
+
+        Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'plan_id' => $plan->id,
+            'name' => 'Plan Demo',
+            'slug' => 'plan-demo',
+            'theme' => 'base',
+            'status' => 'ready',
+        ]);
+
+        $response = $this->actingAs($user)->get('/cms');
+
+        $response->assertOk();
+        $response->assertSee('Abonnement');
+        $response->assertSee('Template Pro');
+    }
+
     public function test_developers_see_the_dashboard_without_the_client_header(): void
     {
         $developer = User::factory()->create([

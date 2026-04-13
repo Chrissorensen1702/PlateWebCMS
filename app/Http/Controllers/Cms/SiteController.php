@@ -41,6 +41,7 @@ class SiteController extends Controller
             'headerSettings',
             'footerSettings',
             'newsletterSettings',
+            'bookingSettings',
             'colorSettings',
             'draftPages' => fn ($query) => $query
                 ->with(['areas', 'sourcePage'])
@@ -82,6 +83,7 @@ class SiteController extends Controller
             'headerSettings',
             'footerSettings',
             'newsletterSettings',
+            'bookingSettings',
             'colorSettings',
             'draftPages' => fn ($query) => $query->ordered(),
         ]);
@@ -170,12 +172,20 @@ class SiteController extends Controller
     {
         return [
             'header' => [
-                'label' => 'Header og footer',
-                'card_copy' => 'Rediger global header og én fælles footer med samme struktur på tværs af hele sitet.',
-                'eyebrow' => 'Header og footer',
-                'title' => 'Website-header og footer',
-                'copy' => 'Her styrer du den globale top og bund på websitet. Footeren bruger nu én fælles struktur med fire sektioner på tværs af alle themes og sider.',
+                'label' => 'Header',
+                'card_copy' => 'Styr logo, brandnavn, tagline og den globale CTA i website-headeren.',
+                'eyebrow' => 'Header',
+                'title' => 'Website-header',
+                'copy' => 'Her styrer du den globale top af websitet, sa logo, brand og CTA er ens pa tvaers af alle sider.',
                 'partial' => 'header',
+            ],
+            'footer' => [
+                'label' => 'Footer',
+                'card_copy' => 'Styr navigation, kontaktoplysninger og sociale links i den faelles footer.',
+                'eyebrow' => 'Footer',
+                'title' => 'Website-footer',
+                'copy' => 'Her styrer du den faelles footer, sa navigation, kontakt og sociale links er samlet et sted pa tvaers af hele websitet.',
+                'partial' => 'footer',
             ],
             'colors' => [
                 'label' => 'Farvevalg',
@@ -211,10 +221,10 @@ class SiteController extends Controller
             ],
             'booking' => [
                 'label' => 'Bookingsystem',
-                'card_copy' => 'Saml fremtidig booking-integration og knyt websitet til bookingsystemet fra et globalt modul.',
+                'card_copy' => 'Aktiver bookingsystemet, link til en eksisterende konto eller forbered en ny fra ét globalt modul.',
                 'eyebrow' => 'Bookingsystem',
-                'title' => 'Booking og integrationer',
-                'copy' => 'Når websitet skal kobles sammen med bookingsystemet, er det her den globale opsætning bør leve.',
+                'title' => 'Benyt bookingsystem',
+                'copy' => 'Hold bookingsystemet som et separat driftssystem, men styr koblingen og hvordan booking bruges på hjemmesiden herfra.',
                 'partial' => 'booking',
             ],
             'newsletter' => [

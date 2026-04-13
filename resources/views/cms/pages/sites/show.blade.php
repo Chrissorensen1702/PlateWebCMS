@@ -5,19 +5,14 @@
             'canUpdateSite' => $canUpdateSite,
             'publishRedirectTo' => url()->current(),
             'showBackButton' => false,
-            'showPreviewButton' => false,
-            'showPublishButton' => false,
+            'showPreviewButton' => true,
+            'showPublishButton' => true,
+            'summaryVariant' => 'dashboard',
         ])
     </x-slot>
 
     <div class="site-editor-page">
         <div class="ui-shell">
-            @if (session('status'))
-                <div class="ui-status">
-                    {{ session('status') }}
-                </div>
-            @endif
-
             @php
                 $nextSortOrder = ($sitePages->max('sort_order') ?? 0) + 1;
                 $createPageModalName = "create-site-page-{$site->id}";
@@ -27,6 +22,19 @@
                 $selectedPreviewUrl = $selectedLivePage
                     ? ($selectedLivePage->is_home ? route('sites.show', $site) : route('sites.page', [$site, $selectedLivePage->slug]))
                     : null;
+                $publishedPageCount = $sitePages->where('is_published', true)->count();
+                $draftPageCount = $sitePages->count() - $publishedPageCount;
+                $primaryDomain = $site->primary_domain;
+                $styleSectionKeys = collect(['header', 'footer', 'colors', 'theme'])
+                    ->filter(fn ($sectionKey) => isset($globalSections[$sectionKey]))
+                    ->values();
+                $integrationVisibilitySectionKeys = collect(['booking', 'seo', 'newsletter'])
+                    ->filter(fn ($sectionKey) => isset($globalSections[$sectionKey]))
+                    ->values();
+                $dashboardSectionLabels = [
+                    'theme' => 'Theme',
+                    'seo' => 'SEO og meta',
+                ];
             @endphp
 
             @include('cms.pages.sites.partials.create-page-modal', [
@@ -60,45 +68,84 @@
                 </aside>
 
                 <div class="site-dashboard-workspace__main">
-                    <section class="ui-card site-dashboard-panel">
+                    <section class="ui-card site-dashboard-panel site-dashboard-panel--workspace">
                         <div class="site-dashboard-panel__header">
                             <div>
                                 <p class="site-dashboard-panel__eyebrow">Globalt website indhold</p>
                                 <h3 class="site-dashboard-panel__title">Websitekonfiguration</h3>
+                                <p class="site-dashboard-panel__copy">
+                                    Alle globale indstillinger samt opsaetning for websitet samlet et sted.
+                                </p>
                             </div>
 
-                            <div class="site-dashboard-panel__header-actions">
-                                <a href="{{ route('sites.show', $site) }}" class="ui-button ui-button--ink">Se preview</a>
+                            <div class="site-dashboard-panel__header-actions site-dashboard-panel__header-actions--meta">
+                                <div class="site-dashboard-hero__chips">
+                                <span class="site-dashboard-hero__chip">{{ $sitePages->count() }} sider</span>
+                                <span class="site-dashboard-hero__chip">{{ $publishedPageCount }} publicerede</span>
+                                <span class="site-dashboard-hero__chip">{{ $draftPageCount }} kladder</span>
+                                <span class="site-dashboard-hero__chip">Theme: {{ $site->theme }}</span>
 
-                                @if ($canUpdateSite)
-                                    <form method="POST" action="{{ route('cms.sites.publish', $site) }}">
-                                        @csrf
-                                        <input type="hidden" name="redirect_to" value="{{ url()->current() }}">
-                                        <button type="submit" class="ui-button ui-button--success">
-                                            OFFENTLIGGOER
-                                        </button>
-                                    </form>
+                                @if ($primaryDomain)
+                                    <span class="site-dashboard-hero__chip">{{ $primaryDomain }}</span>
                                 @endif
+                                </div>
                             </div>
                         </div>
 
-                        <div class="site-dashboard-global-grid">
-                            @foreach (($globalSections ?? []) as $sectionKey => $definition)
-                                <a href="{{ route('cms.sites.global.section', [$site, $sectionKey]) }}" class="site-dashboard-global-card">
-                                    <span class="site-dashboard-global-card__title">
-                                        <span>{{ $definition['label'] }}</span>
+                        <div class="site-dashboard-global-groups">
+                            <section class="site-dashboard-global-group">
+                                <div class="site-dashboard-global-group__header">
+                                    <p class="site-dashboard-global-group__eyebrow">Style</p>
+                                </div>
 
-                                        @if ($sectionKey === 'booking')
-                                            <span class="site-dashboard-global-card__wordmark" aria-label="PlateBook">
-                                                <span class="site-dashboard-global-card__wordmark-paren site-dashboard-global-card__wordmark-paren--plate">(</span>
-                                                <span class="site-dashboard-global-card__wordmark-plate">Plate</span><span class="site-dashboard-global-card__wordmark-book">Book</span>
-                                                <span class="site-dashboard-global-card__wordmark-paren site-dashboard-global-card__wordmark-paren--book">)</span>
+                                <div class="site-dashboard-global-group__grid">
+                                    @foreach ($styleSectionKeys as $sectionKey)
+                                        @php($definition = $globalSections[$sectionKey])
+
+                                        <a
+                                            href="{{ route('cms.sites.global.section', [$site, $sectionKey]) }}"
+                                            class="site-dashboard-global-card"
+                                        >
+                                            <span class="site-dashboard-global-card__eyebrow">{{ $definition['eyebrow'] }}</span>
+                                            <span class="site-dashboard-global-card__title">
+                                                {{ $dashboardSectionLabels[$sectionKey] ?? $definition['label'] }}
                                             </span>
-                                        @endif
-                                    </span>
-                                    <span class="site-dashboard-global-card__copy">{{ $definition['card_copy'] }}</span>
-                                </a>
-                            @endforeach
+                                            <span class="site-dashboard-global-card__copy">{{ $definition['card_copy'] }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </section>
+
+                            <section class="site-dashboard-global-group">
+                                <div class="site-dashboard-global-group__header">
+                                    <p class="site-dashboard-global-group__eyebrow">Integration og synlighed</p>
+                                </div>
+
+                                <div class="site-dashboard-global-group__grid">
+                                    @foreach ($integrationVisibilitySectionKeys as $sectionKey)
+                                        @php($definition = $globalSections[$sectionKey])
+
+                                        <a
+                                            href="{{ route('cms.sites.global.section', [$site, $sectionKey]) }}"
+                                            class="site-dashboard-global-card"
+                                        >
+                                            <span class="site-dashboard-global-card__eyebrow">{{ $definition['eyebrow'] }}</span>
+                                            <span class="site-dashboard-global-card__title">
+                                                <span>{{ $dashboardSectionLabels[$sectionKey] ?? $definition['label'] }}</span>
+
+                                                @if ($sectionKey === 'booking')
+                                                    <span class="site-dashboard-global-card__wordmark" aria-label="PlateBook">
+                                                        <span class="site-dashboard-global-card__wordmark-paren site-dashboard-global-card__wordmark-paren--plate">(</span>
+                                                        <span class="site-dashboard-global-card__wordmark-plate">Plate</span><span class="site-dashboard-global-card__wordmark-book">Book</span>
+                                                        <span class="site-dashboard-global-card__wordmark-paren site-dashboard-global-card__wordmark-paren--book">)</span>
+                                                    </span>
+                                                @endif
+                                            </span>
+                                            <span class="site-dashboard-global-card__copy">{{ $definition['card_copy'] }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </section>
                         </div>
                     </section>
                 </div>

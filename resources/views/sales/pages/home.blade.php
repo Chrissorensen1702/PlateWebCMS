@@ -1,6 +1,7 @@
 @extends('sales.layouts.default')
 
 @section('title', 'Forside')
+@section('body-class', 'marketing-body marketing-body--home')
 
 @section('header')
     @include('sales.layouts.header')
@@ -9,7 +10,7 @@
 @section('main-content')
     @include('sales.partials.home-hero')
 
-    <section class="marketing-process-section">
+    <section id="hvorfor-vaelge-os" class="marketing-process-section">
         <div class="marketing-process-section__shell">
             <div class="section-heading section-heading--split marketing-process-heading" data-reveal style="--reveal-delay: 40ms;">
                 <div class="section-heading__content">

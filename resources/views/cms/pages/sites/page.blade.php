@@ -23,7 +23,7 @@
                     </a>
                 @endif
 
-                <a href="{{ $headerPreviewUrl }}" class="ui-button ui-button--ink">
+                <a href="{{ $headerPreviewUrl }}" class="ui-button ui-button--ink" target="_blank" rel="noreferrer">
                     Se preview
                 </a>
 
@@ -44,12 +44,6 @@
 
     <div class="site-editor-page">
         <div class="ui-shell">
-            @if (session('status'))
-                <div class="ui-status">
-                    {{ session('status') }}
-                </div>
-            @endif
-
             @php
                 $updateErrors = $errors->getBag('updatePage');
                 $livePage = $page->sourcePage;
