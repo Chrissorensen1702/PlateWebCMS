@@ -846,7 +846,7 @@ class CmsSiteManagementTest extends TestCase
         $this->actingAs($developer)
             ->get("/cms/sites/{$site->id}/pages/{$draftPage->id}/custom-code")
             ->assertOk()
-            ->assertSee('Developer værktøj')
+            ->assertSee('Udvidet CMS')
             ->assertSee('Fri HTML og CSS');
 
         $response = $this->actingAs($developer)->patch("/cms/sites/{$site->id}/pages/{$draftPage->id}", [

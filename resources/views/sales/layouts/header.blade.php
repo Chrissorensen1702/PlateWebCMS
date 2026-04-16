@@ -18,7 +18,17 @@
     ];
 
     $productsActive = collect($productLinks)->contains(fn (array $link) => $link['active']);
+    $designsActive = request()->routeIs('sales.designs');
+    $aboutActive = request()->routeIs('sales.about');
     $mobileAppHref = route('sales.mobile-app');
+    $isRegisterPage = request()->routeIs('register');
+    $isGetStartedPage = request()->routeIs('sales.get-started');
+    $gettingStartedHref = $isGetStartedPage || $isRegisterPage
+        ? route('templates').'#pricing-guide'
+        : route('sales.get-started');
+    $gettingStartedLabel = $isGetStartedPage
+        ? 'Beregn pris'
+        : ($isRegisterPage ? 'Se priser' : 'Kom i gang');
 @endphp
 
 <div class="marketing-header__inner">
@@ -42,9 +52,10 @@
             </div>
         </div>
 
+        <a href="{{ route('sales.designs') }}" class="marketing-nav__link{{ $designsActive ? ' marketing-nav__link--active' : '' }}">Se designs</a>
         <a href="{{ route('templates') }}" class="marketing-nav__link{{ request()->routeIs('templates') ? ' marketing-nav__link--active' : '' }}">Priser</a>
         <a href="{{ $mobileAppHref }}" class="marketing-nav__link{{ request()->routeIs('sales.mobile-app') ? ' marketing-nav__link--active' : '' }}">Mobilapp</a>
-        <a href="{{ route('home') }}#hvorfor-vaelge-os" class="marketing-nav__link">Hvorfor vælge os</a>
+        <a href="{{ route('sales.about') }}" class="marketing-nav__link{{ $aboutActive ? ' marketing-nav__link--active' : '' }}">Om os</a>
         <a href="{{ route('contact') }}" class="marketing-nav__link{{ request()->routeIs('contact') ? ' marketing-nav__link--active' : '' }}">Kontakt os</a>
     </nav>
 
@@ -56,6 +67,10 @@
         @else
             <a href="{{ route('login') }}" class="ui-button ui-button--outline marketing-header__login-button">
                 Kundelogin
+            </a>
+
+            <a href="{{ $gettingStartedHref }}" class="ui-button ui-button--ink marketing-header__cta-button">
+                {{ $gettingStartedLabel }}
             </a>
         @endauth
     </div>
@@ -117,9 +132,10 @@
                 </div>
             </details>
 
+            <a href="{{ route('sales.designs') }}" class="marketing-mobile-nav__link{{ $designsActive ? ' marketing-mobile-nav__link--active' : '' }}" data-mobile-nav-close>Se designs</a>
             <a href="{{ route('templates') }}" class="marketing-mobile-nav__link{{ request()->routeIs('templates') ? ' marketing-mobile-nav__link--active' : '' }}" data-mobile-nav-close>Priser</a>
             <a href="{{ $mobileAppHref }}" class="marketing-mobile-nav__link{{ request()->routeIs('sales.mobile-app') ? ' marketing-mobile-nav__link--active' : '' }}" data-mobile-nav-close>Mobilapp</a>
-            <a href="{{ route('home') }}#hvorfor-vaelge-os" class="marketing-mobile-nav__link" data-mobile-nav-close>Hvorfor vælge os</a>
+            <a href="{{ route('sales.about') }}" class="marketing-mobile-nav__link{{ $aboutActive ? ' marketing-mobile-nav__link--active' : '' }}" data-mobile-nav-close>Om os</a>
             <a href="{{ route('contact') }}" class="marketing-mobile-nav__link{{ request()->routeIs('contact') ? ' marketing-mobile-nav__link--active' : '' }}" data-mobile-nav-close>Kontakt os</a>
         </nav>
 
@@ -127,6 +143,10 @@
             @auth
                 <a href="{{ route('dashboard') }}" class="ui-button ui-button--ink marketing-mobile-nav__cta">
                     Gå til CMS-modul
+                </a>
+            @else
+                <a href="{{ $gettingStartedHref }}" class="ui-button ui-button--ink marketing-mobile-nav__cta" data-mobile-nav-close>
+                    {{ $gettingStartedLabel }}
                 </a>
             @endauth
         </div>

@@ -16,7 +16,7 @@
             @php
                 $nextSortOrder = ($sitePages->max('sort_order') ?? 0) + 1;
                 $createPageModalName = "create-site-page-{$site->id}";
-                $selectedPage = $activePage;
+                $selectedPage = $canManageSiteContent ? $activePage : null;
                 $pageSettingsModalName = $selectedPage ? "site-page-settings-{$selectedPage->id}" : null;
                 $selectedLivePage = $selectedPage?->sourcePage;
                 $selectedPreviewUrl = $selectedLivePage
@@ -37,13 +37,15 @@
                 ];
             @endphp
 
-            @include('cms.pages.sites.partials.create-page-modal', [
-                'site' => $site,
-                'modalName' => $createPageModalName,
-                'sortOrder' => $nextSortOrder,
-                'availablePageTemplates' => $availablePageTemplates,
-                'canUpdateSite' => $canUpdateSite,
-            ])
+            @if ($canManageSiteContent)
+                @include('cms.pages.sites.partials.create-page-modal', [
+                    'site' => $site,
+                    'modalName' => $createPageModalName,
+                    'sortOrder' => $nextSortOrder,
+                    'availablePageTemplates' => $availablePageTemplates,
+                    'canUpdateSite' => $canUpdateSite,
+                ])
+            @endif
 
             @if ($selectedPage && $pageSettingsModalName)
                 @include('cms.pages.sites.partials.page-settings-modal', [
@@ -62,6 +64,8 @@
                         'sitePages' => $sitePages,
                         'activePage' => $selectedPage,
                         'canUpdateSite' => $canUpdateSite,
+                        'canManageSiteContent' => $canManageSiteContent,
+                        'canUseCustomCode' => $canUseCustomCode,
                         'modalName' => $createPageModalName,
                         'pageSettingsModalName' => $pageSettingsModalName,
                     ])

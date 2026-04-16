@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerSolution;
 use App\Models\Lead;
 use App\Models\Plan;
 use App\Models\Site;
@@ -55,10 +56,16 @@ class DashboardController extends Controller
                         : null,
                 ],
                 [
-                    'label' => 'Leads',
+                    'label' => 'Henvendelser',
                     'value' => Lead::query()->count(),
-                    'copy' => 'Forespoergsler sendt fra salgssiden.',
-                    'action' => ['label' => 'Se leads', 'href' => route('cms.leads.index')],
+                    'copy' => 'Beskeder og kontaktforesporgsler sendt fra salgssiden.',
+                    'action' => ['label' => 'Se henvendelser', 'href' => route('cms.leads.index')],
+                ],
+                [
+                    'label' => 'Bestillinger',
+                    'value' => CustomerSolution::query()->count(),
+                    'copy' => 'Gemte loesninger og selvbetjente pakkevalg.',
+                    'action' => ['label' => 'Se bestillinger', 'href' => route('cms.orders.index')],
                 ],
                 [
                     'label' => 'Projekter',

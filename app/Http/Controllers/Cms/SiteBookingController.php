@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cms;
 use App\Http\Controllers\Controller;
 use App\Models\Site;
 use App\Models\User;
+use App\Support\Cms\SiteFeatureGate;
 use App\Support\Http\LocalRedirect;
 use App\Support\Http\PublicSiteUrl as PublicSiteUrlSanitizer;
 use Illuminate\Http\Client\ConnectionException;
@@ -16,9 +17,14 @@ use Illuminate\Validation\ValidationException;
 
 class SiteBookingController extends Controller
 {
+    public function __construct(
+        private readonly SiteFeatureGate $siteFeatureGate,
+    ) {}
+
     public function update(Request $request, Site $site): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_BOOKING, $request->user());
 
         $site->loadMissing('tenant.users', 'bookingSettings');
 

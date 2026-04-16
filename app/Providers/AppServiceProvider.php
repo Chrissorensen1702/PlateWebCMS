@@ -55,7 +55,20 @@ class AppServiceProvider extends ServiceProvider
                 ->get(['id', 'name', 'plan_id', 'tenant_id']);
 
             if ($visibleSites->isEmpty()) {
-                $view->with('navPlanChip', null);
+                if ($user->isDeveloper()) {
+                    $view->with('navPlanChip', null);
+
+                    return;
+                }
+
+                $user->loadMissing('pricingSolution.plan');
+
+                $view->with('navPlanChip', [
+                    'label' => 'Abonnement',
+                    'value' => $this->packageLabel((string) $user->pricingSolution?->package_key)
+                        ?? $user->pricingSolution?->plan?->name
+                        ?? 'Ingen plan endnu',
+                ]);
 
                 return;
             }
@@ -69,8 +82,19 @@ class AppServiceProvider extends ServiceProvider
                 'label' => 'Abonnement',
                 'value' => $uniquePlanLabels->count() === 1
                     ? $uniquePlanLabels->first()
-                    : 'Flere planer',
+                    : $uniquePlanLabels->count().' planer',
             ]);
         });
+    }
+
+    private function packageLabel(string $packageKey): ?string
+    {
+        return match ($packageKey) {
+            'launch' => 'Atelier',
+            'scale' => 'Studio',
+            'signature' => 'Signature',
+            'platebook' => 'Chairflow',
+            default => null,
+        };
     }
 }

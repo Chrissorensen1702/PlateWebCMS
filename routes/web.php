@@ -4,6 +4,7 @@ use App\Http\Controllers\Cms\DashboardController;
 use App\Http\Controllers\Cms\DashboardCustomerSiteController;
 use App\Http\Controllers\Cms\CustomerManagementController;
 use App\Http\Controllers\Cms\LeadManagementController;
+use App\Http\Controllers\Cms\OrderManagementController;
 use App\Http\Controllers\Cms\PlanManagementController;
 use App\Http\Controllers\Cms\ProjectManagementController;
 use App\Http\Controllers\Cms\SiteFooterController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Cms\SitePageController;
 use App\Http\Controllers\Cms\SiteSectionController;
 use App\Http\Controllers\Cms\SiteVisibilityController;
 use App\Http\Controllers\Cms\TenantAccessController;
+use App\Http\Controllers\Sales\CustomerSolutionController;
 use App\Http\Controllers\Sales\LeadController;
 use App\Http\Controllers\Sales\SalesController;
 use App\Http\Controllers\Sites\SiteController;
@@ -25,6 +27,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(SalesController::class)->group(function () {
     Route::get('/', 'home')->name('home');
+    Route::get('/kom-i-gang', 'getStarted')->name('sales.get-started');
+    Route::get('/om-os', 'about')->name('sales.about');
+    Route::get('/designs', 'designs')->name('sales.designs');
     Route::get('/templates', 'templates')->name('templates');
     Route::get('/custom-build', 'customBuild')->name('custom-build');
     Route::get('/kunde-cms', 'cms')->name('sales.customer-cms');
@@ -35,6 +40,7 @@ Route::controller(SalesController::class)->group(function () {
 Route::redirect('/contact', '/kontakt');
 Route::post('/kontakt', [LeadController::class, 'store'])->middleware('throttle:6,1')->name('leads.store');
 Route::post('/contact', [LeadController::class, 'store'])->middleware('throttle:6,1');
+Route::post('/pricing/solution', [CustomerSolutionController::class, 'store'])->name('customer.solution.capture');
 Route::get('/sites/{site:slug}', [SiteController::class, 'show'])->name('sites.show');
 Route::get('/sites/{site:slug}/{pageSlug}', [SiteController::class, 'show'])->name('sites.page');
 
@@ -42,12 +48,14 @@ Route::redirect('/dashboard', '/cms');
 
 Route::middleware('auth')->group(function () {
     Route::get('/cms', DashboardController::class)->name('dashboard');
+    Route::get('/min-loesning', [CustomerSolutionController::class, 'show'])->name('customer.solution.show');
     Route::get('/cms/customers', [CustomerManagementController::class, 'index'])->name('cms.customers.index');
     Route::get('/cms/projects', [ProjectManagementController::class, 'index'])->name('cms.projects.index');
     Route::post('/cms/projects/tenants/{tenant}', [ProjectManagementController::class, 'store'])->name('cms.projects.store');
     Route::patch('/cms/projects/items/{projectFolderItem}', [ProjectManagementController::class, 'update'])->name('cms.projects.update');
     Route::delete('/cms/projects/items/{projectFolderItem}', [ProjectManagementController::class, 'destroy'])->name('cms.projects.destroy');
     Route::get('/cms/leads', [LeadManagementController::class, 'index'])->name('cms.leads.index');
+    Route::get('/cms/orders', [OrderManagementController::class, 'index'])->name('cms.orders.index');
     Route::get('/cms/plans', [PlanManagementController::class, 'index'])->name('cms.plans.index');
     Route::post('/cms/plans', [PlanManagementController::class, 'store'])->name('cms.plans.store');
     Route::patch('/cms/plans/{plan}', [PlanManagementController::class, 'update'])->name('cms.plans.update');

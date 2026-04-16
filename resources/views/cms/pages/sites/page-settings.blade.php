@@ -60,7 +60,7 @@
                                 Aaben designer
                             </a>
 
-                            @if (auth()->user()?->isDeveloper())
+                            @if ($canUseCustomCode)
                                 <a href="{{ route('cms.pages.custom-code.show', [$site, $page]) }}" class="ui-button ui-button--outline">
                                     Custom kode
                                 </a>

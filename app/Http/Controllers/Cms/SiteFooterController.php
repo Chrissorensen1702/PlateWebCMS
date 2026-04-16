@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Site;
+use App\Support\Cms\SiteFeatureGate;
 use App\Support\Http\LocalRedirect;
 use App\Support\Http\PublicSiteUrl as PublicSiteUrlSanitizer;
 use App\Support\Sites\SiteFooterSocialPlatforms;
@@ -13,9 +14,14 @@ use Illuminate\Http\Request;
 
 class SiteFooterController extends Controller
 {
+    public function __construct(
+        private readonly SiteFeatureGate $siteFeatureGate,
+    ) {}
+
     public function update(Request $request, Site $site): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_GLOBAL_BRANDING, $request->user());
 
         $rules = [
             'navigation_links' => ['nullable', 'array', 'max:8'],

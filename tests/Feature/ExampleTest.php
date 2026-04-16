@@ -36,9 +36,10 @@ class ExampleTest extends TestCase
             'Websitebuilder',
             'Kunde-CMS',
             'Bookingsystem',
+            'Se designs',
             'Priser',
             'Mobilapp',
-            'Hvorfor vælge os',
+            'Om os',
             'Kontakt os',
         ]);
     }
@@ -83,9 +84,17 @@ class ExampleTest extends TestCase
         $this->get('/templates')
             ->assertOk()
             ->assertSeeTextInOrder([
-                'Få en pris der matcher',
-                'jeres behov',
+                'En løsning, der passer',
+                'til jeres behov',
             ]);
+        $this->get('/kom-i-gang')
+            ->assertOk()
+            ->assertSeeText('Kortlæg jeres behov')
+            ->assertSeeText('Beregn jeres pris')
+            ->assertSeeText('Tilpas hjemmeside og booking')
+            ->assertSeeText('Gå live');
+        $this->get('/om-os')->assertOk()->assertSeeText('Vi bygger loesninger, der samler hjemmeside, booking og CMS i samme retning.');
+        $this->get('/designs')->assertOk()->assertSeeText('Fa et indtryk af de designretninger, som loesningerne kan tage udgangspunkt i.');
         $this->get('/custom-build')->assertOk()->assertSee('Custom builds med et skraeddersyet udtryk og samme CMS-kerne.');
         $this->get('/kunde-cms')->assertOk()->assertSee('Kundelogin og CMS som en stabil del af leverancen.');
         $this->get('/mobilapp')

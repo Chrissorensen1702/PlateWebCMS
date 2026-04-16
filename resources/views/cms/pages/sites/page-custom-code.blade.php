@@ -96,10 +96,10 @@
                         <section class="ui-card site-editor-main-card site-custom-code-card">
                             <div class="site-editor-main-card__header">
                                 <div>
-                                    <p class="site-editor-main-card__eyebrow">Developer værktøj</p>
+                                    <p class="site-editor-main-card__eyebrow">Udvidet CMS</p>
                                     <h3 class="site-editor-main-card__title">Fri HTML og CSS på {{ $page->name }}</h3>
                                     <p class="site-editor-main-card__copy">
-                                        Brug custom mode når vi skal bygge noget helt særligt for kunden uden at lave et nyt theme først. Det her er kun til developer-flowet.
+                                        Brug custom mode når siden skal have egne HTML- og CSS-tilpasninger oven på det almindelige CMS-flow. Signature-kunder og developers kan styre det herfra.
                                     </p>
                                 </div>
                             </div>

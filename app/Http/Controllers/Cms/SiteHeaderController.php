@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Site;
 use App\Models\SiteHeaderSetting;
 use App\Rules\PublicSiteUrl;
+use App\Support\Cms\SiteFeatureGate;
 use App\Support\Http\LocalRedirect;
 use App\Support\Http\PublicSiteUrl as PublicSiteUrlSanitizer;
 use App\Support\Media\SvgSanitizer;
@@ -18,9 +19,14 @@ use Illuminate\Validation\ValidationException;
 
 class SiteHeaderController extends Controller
 {
+    public function __construct(
+        private readonly SiteFeatureGate $siteFeatureGate,
+    ) {}
+
     public function update(Request $request, Site $site): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_GLOBAL_BRANDING, $request->user());
 
         $validated = $request->validateWithBag('updateSiteHeader', [
             'brand_name' => ['nullable', 'string', 'max:255'],

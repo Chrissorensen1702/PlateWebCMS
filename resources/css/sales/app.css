@@ -9,6 +9,10 @@
 @import './pages/mobile-app.css';
 @import './pages/custom-build.css';
 @import './pages/contact.css';
+@import './pages/about.css';
+@import './pages/designs.css';
+@import './pages/get-started.css';
+@import './pages/register.css';
 
 @tailwind base;
 @tailwind components;

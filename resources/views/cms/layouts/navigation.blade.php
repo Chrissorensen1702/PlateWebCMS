@@ -56,6 +56,12 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @if (! Auth::user()->isDeveloper())
+                        <x-nav-link :href="route('customer.solution.show')" :active="request()->routeIs('customer.solution.*')">
+                            {{ __('Min løsning') }}
+                        </x-nav-link>
+                    @endif
+
                     @if (Auth::user()->isDeveloper())
                         <x-nav-link :href="route('cms.customers.index')" :active="request()->routeIs('cms.customers.*')">
                             {{ __('Kunder') }}
@@ -70,7 +76,13 @@
 
                     @if (Auth::user()->isDeveloper())
                         <x-nav-link :href="route('cms.leads.index')" :active="request()->routeIs('cms.leads.*')">
-                            {{ __('Leads') }}
+                            {{ __('Henvendelser') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if (Auth::user()->isDeveloper())
+                        <x-nav-link :href="route('cms.orders.index')" :active="request()->routeIs('cms.orders.*')">
+                            {{ __('Bestillinger') }}
                         </x-nav-link>
                     @endif
 
@@ -184,6 +196,12 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
+            @if (! Auth::user()->isDeveloper())
+                <x-responsive-nav-link :href="route('customer.solution.show')" :active="request()->routeIs('customer.solution.*')">
+                    {{ __('Min løsning') }}
+                </x-responsive-nav-link>
+            @endif
+
             @if (Auth::user()->isDeveloper())
                 <x-responsive-nav-link :href="route('cms.customers.index')" :active="request()->routeIs('cms.customers.*')">
                     {{ __('Kunder') }}
@@ -198,7 +216,13 @@
 
             @if (Auth::user()->isDeveloper())
                 <x-responsive-nav-link :href="route('cms.leads.index')" :active="request()->routeIs('cms.leads.*')">
-                    {{ __('Leads') }}
+                    {{ __('Henvendelser') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if (Auth::user()->isDeveloper())
+                <x-responsive-nav-link :href="route('cms.orders.index')" :active="request()->routeIs('cms.orders.*')">
+                    {{ __('Bestillinger') }}
                 </x-responsive-nav-link>
             @endif
 

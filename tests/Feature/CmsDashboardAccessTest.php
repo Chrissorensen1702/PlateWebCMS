@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\CustomerSolution;
 use App\Models\Lead;
 use App\Models\Plan;
 use App\Models\Site;
@@ -105,6 +106,105 @@ class CmsDashboardAccessTest extends TestCase
         $response->assertOk();
         $response->assertSee('Abonnement');
         $response->assertSee('Template Pro');
+    }
+
+    public function test_dashboard_can_show_fallback_plan_chip_for_customer_without_sites(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $response = $this->actingAs($user)->get('/cms');
+
+        $response->assertOk();
+        $response->assertSee('Abonnement');
+        $response->assertSee('Ingen plan endnu');
+    }
+
+    public function test_dashboard_can_show_saved_solution_when_customer_has_no_sites_yet(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        CustomerSolution::query()->create([
+            'user_id' => $user->id,
+            'package_key' => 'scale',
+            'locations' => 1,
+            'staff' => 4,
+            'bookings' => 300,
+            'sections' => 3,
+            'source' => 'pricing_calculator',
+        ]);
+
+        $response = $this->actingAs($user)->get('/cms');
+
+        $response->assertOk();
+        $response->assertSee('Abonnement');
+        $response->assertSee('Studio');
+    }
+
+    public function test_dashboard_can_show_plan_count_when_customer_has_multiple_plan_types(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $tenant = Tenant::query()->create([
+            'name' => 'Multi Plan Tenant',
+            'slug' => 'multi-plan-tenant',
+            'status' => 'active',
+        ]);
+
+        $tenant->users()->attach($user->id, ['role' => 'owner']);
+
+        $starterPlan = Plan::query()->create([
+            'name' => 'Starter',
+            'slug' => 'starter',
+            'kind' => 'template',
+            'headline' => 'Starter',
+            'summary' => 'Første plan.',
+            'price_from' => 699,
+            'build_time' => '1 uge',
+            'is_active' => true,
+            'sort_order' => 1,
+        ]);
+
+        $scalePlan = Plan::query()->create([
+            'name' => 'Scale',
+            'slug' => 'scale',
+            'kind' => 'template',
+            'headline' => 'Scale',
+            'summary' => 'Anden plan.',
+            'price_from' => 1299,
+            'build_time' => '2 uger',
+            'is_active' => true,
+            'sort_order' => 2,
+        ]);
+
+        Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'plan_id' => $starterPlan->id,
+            'name' => 'Starter Site',
+            'slug' => 'starter-site',
+            'theme' => 'base',
+            'status' => 'ready',
+        ]);
+
+        Site::query()->create([
+            'tenant_id' => $tenant->id,
+            'plan_id' => $scalePlan->id,
+            'name' => 'Scale Site',
+            'slug' => 'scale-site',
+            'theme' => 'base',
+            'status' => 'ready',
+        ]);
+
+        $response = $this->actingAs($user)->get('/cms');
+
+        $response->assertOk();
+        $response->assertSee('Abonnement');
+        $response->assertSee('2 planer');
     }
 
     public function test_developers_see_the_dashboard_without_the_client_header(): void
@@ -226,7 +326,7 @@ class CmsDashboardAccessTest extends TestCase
         $response->assertSee('1.240');
     }
 
-    public function test_developers_can_view_the_leads_page(): void
+    public function test_developers_can_view_the_inquiries_page(): void
     {
         $developer = User::factory()->create([
             'role' => 'developer',
@@ -257,9 +357,52 @@ class CmsDashboardAccessTest extends TestCase
         $response = $this->actingAs($developer)->get('/cms/leads');
 
         $response->assertOk();
-        $response->assertSee('Leads');
+        $response->assertSee('Henvendelser');
         $response->assertSee('Chris Lead');
         $response->assertSee('Starter');
+    }
+
+    public function test_developers_can_view_the_orders_page(): void
+    {
+        $developer = User::factory()->create([
+            'role' => 'developer',
+        ]);
+
+        $plan = Plan::query()->create([
+            'name' => 'Studio',
+            'slug' => 'scale',
+            'kind' => 'template',
+            'headline' => 'Studio plan',
+            'summary' => 'Website og booking.',
+            'price_from' => 89,
+            'build_time' => 'Efter aftale',
+            'is_active' => true,
+            'sort_order' => 2,
+        ]);
+
+        $customer = User::factory()->create([
+            'role' => 'client',
+            'name' => 'Salon Bestilling',
+            'email' => 'bestilling@example.com',
+        ]);
+
+        CustomerSolution::query()->create([
+            'user_id' => $customer->id,
+            'plan_id' => $plan->id,
+            'package_key' => 'scale',
+            'locations' => 1,
+            'staff' => 4,
+            'bookings' => 300,
+            'sections' => 3,
+            'source' => 'pricing_calculator',
+        ]);
+
+        $response = $this->actingAs($developer)->get('/cms/orders');
+
+        $response->assertOk();
+        $response->assertSee('Bestillinger');
+        $response->assertSee('Studio');
+        $response->assertSee('Salon Bestilling');
     }
 
     public function test_developers_can_open_the_customers_page(): void
@@ -317,6 +460,17 @@ class CmsDashboardAccessTest extends TestCase
 
         $this->actingAs($user)
             ->get('/cms/leads')
+            ->assertForbidden();
+    }
+
+    public function test_clients_cannot_view_the_orders_page(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'client',
+        ]);
+
+        $this->actingAs($user)
+            ->get('/cms/orders')
             ->assertForbidden();
     }
 

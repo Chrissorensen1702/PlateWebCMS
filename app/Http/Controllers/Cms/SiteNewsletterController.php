@@ -4,15 +4,21 @@ namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Site;
+use App\Support\Cms\SiteFeatureGate;
 use App\Support\Http\LocalRedirect;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class SiteNewsletterController extends Controller
 {
+    public function __construct(
+        private readonly SiteFeatureGate $siteFeatureGate,
+    ) {}
+
     public function update(Request $request, Site $site): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_NEWSLETTER, $request->user());
 
         $validated = $request->validateWithBag('updateSiteNewsletter', [
             'is_enabled' => ['nullable', 'boolean'],

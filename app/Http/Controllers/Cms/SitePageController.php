@@ -7,6 +7,7 @@ use App\Models\Site;
 use App\Models\SitePageDraft;
 use App\Models\SitePageDraftArea;
 use App\Rules\PublicSiteUrl;
+use App\Support\Cms\SiteFeatureGate;
 use App\Support\Sites\SiteDraftManager;
 use App\Support\Sites\SitePageAreaBlueprints;
 use App\Support\Sites\SitePageLayoutModes;
@@ -26,9 +27,14 @@ use Illuminate\Validation\Rule;
 
 class SitePageController extends Controller
 {
+    public function __construct(
+        private readonly SiteFeatureGate $siteFeatureGate,
+    ) {}
+
     public function show(Request $request, Site $site, SitePageDraft $page): View
     {
         $this->authorize('view', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CONTENT, $request->user());
         SiteDraftManager::ensureDraftsForSite($site);
         abort_unless($page->site_id === $site->id, 404);
 
@@ -59,6 +65,7 @@ class SitePageController extends Controller
             'site' => $site,
             'page' => $page,
             'canUpdateSite' => $request->user()->can('update', $site),
+            'canUseCustomCode' => $this->siteFeatureGate->canUseCustomCode($site, $request->user()),
             'availablePageTemplates' => SitePageTemplates::availableForTheme($site->theme),
             'availableSectionCategories' => SitePageAreaBlueprints::groupedForTheme($site->theme),
             'previewEditorPageMap' => $previewEditorPageMap,
@@ -68,6 +75,7 @@ class SitePageController extends Controller
     public function settings(Request $request, Site $site, SitePageDraft $page): View
     {
         $this->authorize('view', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CONTENT, $request->user());
         SiteDraftManager::ensureDraftsForSite($site);
         abort_unless($page->site_id === $site->id, 404);
 
@@ -84,13 +92,14 @@ class SitePageController extends Controller
             'site' => $site,
             'page' => $page,
             'canUpdateSite' => $request->user()->can('update', $site),
+            'canUseCustomCode' => $this->siteFeatureGate->canUseCustomCode($site, $request->user()),
         ]);
     }
 
     public function customCode(Request $request, Site $site, SitePageDraft $page): View
     {
         $this->authorize('view', $site);
-        abort_unless($request->user()->isDeveloper(), 403);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CUSTOM_CODE, $request->user());
         SiteDraftManager::ensureDraftsForSite($site);
         abort_unless($page->site_id === $site->id, 404);
 
@@ -113,6 +122,7 @@ class SitePageController extends Controller
     public function preview(Request $request, Site $site, SitePageDraft $page): View
     {
         $this->authorize('view', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CONTENT, $request->user());
         SiteDraftManager::ensureDraftsForSite($site);
         abort_unless($page->site_id === $site->id, 404);
 
@@ -150,6 +160,7 @@ class SitePageController extends Controller
     public function store(Request $request, Site $site): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CONTENT, $request->user());
         SiteDraftManager::ensureDraftsForSite($site);
 
         $validated = $request->validateWithBag('createPage', $this->rules($site, null, true), [
@@ -182,8 +193,10 @@ class SitePageController extends Controller
     public function update(Request $request, Site $site, SitePageDraft $page): RedirectResponse|JsonResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CONTENT, $request->user());
         SiteDraftManager::ensureDraftsForSite($site);
         abort_unless($page->site_id === $site->id, 404);
+        $this->ensureCustomCodeAccessIfRequested($request, $site);
         $publishAfterSave = $request->boolean('publish_after_save');
         $returnTo = in_array($request->string('return_to')->toString(), ['design', 'settings', 'dashboard', 'custom-code'], true)
             ? $request->string('return_to')->toString()
@@ -255,6 +268,7 @@ class SitePageController extends Controller
     public function destroy(Site $site, SitePageDraft $page): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CONTENT, auth()->user());
         SiteDraftManager::ensureDraftsForSite($site);
         abort_unless($page->site_id === $site->id, 404);
 
@@ -298,6 +312,20 @@ class SitePageController extends Controller
         }
 
         return route('cms.pages.show', [$site, $page]);
+    }
+
+    private function ensureCustomCodeAccessIfRequested(Request $request, Site $site): void
+    {
+        $requestTouchesCustomCode = $request->exists('layout_mode')
+            || $request->exists('custom_html')
+            || $request->exists('custom_css')
+            || $request->string('return_to')->toString() === 'custom-code';
+
+        if (! $requestTouchesCustomCode) {
+            return;
+        }
+
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CUSTOM_CODE, $request->user());
     }
 
     /**

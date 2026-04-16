@@ -13,7 +13,61 @@
 
             @foreach ($comparisonRows as $row)
                 <div class="pricing-compare__row">
-                    <div class="pricing-compare__feature">{{ $row['label'] }}</div>
+                    <div class="pricing-compare__feature">
+                        <span class="pricing-compare__feature-copy">{{ $row['label'] }}</span>
+
+                        @if (! empty($row['note']))
+                            @php($noteMeta = is_array($row['note']) ? $row['note'] : ['label' => (string) $row['note']])
+
+                            <span class="pricing-compare__feature-note">
+                                <span
+                                    class="pricing-note pricing-note--align-start"
+                                    x-data="{ open: false }"
+                                    x-on:click.outside="open = false"
+                                    x-on:keydown.escape.window="open = false"
+                                >
+                                    <span class="pricing-note__label">{{ $noteMeta['label'] ?? '' }}</span>
+
+                                    @if (! empty($noteMeta['tiers']))
+                                        <span class="pricing-note__popover-wrap">
+                                            <button
+                                                type="button"
+                                                class="pricing-note__trigger"
+                                                x-bind:aria-expanded="open.toString()"
+                                                aria-label="Vis SMS-priser"
+                                                x-on:click="open = ! open"
+                                            >
+                                                ?
+                                            </button>
+
+                                            <div
+                                                class="pricing-note__popover"
+                                                x-cloak
+                                                x-show="open"
+                                                x-transition.opacity.duration.150ms
+                                                style="display: none;"
+                                            >
+                                                <p class="pricing-note__popover-title">{{ $noteMeta['title'] ?? 'SMS-priser' }}</p>
+
+                                                @if (! empty($noteMeta['caption']))
+                                                    <p class="pricing-note__popover-copy">{{ $noteMeta['caption'] }}</p>
+                                                @endif
+
+                                                <div class="pricing-note__tiers">
+                                                    @foreach ($noteMeta['tiers'] as $tier)
+                                                        <div class="pricing-note__tier">
+                                                            <span class="pricing-note__tier-range">{{ $tier['range'] ?? '' }}</span>
+                                                            <span class="pricing-note__tier-price">{{ $tier['price'] ?? '' }}</span>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </span>
+                                    @endif
+                                </span>
+                            </span>
+                        @endif
+                    </div>
 
                     @foreach ($packages as $package)
                         @php($value = $row['values'][$package['key']] ?? false)

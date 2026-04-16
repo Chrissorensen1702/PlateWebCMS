@@ -152,7 +152,7 @@
                                 <p class="ui-kicker ui-kicker--light">Klar retning</p>
                                 <h3 class="ui-title">Naeste sprint kan handle om sider, sektioner og kundespecifikt indhold.</h3>
                                 <p class="dashboard-hero__copy">
-                                    Grunden er lagt med pakker, leads, sites og et kundelogin-flow. Det giver os et naturligt sted at bygge videre med sektioner uden at miste kontrol over designet.
+                                    Grunden er lagt med pakker, henvendelser, sites og et kundelogin-flow. Det giver os et naturligt sted at bygge videre med sektioner uden at miste kontrol over designet.
                                 </p>
 
                                 <div class="dashboard-hero__actions">

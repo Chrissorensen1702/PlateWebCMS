@@ -88,6 +88,16 @@
         font-weight: 700;
     }
 
+    .marketing-header__cta-button {
+        min-height: 3rem;
+        padding-inline: 1.35rem;
+        box-shadow:
+            0 18px 34px rgb(var(--color-primary-rgb) / 0.2),
+            inset 0 1px 0 rgb(255 255 255 / 0.12);
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
     .marketing-header__mobile-actions,
     .marketing-mobile-nav {
         display: none;

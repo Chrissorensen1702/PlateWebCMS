@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Sales;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
+use App\Support\Sales\PricingPackageCatalog;
+use App\Support\Sites\SiteThemes;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -88,13 +90,125 @@ class SalesController extends Controller
         ]);
     }
 
-    public function templates(): View
+    public function getStarted(): View
+    {
+        return view('sales.pages.get-started', [
+            'flowSteps' => [
+                [
+                    'eyebrow' => 'Trin 01',
+                    'title' => 'Kortlæg jeres behov',
+                    'copy' => 'Kortlæg jeres behov, så I får en løsning og en pris, der passer til jeres forretning.',
+                    'tag' => 'Prisoverslag',
+                ],
+                [
+                    'eyebrow' => 'Trin 02',
+                    'title' => 'Beregn jeres pris',
+                    'copy' => 'Vælg løsning og udfyld den dynamiske prisberegner, så I får et konkret overslag med det samme.',
+                    'tag' => 'Konto og kontakt',
+                    'action' => [
+                        'label' => 'Åbn prisberegner',
+                        'href' => route('templates').'#pricing-guide',
+                    ],
+                ],
+                [
+                    'eyebrow' => 'Trin 03',
+                    'title' => 'Kom i gang med det samme',
+                    'copy' => 'Når beregningen er gennemført, kan I oprette konto og gå direkte videre med den løsning, I har valgt.',
+                    'tag' => 'Opsaetning',
+                ],
+                [
+                    'eyebrow' => 'Trin 04',
+                    'title' => 'Tilpas hjemmeside og booking',
+                    'copy' => 'Tilpas indhold, opsætning og booking, så løsningen matcher jeres arbejdsgange og ønsker.',
+                    'tag' => 'Tilpasning',
+                ],
+                [
+                    'eyebrow' => 'Trin 05',
+                    'title' => 'Vi er klar til at hjælpe',
+                    'copy' => 'Har I brug for sparring, står vi klar, så I kommer godt fra start uden unødige forsinkelser.',
+                    'tag' => 'Klar til start',
+                ],
+                [
+                    'eyebrow' => 'Trin 06',
+                    'title' => 'Gå live',
+                    'copy' => 'Når alt er på plads, kan løsningen sættes live, så I er klar til at tage imod kunder online.',
+                    'tag' => 'Lancering',
+                ],
+            ],
+            'checkpoints' => [
+                'Prisoverslag foer kontooprettelse, saa alle nye spor starter med rigtig kontekst.',
+                'Kontoen aabnes foerst, naar beregningen er gennemfoert og klar til at blive gemt.',
+                'Flowet er bygget til at foere brugeren videre uden at hoppe frem og tilbage mellem sider.',
+            ],
+        ]);
+    }
+
+    public function templates(Request $request, PricingPackageCatalog $pricingPackageCatalog): View
     {
         $plans = $this->plans();
+        $packages = $pricingPackageCatalog->packages($plans);
 
         return view('sales.pages.templates', [
-            'packages' => $this->packageShowcase($plans),
-            'comparisonRows' => $this->packageComparisonRows(),
+            'packages' => $packages,
+            'comparisonRows' => $pricingPackageCatalog->comparisonRows(),
+            'initialSelection' => $pricingPackageCatalog->normalizeSelection(
+                $request->query(),
+                collect($packages)->mapWithKeys(fn (array $package) => [$package['key'] => $package])->all(),
+            ),
+        ]);
+    }
+
+    public function about(): View
+    {
+        return view('sales.pages.about', [
+            'pillars' => [
+                [
+                    'title' => 'Vi bygger sammenhaengende loesninger',
+                    'copy' => 'Maalet er ikke bare en flot side, men et setup hvor hjemmeside, booking og CMS spiller sammen og giver mening i den daglige drift.',
+                ],
+                [
+                    'title' => 'Vi saelger det, du faktisk kan bruge',
+                    'copy' => 'Pakkerne er bygget, sa du kan starte enkelt og bygge videre, naar virksomheden vokser. Det goer baade pris og forventninger lettere at afkode.',
+                ],
+                [
+                    'title' => 'Du bevarer kontrol efter levering',
+                    'copy' => 'Kunden skal kunne opdatere indhold, arbejde med sektioner og komme tilbage i loesningen uden at vaere afhængig af et nyt projekt hver gang.',
+                ],
+            ],
+            'highlights' => [
+                'Samlet hjemmeside, booking og CMS i samme retning',
+                'Pakker der er lettere at forstaa og lettere at saelge',
+                'Et kontrolleret CMS, hvor design og kvalitet stadig holdes intakt',
+            ],
+            'steps' => $this->steps(),
+        ]);
+    }
+
+    public function designs(): View
+    {
+        $themes = collect(SiteThemes::all())
+            ->map(fn (array $theme, string $key) => [
+                'key' => $key,
+                'label' => $theme['label'],
+                'description' => $theme['description'],
+                'vibe' => $theme['vibe'],
+                'recommended_for' => $theme['recommended_for'],
+            ])
+            ->values()
+            ->all();
+
+        return view('sales.pages.designs', [
+            'themes' => $themes,
+            'designNotes' => [
+                [
+                    'title' => 'Bygget til forskellige udtryk',
+                    'copy' => 'Du kan starte med et theme, der matcher salonens stemning, og derefter justere farver, sektioner og indhold uden at begynde forfra.',
+                ],
+                [
+                    'title' => 'Klar til baade templates og custom',
+                    'copy' => 'Designsiden viser retningen i universet, men loesningerne kan stadig landes som baade en skarp template og et mere frit Signature-spor.',
+                ],
+            ],
         ]);
     }
 
@@ -161,10 +275,10 @@ class SalesController extends Controller
         $trialIntent = $request->boolean('trial');
 
         $defaultLeadMessage = match ($selectedPackage) {
-            'launch' => 'Jeg vil gerne høre mere om Starter-pakken til 69 kr./måned inkl. .dk-domæne.',
-            'scale' => 'Jeg vil gerne høre mere om hjemmeside + booking med 0 kr. de første 3 måneder og prisen derefter.',
-            'platebook' => 'Jeg vil gerne høre mere om PlateBook fra 49 kr./måned og hvordan prisen skalerer med antal bookinger.',
-            'signature' => 'Jeg vil gerne have et vejledende tilbud på en custom-løsning fra 5.000 kr. og høre om næste skridt.',
+            'launch' => 'Jeg vil gerne høre mere om Atelier fra 199 kr./md. og høre hvordan tilvalg og professionel opsætning passer til min løsning.',
+            'scale' => 'Jeg vil gerne høre mere om Studio med 3 mdr. gratis og høre hvordan pris og setup derefter passer til min forretning.',
+            'platebook' => 'Jeg vil gerne høre mere om Chairflow fra 49 kr./måned og hvordan prisen skalerer med antal bookinger.',
+            'signature' => 'Jeg vil gerne have et vejledende tilbud på Signature fra 5.000 kr. og høre om næste skridt.',
             default => '',
         };
 
@@ -244,100 +358,126 @@ class SalesController extends Controller
             [
                 'key' => 'launch',
                 'eyebrow' => 'Til dig der vil hurtigt i gang',
-                'title' => 'Starter',
-                'badge' => 'Inkl. .dk-domæne',
-                'headline' => 'Et enkelt og professionelt startpunkt, når du vil hurtigt online med en side, der er nem at arbejde videre med.',
-                'price' => '69 kr./måned',
-                'annual_price' => '69 kr./måned',
-                'delivery' => $launch?->build_time ?? 'Hurtig levering',
-                'price_suffix' => 'inkl. .dk-domæne · ekskl. moms',
-                'annual_suffix' => 'inkl. .dk-domæne · ekskl. moms',
+                'title' => 'Atelier',
+                'badge' => 'Domæne klar',
+                'headline' => 'Et professionelt startpunkt for dig, der vil hurtigt online med en løsning, der skaber et godt førstehåndsindtryk og giver plads til at bygge videre, når behovene vokser.',
+                'price' => '199 kr./md.',
+                'annual_price' => '199 kr./md.',
+                'price_suffix' => 'vejledende ud fra sider, trafik og tilvalg · ekskl. moms',
+                'annual_suffix' => 'vejledende ud fra sider, trafik og tilvalg · ekskl. moms',
                 'pricing' => [
                     'mode' => 'flat',
-                    'amount' => 69,
-                    'suffix' => 'kr./måned',
+                    'amount' => 199,
+                    'suffix' => 'kr./md.',
                 ],
                 'visible_fields' => ['locations', 'sections'],
                 'points' => [
-                    'Professionel hjemmeside',
-                    'Kunde-CMS til indhold',
-                    '.dk-domæne inkluderet',
+                    'Professionelt modulopbygget website',
+                    'SEO og metadata',
+                    'Temabaserede layouts',
+                    'Forskellige farvepaletter',
+                    'Hosting på vores platform',
+                    'Kunde-CMS til indhold og opdateringer',
+                    'Nyhedsbrev og leadopsamling',
+                    'Tydelige CTA\'er til konvertering',
+                    'Nem DNS- og domæneopsætning',
+                    'SSL og sikker forbindelse',
+                    'Mobilvenligt design',
                 ],
                 'href' => route('contact', ['plan_id' => $launch?->id, 'package' => 'launch']),
-                'label' => 'Vælg Starter',
+                'label' => 'Vælg Atelier',
                 'tone' => 'launch',
                 'featured' => false,
             ],
             [
                 'key' => 'scale',
                 'eyebrow' => 'Til virksomheder i vækst',
-                'title' => 'Scale',
+                'title' => 'Studio',
                 'badge' => '3 mdr. gratis',
-                'headline' => 'Når du vil have mere branding, mere indhold og booking tænkt direkte ind i løsningen fra start.',
-                'price' => '89 kr./måned',
-                'annual_price' => '89 kr./måned',
-                'delivery' => $scale?->build_time ?? 'Efter aftale',
-                'price_suffix' => '0 kr. de første 3 måneder · derefter vejledende · ekskl. moms',
+                'headline' => 'Til virksomheder, der vil have booking integreret som en naturlig del af kundeoplevelsen. Studio er bygget med PlateBook, så I kan skabe flere bookinger direkte fra jeres egen hjemmeside.',
+                'price' => '0 kr. de første 3 måneder',
+                'annual_price' => '299 kr./måned',
+                'price_suffix' => 'derefter vejledende · ekskl. moms',
                 'annual_suffix' => '0 kr. de første 3 måneder · derefter vejledende · ekskl. moms',
                 'pricing' => [
-                    'mode' => 'intro_booking_tiered',
-                    'suffix' => 'kr./måned',
+                    'mode' => 'scale_configurable',
                     'intro_label' => '0 kr. de første 3 måneder',
-                    'tiers' => [
-                        ['up_to' => 300, 'amount' => 89],
-                        ['up_to' => 1000, 'amount' => 109],
-                        ['up_to' => 2500, 'amount' => 139],
-                        ['up_to' => 5000, 'amount' => 179],
+                    'base_amount' => 299,
+                    'staff_amount' => 25,
+                    'location_tiers' => [
+                        ['up_to' => 1, 'amount' => 0],
+                        ['up_to' => 4, 'amount' => 35],
+                        ['up_to' => 7, 'amount' => 100],
+                        ['up_to' => 10, 'amount' => 200],
                     ],
+                    'booking_tiers' => [
+                        ['up_to' => 250, 'amount' => 0],
+                        ['up_to' => 750, 'amount' => 50],
+                        ['up_to' => 2000, 'amount' => 100],
+                        ['up_to' => 3500, 'amount' => 150],
+                        ['up_to' => 5000, 'amount' => 200],
+                    ],
+                    'suffix' => 'kr./måned',
                 ],
                 'visible_fields' => ['bookings', 'locations', 'staff', 'sections'],
                 'points' => [
-                    'Booking direkte på hjemmesiden',
-                    'Flere sider og stærkere branding',
-                    'Leadflow og tydelige CTA’er',
+                    'Alt fra Atelier',
+                    'Hosting på vores platform',
+                    'Online booking direkte på hjemmesiden',
+                    'Medarbejdere og lokationer i samme løsning',
+                    [
+                        'label' => 'Automatiske bookingbekræftelser og påmindelser',
+                        'note' => 'Fra 0,7 DKK pr. SMS-besked',
+                    ],
+                    'Leadflow og CTA’er til flere bookinger',
+                    'Mere branding og flere indholdssider',
                 ],
                 'href' => route('contact', ['plan_id' => $scale?->id, 'package' => 'scale', 'trial' => 1]),
-                'label' => 'Start gratis i 3 måneder',
+                'label' => 'Vælg Studio',
                 'tone' => 'scale',
                 'featured' => true,
             ],
             [
                 'key' => 'signature',
                 'eyebrow' => 'Til skræddersyede projekter',
-                'title' => 'Custom',
+                'title' => 'Signature',
                 'badge' => 'Skræddersyet',
                 'headline' => 'Når design, funktioner og oplevelse skal formes mere frit omkring virksomheden og det udtryk du vil stå med.',
-                'price' => 'Fra 5.000 kr.',
-                'annual_price' => 'Fra 5.000 kr.',
-                'delivery' => $signature?->build_time ?? 'Efter tilbud',
-                'price_suffix' => 'projektpris · vejledende efter scope',
-                'annual_suffix' => 'projektpris · vejledende efter scope',
+                'price' => 'Fra 5.000 kr. + md. abonnement',
+                'annual_price' => 'Fra 5.000 kr. + md. abonnement',
+                'price_suffix' => 'opstartspris + løbende abonnement · vejledende efter scope',
+                'annual_suffix' => 'opstartspris + løbende abonnement · vejledende efter scope',
                 'pricing' => [
                     'mode' => 'custom_quote',
                     'amount' => 5000,
                     'prefix' => 'Fra',
-                    'suffix' => 'kr.',
+                    'suffix' => 'kr. + md. abonnement',
                 ],
                 'visible_fields' => ['locations', 'sections', 'staff', 'bookings'],
                 'points' => [
-                    'Custom design og struktur',
-                    'Særlige funktioner efter behov',
-                    'Tæt sparring gennem forløbet',
+                    'Alt fra Atelier og Studio',
+                    'Hosting på vores platform',
+                    'Skræddersyet design og struktur',
+                    'Særlige funktioner tilpasset jeres behov',
+                    'Udvidet CMS med HTML-, CSS- og JS-tilpasninger',
+                    'Tæt sparring gennem hele forløbet',
+                    'Bygget omkring jeres brand, målgruppe og arbejdsgange',
                 ],
+                'footnote' => 'Muligheder for særlige funktioner afhænger af løsningens struktur og omfang.',
+                'footnote_point' => 'Særlige funktioner tilpasset jeres behov',
                 'href' => route('contact', ['plan_id' => $signature?->id, 'package' => 'signature']),
-                'label' => 'Få et tilbud',
+                'label' => 'Få et Signature-tilbud',
                 'tone' => 'signature',
                 'featured' => false,
             ],
             [
                 'key' => 'platebook',
                 'eyebrow' => 'Til dig med eksisterende hjemmeside',
-                'title' => 'PlateBook',
+                'title' => 'Chairflow',
                 'badge' => 'Booking only',
                 'headline' => 'Et selvstændigt bookingsystem, hvis du vil beholde din nuværende hjemmeside og tilføje booking uden at bygge alt om.',
                 'price' => '49 kr./måned',
                 'annual_price' => '49 kr./måned',
-                'delivery' => 'Afhænger af setup',
                 'price_suffix' => 'vejledende efter antal bookinger · ekskl. moms',
                 'annual_suffix' => 'vejledende efter antal bookinger · ekskl. moms',
                 'pricing' => [
@@ -352,12 +492,18 @@ class SalesController extends Controller
                 ],
                 'visible_fields' => ['bookings', 'staff', 'locations'],
                 'points' => [
-                    'Booking på eksisterende side',
-                    'Vagtplan og medarbejdere samlet',
-                    'Aktivitetslog og overblik',
+                    'Selvstændigt bookingsystem',
+                    'Hosting på vores platform',
+                    'Let integration på eksisterende hjemmeside',
+                    'Medarbejdere og behandlinger samlet ét sted',
+                    [
+                        'label' => 'Automatiske bookingbekræftelser og påmindelser',
+                        'note' => 'Fra 0,7 DKK pr. SMS-besked',
+                    ],
+                    'Overblik over bookinger og aktivitet',
                 ],
                 'href' => route('contact', ['package' => 'platebook']),
-                'label' => 'Kom i gang med booking',
+                'label' => 'Kom i gang med Chairflow',
                 'tone' => 'platebook',
                 'featured' => false,
             ],

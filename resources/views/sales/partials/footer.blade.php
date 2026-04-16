@@ -1,6 +1,8 @@
 @php
     $navigationLinks = [
         ['label' => 'Forside', 'href' => route('home')],
+        ['label' => 'Om os', 'href' => route('sales.about')],
+        ['label' => 'Se designs', 'href' => route('sales.designs')],
         ['label' => 'Vores priser', 'href' => route('templates')],
         ['label' => 'Custom build', 'href' => route('custom-build')],
         ['label' => 'Kunde-CMS', 'href' => route('sales.customer-cms')],

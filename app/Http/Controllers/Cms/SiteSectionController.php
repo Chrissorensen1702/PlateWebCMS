@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cms;
 use App\Models\Site;
 use App\Models\SitePageDraft;
 use App\Models\SitePageDraftArea;
+use App\Support\Cms\SiteFeatureGate;
 use App\Support\Sites\SitePageAreaBlueprints;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -15,9 +16,14 @@ use Illuminate\Validation\Rule;
 
 class SiteSectionController extends SitePageAreaController
 {
+    public function __construct(
+        private readonly SiteFeatureGate $siteFeatureGate,
+    ) {}
+
     public function store(Request $request, Site $site, SitePageDraft $page): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CONTENT, $request->user());
         abort_unless($page->site_id === $site->id, 404);
 
         $validated = $request->validateWithBag('createSection', [
@@ -40,6 +46,7 @@ class SiteSectionController extends SitePageAreaController
     public function reorder(Request $request, Site $site, SitePageDraft $page): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CONTENT, $request->user());
         abort_unless($page->site_id === $site->id, 404);
 
         $validated = $request->validate([
@@ -138,6 +145,7 @@ class SiteSectionController extends SitePageAreaController
     private function authorizeSection(Site $site, SitePageDraft $page, SitePageDraftArea $section): void
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_CONTENT, auth()->user());
         abort_unless($page->site_id === $site->id && $section->site_page_draft_id === $page->id, 404);
     }
 

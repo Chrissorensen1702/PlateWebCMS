@@ -1,0 +1,73 @@
+@layer components {
+    .marketing-body--about {
+        background:
+            radial-gradient(circle at 18% 8%, rgb(var(--color-primary-rgb) / 0.14), transparent 28%),
+            radial-gradient(circle at 84% 12%, rgb(var(--color-accent-rgb) / 0.12), transparent 24%),
+            linear-gradient(180deg, #e7f2fb 0%, var(--color-cream) 44rem);
+        background-repeat: no-repeat;
+    }
+
+    .about-page__shell {
+        display: grid;
+        gap: 2rem;
+    }
+
+    .about-page__grid {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .about-page__story {
+        padding: 2rem;
+    }
+
+    .about-page__story-copy {
+        margin-top: 1rem;
+        color: rgb(255 255 255 / 0.78);
+        font-size: 0.98rem;
+        line-height: 1.85;
+    }
+
+    .about-page__story-list {
+        margin-top: 2rem;
+    }
+
+    .about-page__story-list .ui-list__item {
+        color: rgb(255 255 255 / 0.82);
+    }
+
+    .about-page__story-list .ui-list__dot {
+        background: rgb(255 255 255 / 0.74);
+    }
+
+    .about-page__stack {
+        display: grid;
+        gap: 1.25rem;
+    }
+
+    .about-page__note {
+        padding: 1.8rem;
+    }
+
+    .about-page__note-title {
+        margin: 0;
+        color: var(--color-ink);
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+    }
+
+    .about-page__note-copy {
+        margin: 0.9rem 0 0;
+        color: var(--color-muted);
+        font-size: 0.95rem;
+        line-height: 1.8;
+    }
+
+    @media (min-width: 1024px) {
+        .about-page__grid {
+            grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+        }
+    }
+}

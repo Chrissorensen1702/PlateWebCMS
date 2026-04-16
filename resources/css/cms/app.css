@@ -10,6 +10,8 @@
 @import './pages/customers.css';
 @import './pages/dashboard.css';
 @import './pages/leads.css';
+@import './pages/orders.css';
+@import './pages/customer-solution.css';
 @import './pages/plans.css';
 @import './pages/projects.css';
 @import './pages/sites.css';

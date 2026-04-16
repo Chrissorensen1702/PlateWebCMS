@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Site;
+use App\Support\Cms\SiteFeatureGate;
 use App\Support\Http\LocalRedirect;
 use App\Support\Sites\SiteColorPalettes;
 use App\Support\Sites\SiteDraftManager;
@@ -15,6 +16,10 @@ use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
+    public function __construct(
+        private readonly SiteFeatureGate $siteFeatureGate,
+    ) {}
+
     public function index(Request $request): View
     {
         $sites = Site::query()
@@ -50,22 +55,29 @@ class SiteController extends Controller
 
         $activePageId = $request->integer('page');
         $activePage = $site->draftPages->firstWhere('id', $activePageId) ?? $site->draftPages->first();
+        $globalSections = $this->siteFeatureGate->filterGlobalSections($site, $this->globalSections(), $request->user());
 
         return view('cms.pages.sites.show', [
             'site' => $site,
             'sitePages' => $site->draftPages,
             'activePage' => $activePage,
             'canUpdateSite' => $request->user()->can('update', $site),
+            'canManageSiteContent' => $this->siteFeatureGate->canManageContent($site, $request->user()),
+            'canUseCustomCode' => $this->siteFeatureGate->canUseCustomCode($site, $request->user()),
             'availablePageTemplates' => SitePageTemplates::availableForTheme($site->theme),
-            'globalSections' => $this->globalSections(),
+            'globalSections' => $globalSections,
         ]);
     }
 
     public function globalContent(Request $request, Site $site): RedirectResponse
     {
         $this->authorize('view', $site);
+        $sections = $this->siteFeatureGate->filterGlobalSections($site, $this->globalSections(), $request->user());
+        $firstSection = array_key_first($sections);
 
-        return redirect()->route('cms.sites.global.section', [$site, 'header']);
+        abort_unless($firstSection !== null, 403);
+
+        return redirect()->route('cms.sites.global.section', [$site, $firstSection]);
     }
 
     public function globalSection(Request $request, Site $site, string $section): View
@@ -75,6 +87,7 @@ class SiteController extends Controller
 
         $sections = $this->globalSections();
         abort_unless(array_key_exists($section, $sections), 404);
+        abort_unless($this->siteFeatureGate->allowsGlobalSection($site, $section, $request->user()), 403);
 
         $site->load([
             'tenant.users',
@@ -123,6 +136,7 @@ class SiteController extends Controller
     public function updateTheme(Request $request, Site $site): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_THEME_TEMPLATES, $request->user());
 
         $validated = $request->validateWithBag('updateSiteTheme', [
             'theme' => ['required', 'string', 'in:'.implode(',', SiteThemes::keys())],
@@ -145,6 +159,7 @@ class SiteController extends Controller
     public function updateColors(Request $request, Site $site): RedirectResponse
     {
         $this->authorize('update', $site);
+        $this->siteFeatureGate->ensureAllowed($site, SiteFeatureGate::FEATURE_COLOR_PALETTES, $request->user());
 
         $validated = $request->validateWithBag('updateSiteColors', [
             'palette_key' => ['required', 'string', 'in:'.implode(',', SiteColorPalettes::keys())],

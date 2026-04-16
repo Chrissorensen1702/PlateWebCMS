@@ -4,7 +4,7 @@
             <p class="ui-kicker">Adgang</p>
             <h2 class="ui-title">Log ind i dit CMS</h2>
             <p class="auth-page__copy">
-                Kunder kan redigere deres indhold her. Nye kunder bliver oprettet internt, saa der er ingen offentlig registrering.
+                Kunder kan logge ind igen her og fortsætte med deres løsning. Nye kunder kan starte på prissiden, gemme deres setup og oprette konto derfra.
             </p>
         </div>
 
@@ -60,6 +60,13 @@
                     {{ __('Log in') }}
                 </x-primary-button>
             </div>
+
+            @if (session('sales.pending_customer_solution') && Route::has('register'))
+                <p class="auth-page__helper">
+                    Har du lige gemt en løsning fra prisberegneren?
+                    <a class="auth-page__link" href="{{ route('register') }}">Opret konto og fortsæt her</a>
+                </p>
+            @endif
         </form>
     </div>
 </x-guest-layout>

@@ -60,7 +60,7 @@
 
                                     <div class="plans-admin-card__meta">
                                         <span>{{ $plan->sites_count }} sites</span>
-                                        <span>{{ $plan->leads_count }} leads</span>
+                                        <span>{{ $plan->leads_count }} henvendelser</span>
                                         <span>{{ count($plan->features) }} features</span>
                                     </div>
                                 </div>
@@ -152,7 +152,7 @@
                         <div class="plans-drawer__body">
                             <div class="plans-admin-card__meta">
                                 <span>{{ $plan->sites_count }} sites</span>
-                                <span>{{ $plan->leads_count }} leads</span>
+                                <span>{{ $plan->leads_count }} henvendelser</span>
                                 <span>Slug: {{ $plan->slug }}</span>
                                 @if ($plan->price_from)
                                     <span>Fra {{ number_format($plan->price_from, 0, ',', '.') }} kr.</span>

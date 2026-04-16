@@ -3,7 +3,7 @@
         <div class="section-heading">
             <div class="section-heading__content">
                 <p class="section-heading__kicker">SALGSINTERESSE</p>
-                <h2 class="section-heading__title">Leads</h2>
+                <h2 class="section-heading__title">Henvendelser</h2>
                 <p class="section-heading__copy">
                     Her samler vi henvendelser fra salgssiden, så du hurtigt kan se hvem der har vist interesse og hvilken pakke de kom ind på.
                 </p>
@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="leads-page__meta">
-                        <span class="dashboard-feed__meta">{{ $leads->count() }} leads</span>
+                        <span class="dashboard-feed__meta">{{ $leads->count() }} henvendelser</span>
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@
                         </article>
                     @empty
                         <div class="leads-page__empty">
-                            <p class="ui-copy">Der er ingen leads endnu. Når nogen sender en henvendelse fra salgssiden, lander de her.</p>
+                            <p class="ui-copy">Der er ingen henvendelser endnu. Når nogen sender en besked fra salgssiden, lander de her.</p>
                         </div>
                     @endforelse
                 </div>
