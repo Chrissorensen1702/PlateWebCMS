@@ -15,6 +15,7 @@
         $brandName = $showBrandName ? ($header?->brand_name ?: $site->name) : null;
         $logoUrl = $header?->logo_url;
         $logoAlt = $header?->logo_alt ?: ($brandName ?: $site->name);
+        $siteHomeUrl = $site->preview_home_url ?? route('sites.show', $site);
         $headerBackgroundStyle = \App\Models\SiteHeaderSetting::normalizeBackgroundStyle($header?->background_style);
         $headerTextColorStyle = \App\Models\SiteHeaderSetting::normalizeTextColorStyle($header?->text_color_style);
         $headerShadowStyle = \App\Models\SiteHeaderSetting::normalizeShadowStyle($header?->shadow_style);
@@ -40,7 +41,7 @@
     @else
         <header class="{{ $headerClasses }}">
             <div class="ui-shell site-theme-header__inner">
-                <a href="{{ route('sites.show', $site) }}" class="site-theme-brand">
+                <a href="{{ $siteHomeUrl }}" class="site-theme-brand">
                     @if ($logoUrl)
                         <img src="{{ $logoUrl }}" alt="{{ $logoAlt }}" class="site-theme-brand__logo">
                     @else
@@ -58,9 +59,10 @@
                             @foreach ($navigation as $navPage)
                                 @php
                                     $isCurrentPage = $navPage->is($page);
-                                    $href = $navPage->is_home
-                                        ? route('sites.show', $site)
-                                        : route('sites.page', [$site, $navPage->slug]);
+                                    $href = $navPage->preview_url
+                                        ?? ($navPage->is_home
+                                            ? $siteHomeUrl
+                                            : route('sites.page', [$site, $navPage->slug]));
                                 @endphp
 
                                 <a href="{{ $href }}" class="site-theme-nav__link{{ $isCurrentPage ? ' site-theme-nav__link--active' : '' }}">

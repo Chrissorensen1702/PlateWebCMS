@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Sales;
 
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
+use App\Support\Sales\DesignShowcaseCatalog;
 use App\Support\Sales\PricingPackageCatalog;
-use App\Support\Sites\SiteThemes;
-use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
+use InvalidArgumentException;
 
 class SalesController extends Controller
 {
@@ -184,31 +185,44 @@ class SalesController extends Controller
         ]);
     }
 
-    public function designs(): View
+    public function designs(DesignShowcaseCatalog $designShowcaseCatalog): View
     {
-        $themes = collect(SiteThemes::all())
-            ->map(fn (array $theme, string $key) => [
-                'key' => $key,
-                'label' => $theme['label'],
-                'description' => $theme['description'],
-                'vibe' => $theme['vibe'],
-                'recommended_for' => $theme['recommended_for'],
-            ])
-            ->values()
-            ->all();
+        $showcaseThemes = $designShowcaseCatalog->showcaseThemes();
+        $themes = $designShowcaseCatalog->themes();
 
         return view('sales.pages.designs', [
+            'showcaseThemes' => $showcaseThemes,
             'themes' => $themes,
+            'themeCount' => count($showcaseThemes),
             'designNotes' => [
                 [
-                    'title' => 'Bygget til forskellige udtryk',
-                    'copy' => 'Du kan starte med et theme, der matcher salonens stemning, og derefter justere farver, sektioner og indhold uden at begynde forfra.',
+                    'title' => 'Hver preview viser en forside i et konkret theme',
+                    'copy' => 'I stedet for at vise mange sidetyper kan du nu fokusere paa den vigtigste oplevelse: hvordan forsiden foeles i hvert designspor.',
                 ],
                 [
-                    'title' => 'Klar til baade templates og custom',
-                    'copy' => 'Designsiden viser retningen i universet, men loesningerne kan stadig landes som baade en skarp template og et mere frit Signature-spor.',
+                    'title' => 'Accordion-layoutet holder siden enkel at overskue',
+                    'copy' => 'Themes ligger stablet i fuld bredde, og du aabner kun den preview, du vil se naermere paa.',
                 ],
             ],
+        ]);
+    }
+
+    public function designPreview(Request $request, string $theme, DesignShowcaseCatalog $designShowcaseCatalog): View
+    {
+        try {
+            $preview = $designShowcaseCatalog->previewTheme(
+                $theme,
+                $request->boolean('embed'),
+            );
+        } catch (InvalidArgumentException) {
+            abort(404);
+        }
+
+        return view("sites.themes.{$preview['theme']}.page", [
+            'site' => $preview['site'],
+            'page' => $preview['page'],
+            'navigation' => $preview['navigation'],
+            'theme' => $preview['theme'],
         ]);
     }
 

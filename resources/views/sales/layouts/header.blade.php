@@ -31,6 +31,18 @@
         : ($isRegisterPage ? 'Se priser' : 'Kom i gang');
 @endphp
 
+<div class="marketing-topbar">
+    <div class="marketing-topbar__inner">
+        <div class="marketing-topbar__copy">
+            <p class="marketing-topbar__text">
+                <span class="marketing-topbar__lead">HJÆÆÆLP! 😄 🇩🇰</span>
+                <span>Vi søger få virksomheder til at forme vores første templates - Få custom design til Studio-pris inkl. 6 måneder gratis.</span>
+                <a href="mailto:kontakt@plateweb.dk?subject=Samarbejde%20om%20nyt%20template" class="marketing-topbar__inline-link">Læs mere</a>
+            </p>
+        </div>
+    </div>
+</div>
+
 <div class="marketing-header__inner">
     <a href="{{ route('home') }}" class="brand-lockup">
         <x-application-header-logo class="brand-lockup__wordmark" />

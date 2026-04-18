@@ -94,7 +94,7 @@ class ExampleTest extends TestCase
             ->assertSeeText('Tilpas hjemmeside og booking')
             ->assertSeeText('Gå live');
         $this->get('/om-os')->assertOk()->assertSeeText('Vi bygger loesninger, der samler hjemmeside, booking og CMS i samme retning.');
-        $this->get('/designs')->assertOk()->assertSeeText('Fa et indtryk af de designretninger, som loesningerne kan tage udgangspunkt i.');
+        $this->get('/designs')->assertOk()->assertSeeText('Et design, der passer til jeres forretning');
         $this->get('/custom-build')->assertOk()->assertSee('Custom builds med et skraeddersyet udtryk og samme CMS-kerne.');
         $this->get('/kunde-cms')->assertOk()->assertSee('Kundelogin og CMS som en stabil del af leverancen.');
         $this->get('/mobilapp')

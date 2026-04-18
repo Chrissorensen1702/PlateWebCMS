@@ -30,6 +30,7 @@ Route::controller(SalesController::class)->group(function () {
     Route::get('/kom-i-gang', 'getStarted')->name('sales.get-started');
     Route::get('/om-os', 'about')->name('sales.about');
     Route::get('/designs', 'designs')->name('sales.designs');
+    Route::get('/designs/preview/{theme}', 'designPreview')->name('sales.designs.preview');
     Route::get('/templates', 'templates')->name('templates');
     Route::get('/custom-build', 'customBuild')->name('custom-build');
     Route::get('/kunde-cms', 'cms')->name('sales.customer-cms');

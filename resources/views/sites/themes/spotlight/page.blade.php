@@ -17,6 +17,7 @@
         $tagline = $showTagline ? ($header?->tagline ?: 'Campaign & conversion mode') : null;
         $logoUrl = $header?->logo_url;
         $logoAlt = $header?->logo_alt ?: ($brandName ?: $site->name);
+        $siteHomeUrl = $site->preview_home_url ?? route('sites.show', $site);
         $headerBackgroundStyle = \App\Models\SiteHeaderSetting::normalizeBackgroundStyle($header?->background_style);
         $headerTextColorStyle = \App\Models\SiteHeaderSetting::normalizeTextColorStyle($header?->text_color_style);
         $headerShadowStyle = \App\Models\SiteHeaderSetting::normalizeShadowStyle($header?->shadow_style);
@@ -42,7 +43,7 @@
     @else
         <header class="{{ $headerClasses }}">
             <div class="ui-shell spotlight-header">
-                <a href="{{ route('sites.show', $site) }}" class="spotlight-brand">
+                <a href="{{ $siteHomeUrl }}" class="spotlight-brand">
                     @if ($logoUrl)
                         <img src="{{ $logoUrl }}" alt="{{ $logoAlt }}" class="spotlight-brand__logo">
                     @else
@@ -68,9 +69,10 @@
                             @foreach ($navigation as $navPage)
                                 @php
                                     $isCurrentPage = $navPage->is($page);
-                                    $href = $navPage->is_home
-                                        ? route('sites.show', $site)
-                                        : route('sites.page', [$site, $navPage->slug]);
+                                    $href = $navPage->preview_url
+                                        ?? ($navPage->is_home
+                                            ? $siteHomeUrl
+                                            : route('sites.page', [$site, $navPage->slug]));
                                 @endphp
 
                                 <a href="{{ $href }}" class="spotlight-nav__link{{ $isCurrentPage ? ' spotlight-nav__link--active' : '' }}">

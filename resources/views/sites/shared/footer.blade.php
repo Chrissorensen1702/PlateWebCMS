@@ -41,9 +41,10 @@
         $navigationLinks = $navigation->take(8)->map(function ($navPage) use ($site) {
             return [
                 'label' => $navPage->name,
-                'href' => $navPage->is_home
-                    ? route('sites.show', $site)
-                    : route('sites.page', [$site, $navPage->slug]),
+                'href' => $navPage->preview_url
+                    ?? ($navPage->is_home
+                        ? ($site->preview_home_url ?? route('sites.show', $site))
+                        : route('sites.page', [$site, $navPage->slug])),
             ];
         });
     }
