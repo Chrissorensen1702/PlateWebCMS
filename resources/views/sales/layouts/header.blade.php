@@ -21,6 +21,7 @@
     $designsActive = request()->routeIs('sales.designs');
     $aboutActive = request()->routeIs('sales.about');
     $mobileAppHref = route('sales.mobile-app');
+    $isHomePage = request()->routeIs('home');
     $isRegisterPage = request()->routeIs('register');
     $isGetStartedPage = request()->routeIs('sales.get-started');
     $gettingStartedHref = $isGetStartedPage || $isRegisterPage
@@ -45,7 +46,11 @@
 
 <div class="marketing-header__inner">
     <a href="{{ route('home') }}" class="brand-lockup">
-        <x-application-header-logo class="brand-lockup__wordmark" />
+        <img
+            src="{{ asset('images/logo/plateweb-sales.svg') }}"
+            alt="PlateWeb"
+            class="brand-lockup__wordmark"
+        />
     </a>
 
     <nav class="marketing-nav">
@@ -81,9 +86,11 @@
                 Kundelogin
             </a>
 
-            <a href="{{ $gettingStartedHref }}" class="ui-button ui-button--ink marketing-header__cta-button">
-                {{ $gettingStartedLabel }}
-            </a>
+            @unless ($isHomePage)
+                <a href="{{ $gettingStartedHref }}" class="ui-button ui-button--ink marketing-header__cta-button">
+                    {{ $gettingStartedLabel }}
+                </a>
+            @endunless
         @endauth
     </div>
 
@@ -119,7 +126,11 @@
     <aside class="marketing-mobile-nav__drawer" id="marketing-mobile-drawer" aria-label="Mobilmenu">
         <div class="marketing-mobile-nav__header">
             <a href="{{ route('home') }}" class="brand-lockup brand-lockup--mobile" data-mobile-nav-close>
-                <x-application-header-logo class="brand-lockup__wordmark" />
+                <img
+                    src="{{ asset('images/logo/plateweb-sales.svg') }}"
+                    alt="PlateWeb"
+                    class="brand-lockup__wordmark"
+                />
             </a>
 
             <button type="button" class="marketing-mobile-nav__close" data-mobile-nav-close aria-label="Luk menu">
@@ -157,9 +168,11 @@
                     Gå til CMS-modul
                 </a>
             @else
-                <a href="{{ $gettingStartedHref }}" class="ui-button ui-button--ink marketing-mobile-nav__cta" data-mobile-nav-close>
-                    {{ $gettingStartedLabel }}
-                </a>
+                @unless ($isHomePage)
+                    <a href="{{ $gettingStartedHref }}" class="ui-button ui-button--ink marketing-mobile-nav__cta" data-mobile-nav-close>
+                        {{ $gettingStartedLabel }}
+                    </a>
+                @endunless
             @endauth
         </div>
     </aside>

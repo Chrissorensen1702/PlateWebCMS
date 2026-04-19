@@ -2,6 +2,49 @@
     .marketing-body {
         position: relative;
         --font-display: "Sora", sans-serif;
+        --color-primary: #5e7097;
+        --color-primary-hover: #4f6288;
+        --color-primary-rgb: 94 112 151;
+        --color-primary-soft: rgb(var(--color-primary-rgb) / 0.14);
+        --color-accent: #6e83ad;
+        --color-accent-deep: #4f6288;
+        --color-accent-rgb: 110 131 173;
+        --color-accent-soft: rgb(var(--color-accent-rgb) / 0.16);
+        --color-cream: #f4f6fb;
+        --color-stone: #e5ebf4;
+        --color-surface: #ffffff;
+        --color-surface-rgb: 255 255 255;
+        --color-surface-alt: #eef2f8;
+        --color-surface-alt-rgb: 238 242 248;
+        --color-ink: #0e1833;
+        --color-ink-rgb: 14 24 51;
+        --color-muted: #59647d;
+        --color-forest: var(--color-primary);
+        --color-text-rgb: 33 45 71;
+        --color-border: #d7dfec;
+        --color-border-rgb: 215 223 236;
+        --color-header-ink-rgb: 14 24 51;
+        --color-header-accent-rgb: 79 98 136;
+        --color-header-surface-rgb: 228 235 245;
+        --surface-border: rgb(var(--color-border-rgb) / 0.76);
+        --surface-border-strong: rgb(var(--color-border-rgb) / 0.94);
+        --gradient-brand: linear-gradient(
+            135deg,
+            rgb(var(--color-accent-rgb) / 0.96) 0%,
+            rgb(var(--color-primary-rgb) / 0.94) 56%,
+            rgb(var(--color-header-ink-rgb) / 1) 100%
+        );
+        --gradient-panel: linear-gradient(
+            160deg,
+            rgb(var(--color-header-ink-rgb) / 1) 0%,
+            rgb(var(--color-primary-rgb) / 0.92) 100%
+        );
+        --marketing-tint-top: #dbe4f0;
+        --marketing-tint-mid: #edf2f8;
+        --marketing-tint-bottom: #f7f9fc;
+        --marketing-topbar-start: rgb(241 244 249 / 0.95);
+        --marketing-topbar-end: rgb(226 232 241 / 0.92);
+        --marketing-header-surface: rgb(228 235 245 / 0.94);
         background: var(--color-cream);
         color: var(--color-ink);
     }
@@ -9,18 +52,18 @@
     .marketing-body--home {
         background:
             radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.78), transparent 32%),
-            radial-gradient(circle at 16% 10%, rgba(117, 199, 255, 0.18), transparent 32%),
-            radial-gradient(circle at 85% 8%, rgba(163, 214, 255, 0.22), transparent 28%),
-            linear-gradient(180deg, #d8ecff 0%, #edf5fb 46rem, var(--color-cream) 46rem);
+            radial-gradient(circle at 16% 10%, rgb(var(--color-accent-rgb) / 0.16), transparent 32%),
+            radial-gradient(circle at 85% 8%, rgb(var(--color-primary-rgb) / 0.14), transparent 28%),
+            linear-gradient(180deg, var(--marketing-tint-top) 0%, var(--marketing-tint-mid) 46rem, var(--color-cream) 46rem);
         background-repeat: no-repeat;
     }
 
     .marketing-body--mobile-app {
         background:
             radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.78), transparent 32%),
-            radial-gradient(circle at 16% 10%, rgba(117, 199, 255, 0.18), transparent 32%),
-            radial-gradient(circle at 85% 8%, rgba(163, 214, 255, 0.22), transparent 28%),
-            linear-gradient(180deg, #d8ecff 0%, #edf5fb 46rem, var(--color-cream) 46rem);
+            radial-gradient(circle at 16% 10%, rgb(var(--color-accent-rgb) / 0.16), transparent 32%),
+            radial-gradient(circle at 85% 8%, rgb(var(--color-primary-rgb) / 0.14), transparent 28%),
+            linear-gradient(180deg, var(--marketing-tint-top) 0%, var(--marketing-tint-mid) 46rem, var(--color-cream) 46rem);
         background-repeat: no-repeat;
     }
 
@@ -46,7 +89,7 @@
         position: relative;
         z-index: 40;
         border-bottom: 0;
-        background: rgb(216 236 255 / 0.94);
+        background: var(--marketing-header-surface);
         backdrop-filter: blur(14px);
         box-shadow: none;
     }
@@ -60,7 +103,7 @@
     .marketing-topbar {
         border-bottom: 1px solid rgb(var(--color-primary-rgb) / 0.12);
         background:
-            linear-gradient(180deg, rgb(231 241 251 / 0.94), rgb(214 229 246 / 0.9));
+            linear-gradient(180deg, var(--marketing-topbar-start), var(--marketing-topbar-end));
         backdrop-filter: blur(10px);
         box-shadow:
             inset 0 -1px 0 rgb(255 255 255 / 0.42),

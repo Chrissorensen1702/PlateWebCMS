@@ -33,7 +33,7 @@
 
                 <div class="site-common-footer__brand-block">
                     <img
-                        src="{{ asset('images/logo/header.svg') }}"
+                        src="{{ asset('images/logo/plateweb-sales.svg') }}"
                         alt="PlateWeb"
                         class="site-common-footer__logo"
                     >

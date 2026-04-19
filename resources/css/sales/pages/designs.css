@@ -3,7 +3,7 @@
         background:
             radial-gradient(circle at 16% 8%, rgb(var(--color-primary-rgb) / 0.18), transparent 30%),
             radial-gradient(circle at 88% 14%, rgb(var(--color-accent-rgb) / 0.16), transparent 24%),
-            linear-gradient(180deg, #e8f2fb 0%, var(--color-cream) 48rem);
+            linear-gradient(180deg, var(--marketing-tint-mid) 0%, var(--color-cream) 48rem);
         background-repeat: no-repeat;
     }
 

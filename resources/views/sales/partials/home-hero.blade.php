@@ -4,21 +4,20 @@
             <div class="marketing-hero__intro">
                 <div class="marketing-hero__copy">
                     <p class="marketing-hero__eyebrow">
-                        <span class="marketing-hero__eyebrow-text">Bygget til vækst og konvertering</span>
+                        <span class="marketing-hero__eyebrow-text">Direkte booking på egen hjemmeside</span>
                     </p>
                     <p class="ui-title ui-title--display marketing-hero__title">
-                        <span class="marketing-hero__title-line">Hjemmeside, booking og betaling</span>
-                        <span class="marketing-hero__title-line">samlet ét sted</span>
+                        <span class="marketing-hero__title-line">Din hjemmeside skal ikke bare være flot.</span>
+                        <span class="marketing-hero__title-line">Den skal fylde kalenderen.</span>
                     </p>
                     <p class="marketing-hero__lede">
-                        Design din hjemmeside, opdater indholdet i et simpelt kunde-CMS og lad kunder booke direkte på siden
-                        - uden at sende dem videre til væk fra dit website
+                        Et enkelt system til saloner, hvor kunderne booker direkte på din egen hjemmeside.
                     </p>
                 </div>
 
                 <div class="marketing-hero__actions">
-                    <a href="{{ route('templates') }}" class="ui-button ui-button--ink marketing-hero__button marketing-hero__button--solid">Se løsning</a>
-                    <a href="{{ route('contact') }}" class="ui-button ui-button--outline marketing-hero__button marketing-hero__button--ghost">Prøv gratis i 30 dage</a>
+                    <a href="{{ route('templates') }}" class="ui-button ui-button--ink marketing-hero__button marketing-hero__button--solid">Beregn din pris</a>
+                    <a href="#produkt-bookingsystem" class="ui-button ui-button--outline marketing-hero__button marketing-hero__button--ghost">Se bookingflow</a>
                 </div>
 
                 <ul class="marketing-hero__feature-strip" aria-label="Platformens styrker">
@@ -42,11 +41,6 @@
 
             <div class="marketing-hero__showcase" aria-label="PlateWeb website preview">
                 <div class="marketing-hero__device-scene">
-                    <div class="marketing-hero__audience-badge" aria-label="Skabt til frisører og saloner">
-                        <span>Skabt til</span>
-                        <strong>frisører og saloner</strong>
-                    </div>
-
                     <div class="marketing-hero__browser">
                         <div class="marketing-hero__browser-body">
                             <img

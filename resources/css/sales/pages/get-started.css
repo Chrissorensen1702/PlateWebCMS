@@ -103,7 +103,7 @@
             radial-gradient(circle at 50% 18%, rgb(255 255 255 / 0.82), transparent 30%),
             radial-gradient(circle at 18% 10%, rgb(var(--color-primary-rgb) / 0.18), transparent 30%),
             radial-gradient(circle at 84% 10%, rgb(var(--color-accent-rgb) / 0.16), transparent 26%),
-            linear-gradient(180deg, #d8ecff 0%, #edf5fb 46rem, var(--color-cream) 46rem);
+            linear-gradient(180deg, var(--marketing-tint-top) 0%, var(--marketing-tint-mid) 46rem, var(--color-cream) 46rem);
         background-repeat: no-repeat;
     }
 

@@ -6,10 +6,10 @@
             radial-gradient(circle at 84% 10%, rgb(var(--color-accent-rgb) / 0.16), transparent 26%),
             linear-gradient(
                 180deg,
-                #d8ecff 0%,
-                #edf5fb 38rem,
-                #edf2f6 56rem,
-                #f0f3f3 74rem,
+                var(--marketing-tint-top) 0%,
+                var(--marketing-tint-mid) 38rem,
+                #eef2f8 56rem,
+                #f3f6fa 74rem,
                 var(--color-cream) 96rem,
                 var(--color-cream) 100%
             );

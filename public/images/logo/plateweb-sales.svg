@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="220" viewBox="380 290 860 320" fill="none">
+  <defs>
+    <linearGradient id="plateweb-sales-swoosh" x1="420" y1="510" x2="1190" y2="510" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5E7097" stop-opacity="0"/>
+      <stop offset="0.16" stop-color="#6E83AD" stop-opacity="0.78"/>
+      <stop offset="0.55" stop-color="#5E7097" stop-opacity="0.94"/>
+      <stop offset="0.86" stop-color="#4F6288" stop-opacity="0.88"/>
+      <stop offset="1" stop-color="#4F6288" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <text
+    x="416"
+    y="452"
+    font-family="Baskerville, 'Iowan Old Style', 'Times New Roman', serif"
+    font-size="172"
+    font-weight="700"
+    letter-spacing="-4"
+  ><tspan fill="#0E1833" font-style="italic">Plate</tspan><tspan dx="6" fill="#5E7097" font-style="normal">Web</tspan></text>
+
+  <path
+    d="M420 518C564 505 730 500 912 500C1026 500 1118 504 1190 510"
+    stroke="url(#plateweb-sales-swoosh)"
+    stroke-width="10"
+    stroke-linecap="round"
+  />
+</svg>

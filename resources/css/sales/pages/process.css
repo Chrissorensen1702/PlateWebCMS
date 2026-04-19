@@ -42,6 +42,15 @@
         box-shadow: 0 22px 46px rgb(var(--color-ink-rgb) / 0.05);
     }
 
+    .home-feature-card--featured {
+        z-index: 1;
+        border-color: rgb(var(--color-primary-rgb) / 0.22);
+        background: linear-gradient(180deg, rgb(var(--color-primary-rgb) / 0.14), rgb(var(--color-surface-rgb) / 0.98) 56%);
+        box-shadow:
+            0 28px 56px rgb(var(--color-header-ink-rgb) / 0.12),
+            0 14px 32px rgb(var(--color-primary-rgb) / 0.12);
+    }
+
     .home-feature-card::before {
         content: "";
         position: absolute;
@@ -51,6 +60,31 @@
         border-radius: 9999px;
         background: radial-gradient(circle, rgb(var(--color-accent-rgb) / 0.18), transparent 70%);
         pointer-events: none;
+    }
+
+    .home-feature-card--featured::before {
+        inset: auto -2rem -3rem auto;
+        width: 10rem;
+        height: 10rem;
+        background: radial-gradient(circle, rgb(var(--color-primary-rgb) / 0.24), transparent 72%);
+    }
+
+    .home-feature-card__badge {
+        display: inline-flex;
+        align-items: center;
+        justify-self: center;
+        min-height: 2rem;
+        margin: 0;
+        padding: 0.35rem 0.75rem;
+        border-radius: 9999px;
+        background: rgb(var(--color-header-ink-rgb) / 0.96);
+        box-shadow: 0 16px 34px rgb(var(--color-header-ink-rgb) / 0.16);
+        color: rgb(255 255 255 / 0.96);
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        line-height: 1;
+        text-transform: uppercase;
     }
 
     .home-feature-card__header {
@@ -108,6 +142,14 @@
         letter-spacing: -0.04em;
     }
 
+    .home-feature-card__summary {
+        max-width: 18rem;
+        margin: -0.1rem 0 0;
+        color: rgb(var(--color-text-rgb) / 0.78);
+        font-size: 0.93rem;
+        line-height: 1.45;
+    }
+
     .home-feature-card__points {
         display: grid;
         gap: 0.55rem;
@@ -144,6 +186,10 @@
         border-radius: 9999px;
     }
 
+    .home-feature-card__action--featured {
+        box-shadow: 0 18px 36px rgb(var(--color-header-ink-rgb) / 0.16);
+    }
+
     .home-feature-card--1 {
         background: linear-gradient(180deg, rgb(var(--color-surface-rgb) / 0.98), rgb(var(--color-surface-rgb) / 0.94));
     }
@@ -158,6 +204,27 @@
 
     .home-feature-card--4 {
         background: linear-gradient(180deg, rgb(var(--color-primary-rgb) / 0.12), rgb(var(--color-surface-rgb) / 0.98));
+    }
+
+    .home-feature-card--featured .home-feature-card__logo-badge {
+        width: 8.35rem;
+        height: 8.35rem;
+        box-shadow:
+            inset 0 1px 0 rgb(var(--color-surface-rgb) / 0.84),
+            0 22px 38px rgb(var(--color-primary-rgb) / 0.18);
+    }
+
+    .home-feature-card--featured .home-feature-card__title {
+        font-size: clamp(1.6rem, 2vw, 1.95rem);
+    }
+
+    .home-feature-card--featured .home-feature-card__point {
+        color: rgb(var(--color-text-rgb) / 0.92);
+    }
+
+    .home-feature-card--featured .home-feature-card__point::before {
+        background: var(--color-primary);
+        box-shadow: 0 0 0 4px rgb(var(--color-primary-rgb) / 0.14);
     }
 
     .feature-story {
@@ -519,11 +586,15 @@
         }
 
         .home-feature-card--2 {
-            transform: translateY(1rem);
+            transform: none;
         }
 
         .home-feature-card--4 {
             transform: translateY(1rem);
+        }
+
+        .home-feature-card--featured {
+            transform: translateY(-0.35rem) scale(1.015);
         }
     }
 
@@ -539,6 +610,12 @@
 
         .home-feature-card__header {
             gap: 0.65rem;
+        }
+
+        .home-feature-card__badge {
+            min-height: 1.8rem;
+            padding-inline: 0.68rem;
+            font-size: 0.58rem;
         }
 
         .home-feature-card__emoji {
@@ -557,6 +634,10 @@
 
         .home-feature-card__title {
             font-size: 1.55rem;
+        }
+
+        .home-feature-card__summary {
+            font-size: 0.88rem;
         }
 
         .home-feature-card__points {
