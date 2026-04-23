@@ -9,16 +9,107 @@
 
     .about-page__shell {
         display: grid;
-        gap: 2rem;
+        gap: clamp(2rem, 4vw, 3rem);
     }
 
     .about-page__grid {
         display: grid;
         gap: 1.5rem;
+        align-items: start;
+    }
+
+    .about-page__story,
+    .about-page__note {
+        backdrop-filter: blur(12px);
+    }
+
+    .about-page__journey {
+        position: relative;
+        padding: 0;
+    }
+
+    .about-page__timeline {
+        position: relative;
+        display: grid;
+        gap: 1.55rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .about-page__timeline::before {
+        content: "";
+        position: absolute;
+        top: 0.45rem;
+        bottom: 0.55rem;
+        left: 0.5rem;
+        width: 1px;
+        background: linear-gradient(
+            180deg,
+            rgb(var(--color-primary-rgb) / 0.38) 0%,
+            rgb(var(--color-primary-rgb) / 0.12) 100%
+        );
+    }
+
+    .about-page__timeline-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 0.95rem;
+        align-items: start;
+    }
+
+    .about-page__timeline-marker {
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        margin-top: 0.35rem;
+        border: 3px solid rgb(var(--color-primary-rgb) / 0.9);
+        border-radius: 9999px;
+        background: #fff;
+        box-shadow: 0 0 0 7px rgb(var(--color-primary-rgb) / 0.08);
+    }
+
+    .about-page__timeline-content {
+        display: grid;
+        gap: 0.32rem;
+        max-width: min(100%, 22rem);
+    }
+
+    .about-page__timeline-year {
+        margin: 0;
+        color: rgb(var(--color-accent-rgb) / 0.9);
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+    }
+
+    .about-page__timeline-title {
+        margin: 0;
+        color: var(--color-ink);
+        font-size: 1.08rem;
+        font-weight: 700;
+        line-height: 1.22;
+        letter-spacing: -0.03em;
+    }
+
+    .about-page__timeline-copy {
+        margin: 0;
+        color: var(--color-muted);
+        font-size: 0.94rem;
+        line-height: 1.75;
+    }
+
+    .about-page__content {
+        display: grid;
+        gap: 1.5rem;
     }
 
     .about-page__story {
-        padding: 2rem;
+        padding: clamp(1.7rem, 2.4vw, 2.2rem);
     }
 
     .about-page__story-copy {
@@ -65,9 +156,34 @@
         line-height: 1.8;
     }
 
+    @media (min-width: 768px) {
+        .about-page__stack {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .about-page__stack > :first-child {
+            grid-column: 1 / -1;
+        }
+    }
+
     @media (min-width: 1024px) {
         .about-page__grid {
-            grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+            grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+            gap: 1.75rem;
+        }
+
+        .about-page__journey {
+            position: sticky;
+            top: 7rem;
+            padding-right: clamp(0.5rem, 1.25vw, 1rem);
+        }
+
+        .about-page__timeline-item:nth-child(odd) .about-page__timeline-content {
+            margin-inline-start: 0.15rem;
+        }
+
+        .about-page__timeline-item:nth-child(even) .about-page__timeline-content {
+            margin-inline-start: clamp(1.9rem, 4vw, 3.75rem);
         }
     }
 }

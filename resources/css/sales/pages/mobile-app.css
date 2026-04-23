@@ -408,7 +408,7 @@
     .mobile-app-guides__shell {
         display: grid;
         gap: 2rem;
-        width: min(1520px, 100%);
+        width: 100%;
         margin: 0 auto;
     }
 

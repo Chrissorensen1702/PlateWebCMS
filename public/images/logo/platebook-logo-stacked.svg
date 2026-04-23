@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="820" viewBox="0 0 900 820" fill="none">
+  <defs>
+    <linearGradient id="platebook-stacked-header" x1="354" y1="84" x2="550" y2="272" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0E1833"/>
+      <stop offset="1" stop-color="#5E7097"/>
+    </linearGradient>
+    <linearGradient id="platebook-stacked-check" x1="482" y1="222" x2="550" y2="290" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6E83AD"/>
+      <stop offset="1" stop-color="#4F6288"/>
+    </linearGradient>
+    <linearGradient id="platebook-stacked-underline" x1="118" y1="724" x2="782" y2="724" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5E7097" stop-opacity="0"/>
+      <stop offset="0.16" stop-color="#6E83AD" stop-opacity="0.78"/>
+      <stop offset="0.55" stop-color="#5E7097" stop-opacity="0.94"/>
+      <stop offset="0.86" stop-color="#4F6288" stop-opacity="0.88"/>
+      <stop offset="1" stop-color="#4F6288" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="platebook-stacked-shadow" x="294" y="56" width="314" height="318" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0E1833" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#platebook-stacked-shadow)">
+    <rect x="326" y="84" width="268" height="108" rx="48" fill="url(#platebook-stacked-header)"/>
+
+    <rect x="380" y="54" width="24" height="56" rx="12" fill="#0E1833"/>
+    <rect x="516" y="54" width="24" height="56" rx="12" fill="#5E7097"/>
+
+    <rect x="360" y="214" width="56" height="46" rx="14" fill="#D9E3F2"/>
+    <rect x="434" y="214" width="56" height="46" rx="14" fill="#D9E3F2"/>
+    <rect x="508" y="214" width="56" height="46" rx="14" fill="#D9E3F2"/>
+    <rect x="360" y="278" width="56" height="46" rx="14" fill="#E8EEF7"/>
+    <rect x="434" y="278" width="56" height="46" rx="14" fill="#E8EEF7"/>
+
+    <circle cx="528" cy="286" r="44" fill="url(#platebook-stacked-check)"/>
+    <path d="M507 286L522 301L549 274" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text
+    x="448"
+    y="538"
+    text-anchor="end"
+    fill="#0E1833"
+    font-family="Baskerville, 'Iowan Old Style', 'Times New Roman', serif"
+    font-size="172"
+    font-weight="700"
+    font-style="italic"
+    letter-spacing="-4"
+  >Plate</text>
+
+  <text
+    x="452"
+    y="538"
+    text-anchor="start"
+    fill="#5E7097"
+    font-family="Baskerville, 'Iowan Old Style', 'Times New Roman', serif"
+    font-size="172"
+    font-weight="700"
+    letter-spacing="-4"
+  >Book</text>
+
+  <text
+    x="450"
+    y="626"
+    text-anchor="middle"
+    fill="#6B7892"
+    font-family="Avenir Next, 'Helvetica Neue', Arial, sans-serif"
+    font-size="54"
+    font-weight="600"
+    letter-spacing="7"
+  >BOOKING SYSTEM</text>
+
+  <path
+    d="M118 716C242 704 352 698 450 698C548 698 658 704 782 716"
+    stroke="url(#platebook-stacked-underline)"
+    stroke-width="12"
+    stroke-linecap="round"
+  />
+</svg>

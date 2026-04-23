@@ -1,4 +1,6 @@
 @php
+    $newsletterErrors = $errors->getBag('newsletterSignup');
+
     $navigationLinks = [
         ['label' => 'Forside', 'href' => route('home')],
         ['label' => 'Om os', 'href' => route('sales.about')],
@@ -16,10 +18,15 @@
         ['label' => 'Betaling', 'href' => route('contact')],
     ];
 
-    $contactLinks = [
-        ['label' => 'Kontaktformular', 'href' => route('contact')],
-        ['label' => 'Prøv 30 dage gratis', 'href' => route('contact')],
-        ['label' => 'Kundelogin', 'href' => route('login')],
+    $socialPlatforms = [
+        ['label' => 'Instagram', 'platform' => 'instagram'],
+        ['label' => 'Facebook', 'platform' => 'facebook'],
+        ['label' => 'LinkedIn', 'platform' => 'linkedin'],
+    ];
+
+    $paymentMethods = [
+        ['label' => 'Visa', 'asset' => 'images/payments-official/visa.svg', 'class' => 'marketing-footer__payment-logo--visa'],
+        ['label' => 'Mastercard', 'asset' => 'images/payments-official/mastercard.png', 'class' => 'marketing-footer__payment-logo--mastercard'],
     ];
 @endphp
 
@@ -28,31 +35,35 @@
         <div class="ui-shell site-common-footer__inner">
             <section class="site-common-footer__section site-common-footer__section--brand">
                 <div class="site-common-footer__section-header">
-                    <h2 class="site-common-footer__section-title">PlateWeb</h2>
+                    <h2 class="site-common-footer__section-title">Kontaktoplysninger</h2>
                 </div>
 
-                <div class="site-common-footer__brand-block">
-                    <img
-                        src="{{ asset('images/logo/plateweb-sales.svg') }}"
-                        alt="PlateWeb"
-                        class="site-common-footer__logo"
-                    >
-
-                    <div class="site-common-footer__brand-copy">
-                        <p class="site-common-footer__contact-heading">Kontaktoplysninger:</p>
-                        <p class="site-common-footer__lead">
-                            PlateWeb ApS<br>
-                            CVR 88888888<br>
-                            +45 20 63 12 99<br>
-                            kontakt@plateweb.dk
-                        </p>
+                <div class="marketing-footer__brand-stack">
+                    <div class="site-common-footer__brand-block">
+                        <div class="site-common-footer__brand-copy">
+                            <p class="site-common-footer__lead">
+                                PlateDigital<br>
+                                CVR: 42456187<br>
+                                +45 20 63 12 99<br>
+                                hallo@plateweb.dk
+                            </p>
+                        </div>
                     </div>
-                </div>
 
-                <div class="site-common-footer__action">
-                    <a href="{{ route('contact') }}" class="site-common-footer__cta">
-                        Se kontaktformular
-                    </a>
+                    <div class="site-common-footer__action">
+                        <a href="{{ route('contact') }}" class="site-common-footer__cta">
+                            Se kontaktformular
+                        </a>
+                    </div>
+
+                    <div class="marketing-footer__powered-brand">
+                        <p class="marketing-footer__powered-by">En del af</p>
+                        <img
+                            src="{{ asset('images/logo/PlateDigital-logo-saas.svg') }}"
+                            alt="PlateDigital"
+                            class="site-common-footer__logo marketing-footer__brand-logo"
+                        >
+                    </div>
                 </div>
             </section>
 
@@ -82,16 +93,63 @@
 
             <section class="site-common-footer__section">
                 <div class="site-common-footer__section-header">
-                    <h2 class="site-common-footer__section-title">Kom videre</h2>
+                    <h2 class="site-common-footer__section-title">Kan du ikke få nok?</h2>
                 </div>
 
-                <div class="site-common-footer__contact-list">
-                    @foreach ($contactLinks as $link)
-                        <div class="site-common-footer__contact-item">
-                            <span class="site-common-footer__contact-label">{{ $loop->iteration < 10 ? '0'.$loop->iteration : $loop->iteration }}</span>
-                            <a href="{{ $link['href'] }}" class="site-common-footer__link">{{ $link['label'] }}</a>
+                <div class="marketing-footer__engagement">
+                    <div class="marketing-footer__engagement-block marketing-footer__engagement-block--social">
+                        <p class="marketing-footer__mini-heading">Følg os</p>
+
+                        <div class="marketing-footer__social-grid">
+                            @foreach ($socialPlatforms as $socialPlatform)
+                                <div class="marketing-footer__social-item">
+                                    <span class="marketing-footer__social-icon" aria-hidden="true">
+                                        @include('sites.shared.partials.social-icon', [
+                                            'platform' => $socialPlatform['platform'],
+                                            'class' => 'marketing-footer__social-svg',
+                                        ])
+                                    </span>
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                    </div>
+
+                    <div class="marketing-footer__engagement-block marketing-footer__engagement-block--newsletter" id="footer-newsletter">
+                        <p class="marketing-footer__mini-heading">Tilmeld dig vores nyhedsbrev</p>
+                        <p class="marketing-footer__newsletter-copy">
+                            Få nye designs, tips og opdateringer direkte i indbakken.
+                        </p>
+
+                        @if (session('newsletter_status'))
+                            <p class="ui-status marketing-footer__newsletter-status">{{ session('newsletter_status') }}</p>
+                        @endif
+
+                        <form method="POST" action="{{ route('newsletter.store') }}" class="marketing-footer__newsletter-form">
+                            @csrf
+
+                            <input
+                                id="footer-newsletter-email"
+                                name="newsletter_email"
+                                type="email"
+                                value="{{ old('newsletter_email') }}"
+                                class="ui-field__control marketing-footer__newsletter-input"
+                                placeholder="din@email.dk"
+                                aria-label="Email til nyhedsbrev"
+                                autocomplete="email"
+                                required
+                            >
+
+                            <button type="submit" class="ui-button ui-button--ink marketing-footer__newsletter-button">
+                                Tilmeld
+                            </button>
+                        </form>
+
+                        @if ($newsletterErrors->has('newsletter_email'))
+                            <p class="ui-field__error marketing-footer__newsletter-error">
+                                {{ $newsletterErrors->first('newsletter_email') }}
+                            </p>
+                        @endif
+                    </div>
                 </div>
             </section>
         </div>
@@ -99,9 +157,24 @@
 
     <div class="site-common-footer__subbar">
         <div class="ui-shell site-common-footer__subbar-inner">
-            <span>&copy; {{ now()->year }} PlateWeb</span>
-            <a href="{{ route('home') }}" class="site-common-footer__subbar-link">plateweb.dk</a>
-            <span>CVR 88888888</span>
+            <div class="marketing-footer__subbar-meta">
+                <span>&copy; {{ now()->year }} PlateDigital</span>
+                <a href="{{ route('home') }}" class="site-common-footer__subbar-link">plateweb.dk</a>
+                <span>CVR 42456187</span>
+                <div class="marketing-footer__payment-list marketing-footer__payment-list--subbar" aria-label="Betalingsmetoder">
+                    @foreach ($paymentMethods as $paymentMethod)
+                        <span class="marketing-footer__payment-badge marketing-footer__payment-badge--subbar">
+                            <img
+                                src="{{ asset($paymentMethod['asset']) }}"
+                                alt="{{ $paymentMethod['label'] }}"
+                                class="marketing-footer__payment-logo {{ $paymentMethod['class'] }}"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                        </span>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 </footer>

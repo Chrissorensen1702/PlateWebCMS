@@ -20,6 +20,7 @@ class LeadManagementController extends Controller
 
         $statusLabels = [
             'new' => 'Ny',
+            'newsletter' => 'Nyhedsbrev',
             'contacted' => 'Kontaktet',
             'closed' => 'Lukket',
         ];

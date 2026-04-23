@@ -10,46 +10,51 @@
 @section('main-content')
     <section class="ui-section ui-section--tight about-page__hero">
         <div class="ui-shell about-page__shell">
-            <div class="section-heading section-heading--split">
-                <div class="section-heading__content">
-                    <p class="section-heading__kicker">Om os</p>
-                    <h1 class="section-heading__title">Vi bygger loesninger, der samler hjemmeside, booking og CMS i samme retning.</h1>
-                </div>
-
-                <p class="section-heading__side">
-                    PlateWeb er bygget med tanke paa virksomheder, der gerne vil have et skarpere digitalt setup uden at drukne i
-                    flere forskellige systemer. Vi tror paa en enklere salgsmodel, tydeligere pakker og et CMS, der er nemt at
-                    komme tilbage til efter levering.
-                </p>
-            </div>
-
             <div class="about-page__grid">
-                <article class="ui-card ui-card--dark about-page__story">
-                    <p class="ui-kicker ui-kicker--light">Vores retning</p>
-                    <h2 class="ui-title">En mere samlet leverance fra foerste klik til daglig drift.</h2>
-                    <p class="about-page__story-copy">
-                        Tanken er at skabe et univers, hvor hjemmeside, bookingsystem og kundelogin ikke opleves som tre separate
-                        produkter, men som en samlet loesning kunden faktisk kan bruge. Det giver en mere helstøbt oplevelse udadtil
-                        og et mere kontrolleret setup bag kulissen.
-                    </p>
+                <aside class="about-page__journey">
+                    <ol class="about-page__timeline" aria-label="PlateWebs rejse">
+                        @foreach ($journey as $milestone)
+                            <li class="about-page__timeline-item">
+                                <span class="about-page__timeline-marker" aria-hidden="true"></span>
 
-                    <ul class="ui-list about-page__story-list">
-                        @foreach ($highlights as $highlight)
-                            <li class="ui-list__item">
-                                <span class="ui-list__dot"></span>
-                                <span>{{ $highlight }}</span>
+                                <div class="about-page__timeline-content">
+                                    <p class="about-page__timeline-year">{{ $milestone['year'] }}</p>
+                                    <h3 class="about-page__timeline-title">{{ $milestone['title'] }}</h3>
+                                    <p class="about-page__timeline-copy">{{ $milestone['copy'] }}</p>
+                                </div>
                             </li>
                         @endforeach
-                    </ul>
-                </article>
+                    </ol>
+                </aside>
 
-                <div class="about-page__stack">
-                    @foreach ($pillars as $pillar)
-                        <article class="ui-card about-page__note">
-                            <h2 class="about-page__note-title">{{ $pillar['title'] }}</h2>
-                            <p class="about-page__note-copy">{{ $pillar['copy'] }}</p>
-                        </article>
-                    @endforeach
+                <div class="about-page__content">
+                    <article class="ui-card ui-card--dark about-page__story">
+                        <p class="ui-kicker ui-kicker--light">Vores retning</p>
+                        <h2 class="ui-title">En mere samlet leverance fra foerste klik til daglig drift.</h2>
+                        <p class="about-page__story-copy">
+                            Tanken er at skabe et univers, hvor hjemmeside, bookingsystem og kundelogin ikke opleves som tre separate
+                            produkter, men som en samlet loesning kunden faktisk kan bruge. Det giver en mere helstoept oplevelse udadtil
+                            og et mere kontrolleret setup bag kulissen.
+                        </p>
+
+                        <ul class="ui-list about-page__story-list">
+                            @foreach ($highlights as $highlight)
+                                <li class="ui-list__item">
+                                    <span class="ui-list__dot"></span>
+                                    <span>{{ $highlight }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </article>
+
+                    <div class="about-page__stack">
+                        @foreach ($pillars as $pillar)
+                            <article class="ui-card about-page__note">
+                                <h2 class="about-page__note-title">{{ $pillar['title'] }}</h2>
+                                <p class="about-page__note-copy">{{ $pillar['copy'] }}</p>
+                            </article>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

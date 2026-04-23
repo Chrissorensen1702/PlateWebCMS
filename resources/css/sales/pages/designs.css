@@ -7,12 +7,6 @@
         background-repeat: no-repeat;
     }
 
-    .marketing-body--designs .ui-shell {
-        width: 100%;
-        max-width: none;
-        padding-inline: clamp(1.5rem, 3vw, 3rem);
-    }
-
     .marketing-body--designs .marketing-header {
         background: transparent;
         backdrop-filter: none;

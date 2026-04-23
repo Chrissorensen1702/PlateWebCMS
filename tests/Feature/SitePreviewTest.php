@@ -467,7 +467,7 @@ class SitePreviewTest extends TestCase
         $response->assertSee('aria-label="Instagram"', false);
         $response->assertSee('Alle rettigheder reserveret');
         $response->assertSee('PlateWeb.dk');
-        $response->assertSee('CVR: 88888888');
+        $response->assertSee('CVR: 42456187');
     }
 
     public function test_public_preview_filters_existing_unsafe_links_before_rendering(): void

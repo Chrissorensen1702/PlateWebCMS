@@ -1,14 +1,22 @@
+@php
+    $featureStoryEyebrow = $featureStoryEyebrow ?? 'Tre dele. Et samlet flow.';
+    $featureStoryCopy = $featureStoryCopy ?? 'I stedet for tre løse værktøjer får du én løsning, hvor hjemmesiden skaffer opmærksomhed, bookingen konverterer og CMS\'et holder siden levende.';
+    $featureStoryTrail = $featureStoryTrail ?? ['Website', 'Booking', 'CMS'];
+@endphp
+
 <div class="feature-story">
     <div class="feature-story__intro">
-        <p class="feature-story__eyebrow">Tre dele. Et samlet flow.</p>
+        <p class="feature-story__eyebrow">{{ $featureStoryEyebrow }}</p>
         <p class="feature-story__copy">
-            I stedet for tre løse værktøjer får du én løsning, hvor hjemmesiden skaffer opmærksomhed, bookingen konverterer og CMS'et holder siden levende.
+            {{ $featureStoryCopy }}
         </p>
-        <div class="feature-story__trail" aria-hidden="true">
-            <span>Website</span>
-            <span>Booking</span>
-            <span>CMS</span>
-        </div>
+        @if (! empty($featureStoryTrail))
+            <div class="feature-story__trail" aria-hidden="true">
+                @foreach ($featureStoryTrail as $trailItem)
+                    <span>{{ $trailItem }}</span>
+                @endforeach
+            </div>
+        @endif
     </div>
 
     <div class="feature-story__cards">
@@ -21,19 +29,15 @@
 
                 <div class="feature-story-card__visual" aria-hidden="true">
                     @if ($loop->iteration === 1)
-                        <div class="feature-graphic feature-graphic--browser">
-                            <div class="feature-graphic__browser-top">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="feature-graphic__browser-body">
-                                <div class="feature-graphic__hero-bar"></div>
-                                <div class="feature-graphic__hero-card"></div>
-                                <div class="feature-graphic__browser-grid">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
+                        <div class="feature-graphic feature-graphic--site-closeup">
+                            <div class="feature-graphic__closeup-frame">
+                                <div class="feature-graphic__closeup-header">
+                                    <span class="feature-graphic__closeup-brand">MÅNESKØN</span>
+                                </div>
+
+                                <div class="feature-graphic__closeup-hero">
+                                    <span class="feature-graphic__closeup-kicker">Din oase for skønhed og velvære</span>
+                                    <span class="feature-graphic__closeup-title">Velkommen!</span>
                                 </div>
                             </div>
                         </div>

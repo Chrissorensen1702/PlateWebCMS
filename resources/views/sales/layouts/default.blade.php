@@ -7,8 +7,6 @@
 
         <title>{{ trim($__env->yieldContent('title')) !== '' ? trim($__env->yieldContent('title')).' | '.config('app.name', 'CMS Studio') : config('app.name', 'CMS Studio') }}</title>
 
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=sora:400,500,600,700|space-grotesk:400,500,700&display=swap" rel="stylesheet" />
         <script>document.documentElement.classList.add('js-ready');</script>
 
         @vite(['resources/css/sales/app.css', 'resources/js/sales/app.js'])

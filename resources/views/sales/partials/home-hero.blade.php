@@ -2,7 +2,7 @@
     <div class="marketing-hero__surface">
         <div class="marketing-hero__shell">
             <div class="marketing-hero__intro">
-                <div class="marketing-hero__copy">
+                <div class="marketing-hero__copy" data-reveal style="--reveal-delay: 40ms;">
                     <p class="marketing-hero__eyebrow">
                         <span class="marketing-hero__eyebrow-text">Direkte booking på egen hjemmeside</span>
                     </p>
@@ -15,12 +15,12 @@
                     </p>
                 </div>
 
-                <div class="marketing-hero__actions">
+                <div class="marketing-hero__actions" data-reveal style="--reveal-delay: 130ms;">
                     <a href="{{ route('templates') }}" class="ui-button ui-button--ink marketing-hero__button marketing-hero__button--solid">Beregn din pris</a>
                     <a href="#produkt-bookingsystem" class="ui-button ui-button--outline marketing-hero__button marketing-hero__button--ghost">Se bookingflow</a>
                 </div>
 
-                <ul class="marketing-hero__feature-strip" aria-label="Platformens styrker">
+                <ul class="marketing-hero__feature-strip" aria-label="Platformens styrker" data-reveal style="--reveal-delay: 220ms;">
                     <li class="marketing-hero__feature-step">
                         <span class="marketing-hero__feature-pill">Nem website designer</span>
                     </li>
@@ -34,12 +34,14 @@
                         <span class="marketing-hero__feature-pill">Integreret betaling</span>
                     </li>
                     <li class="marketing-hero__feature-step marketing-hero__feature-step--solution">
-                        <span class="marketing-hero__feature-pill marketing-hero__feature-pill--solution">Samlet på én enhed</span>
+                        <span class="marketing-hero__feature-pill marketing-hero__feature-pill--solution">
+                            <span class="marketing-hero__feature-brand marketing-hero__feature-brand--plate">Plate</span><span class="marketing-hero__feature-brand marketing-hero__feature-brand--web">Web</span>
+                        </span>
                     </li>
                 </ul>
             </div>
 
-            <div class="marketing-hero__showcase" aria-label="PlateWeb website preview">
+            <div class="marketing-hero__showcase" aria-label="PlateWeb website preview" data-reveal style="--reveal-delay: 140ms; --reveal-transform: translate3d(2.5rem, 0, 0) scale(0.97);">
                 <div class="marketing-hero__device-scene">
                     <div class="marketing-hero__browser">
                         <div class="marketing-hero__browser-body">

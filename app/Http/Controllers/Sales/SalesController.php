@@ -20,74 +20,6 @@ class SalesController extends Controller
         return view('sales.pages.home', [
             'templatePlans' => $plans->where('is_custom', false)->values(),
             'customTrackCount' => $plans->where('is_custom', true)->count(),
-            'homeFeatures' => [
-                [
-                    'emoji' => '🌐',
-                    'title' => 'Hjemmeside',
-                    'points' => [
-                        'Modulopbygget sidebygning',
-                        'Farver der matcher dit brand',
-                        'Kunde-CMS til hurtige opdateringer',
-                        'Domæne og DNS sat rigtigt op',
-                    ],
-                    'href' => route('templates'),
-                ],
-                [
-                    'emoji' => '📅',
-                    'logo' => 'platebook',
-                    'id' => 'produkt-bookingsystem',
-                    'title' => 'Bookingsystem',
-                    'points' => [
-                        'Integreret booking på din hjemmeside',
-                        'Medarbejdere og kompetencer samlet',
-                        'Overskuelig vagtplan',
-                        'Aktivitetslog med historik',
-                    ],
-                    'href' => route('contact'),
-                ],
-                [
-                    'emoji' => '📊',
-                    'title' => 'Statistik',
-                    'points' => [
-                        'Indblik i populære ydelser',
-                        'Omsætning og bruttoavance pr. periode',
-                        'NPS og kundeanmeldelser',
-                    ],
-                    'href' => route('contact'),
-                ],
-                [
-                    'emoji' => '💸',
-                    'title' => 'Betaling',
-                    'points' => [
-                        'Hent ydelser direkte til betaling',
-                        'Kortbetaling',
-                        'Kontant betaling',
-                        'MobilePay',
-                    ],
-                    'href' => route('contact'),
-                ],
-            ],
-            'highlights' => [
-                [
-                    'title' => 'Templates med fart i leveringen',
-                    'copy' => 'Fa faste pakker, tydelige rammer og et setup der er hurtigt at saelge igen og igen.',
-                    'href' => route('templates'),
-                    'label' => 'Se template-pakker',
-                ],
-                [
-                    'title' => 'Custom build uden nyt bagland hver gang',
-                    'copy' => 'Specialdesignede sites kan stadig lande i samme CMS-fundament, saa du genbruger login og indholdsmoduler.',
-                    'href' => route('custom-build'),
-                    'label' => 'Laes om custom build',
-                ],
-                [
-                    'title' => 'Kunde-CMS som en fast del af pakken',
-                    'copy' => 'Kunden redigerer kun de sektioner du har gjort tilgaengelige, mens layout og kvalitet forbliver under kontrol.',
-                    'href' => route('sales.customer-cms'),
-                    'label' => 'Se CMS-retningen',
-                ],
-            ],
-            'steps' => $this->steps(),
         ]);
     }
 
@@ -162,6 +94,28 @@ class SalesController extends Controller
     public function about(): View
     {
         return view('sales.pages.about', [
+            'journey' => [
+                [
+                    'year' => '2022',
+                    'title' => 'Ideen tager form',
+                    'copy' => 'Udgangspunktet var et oenske om at samle hjemmeside, booking og CMS i en mere gennemsigtig loesning for mindre virksomheder.',
+                ],
+                [
+                    'year' => '2023',
+                    'title' => 'Strukturen bliver tydelig',
+                    'copy' => 'Pakker, arbejdsproces og retning blev skabt med fokus paa enkelhed, sa det er lettere at forstaa baade pris, indhold og muligheder.',
+                ],
+                [
+                    'year' => '2024',
+                    'title' => 'Platformen begynder at samle sig',
+                    'copy' => 'Flere dele af universet bliver taenkt som en samlet oplevelse, hvor design, drift og opdateringer skal spille bedre sammen.',
+                ],
+                [
+                    'year' => 'Nu',
+                    'title' => 'Vi bygger videre med samme retning',
+                    'copy' => 'Maalet er stadig det samme: at skabe en mere helstoept digital leverance, som kunder faktisk kan bruge i hverdagen.',
+                ],
+            ],
             'pillars' => [
                 [
                     'title' => 'Vi bygger sammenhaengende loesninger',

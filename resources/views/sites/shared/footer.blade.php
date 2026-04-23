@@ -173,7 +173,7 @@
         <div class="ui-shell site-common-footer__subbar-inner">
             <span>&copy; Alle rettigheder reserveret</span>
             <a href="https://plateweb.dk" class="site-common-footer__subbar-link" target="_blank" rel="noreferrer">PlateWeb.dk</a>
-            <span>CVR: 88888888</span>
+            <span>CVR: 42456187</span>
         </div>
     </div>
 </footer>

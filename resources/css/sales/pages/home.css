@@ -1,8 +1,809 @@
 @layer components {
-    .marketing-body--home .ui-shell {
+    .marketing-body--home {
+        --marketing-home-muted-surface: rgb(var(--color-header-surface-rgb) / 0.94);
+        --marketing-home-muted-surface-soft: rgb(var(--color-surface-alt-rgb) / 0.92);
+        background: #fff;
+    }
+
+    .marketing-body--home .marketing-body__glow--top,
+    .marketing-body--home .marketing-body__glow--side {
+        display: none;
+    }
+
+    .marketing-body--home [x-cloak] {
+        display: none !important;
+    }
+
+    .marketing-body--home .marketing-header {
+        background: rgb(255 255 255 / 0.92);
+        border-bottom: 1px solid rgb(var(--color-border-rgb) / 0.68);
+        backdrop-filter: blur(12px);
+    }
+
+    .marketing-benefits-section {
+        padding-top: clamp(0.35rem, 1vw, 0.85rem);
+        padding-bottom: clamp(2.25rem, 4vw, 3.75rem);
+        background: #fff;
+    }
+
+    .marketing-benefits-section__shell {
+        display: grid;
+        gap: clamp(1.5rem, 2.6vw, 2.4rem);
+    }
+
+    .marketing-benefits-intro {
+        display: grid;
+        gap: 0.9rem;
+        max-width: 44rem;
+        justify-self: center;
+        text-align: center;
+    }
+
+    .marketing-benefits-kicker {
+        justify-self: center;
+        margin: 0;
+        color: rgb(var(--color-primary-rgb) / 0.95);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+    }
+
+    .marketing-benefits-title {
+        margin: 0;
+        color: var(--color-ink);
+        font-size: clamp(2rem, 3.6vw, 3rem);
+        font-weight: 500;
+        line-height: 0.98;
+        letter-spacing: -0.05em;
+    }
+
+    .marketing-benefits-copy {
+        margin: 0;
+        max-width: 40rem;
+        justify-self: center;
+        color: rgb(var(--color-text-rgb) / 0.78);
+        font-size: 1rem;
+        line-height: 1.72;
+    }
+
+    .marketing-benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.05rem;
+    }
+
+    .marketing-benefit-card {
+        --marketing-benefit-accent-rgb: var(--color-primary-rgb);
+
+        position: relative;
+        display: grid;
+        align-content: space-between;
+        gap: 1.2rem;
+        min-height: 12.4rem;
+        padding: 1.45rem;
+        border: 1px solid rgb(var(--marketing-benefit-accent-rgb) / 0.16);
+        border-radius: 1.35rem;
+        background:
+            radial-gradient(circle at 90% 14%, rgb(var(--marketing-benefit-accent-rgb) / 0.15), transparent 30%),
+            linear-gradient(145deg, #fff 0%, rgb(var(--color-header-surface-rgb) / 0.26) 100%);
+        box-shadow:
+            0 18px 36px rgb(var(--color-ink-rgb) / 0.04),
+            inset 0 1px 0 rgb(255 255 255 / 0.78);
+        overflow: hidden;
+        isolation: isolate;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .marketing-benefit-card:nth-child(2) {
+        --marketing-benefit-accent-rgb: var(--color-header-accent-rgb);
+    }
+
+    .marketing-benefit-card:nth-child(3) {
+        --marketing-benefit-accent-rgb: var(--color-accent-rgb);
+    }
+
+    .marketing-benefit-card:nth-child(4) {
+        --marketing-benefit-accent-rgb: 66 132 102;
+    }
+
+    .marketing-benefit-card:nth-child(5) {
+        --marketing-benefit-accent-rgb: 111 116 196;
+    }
+
+    .marketing-benefit-card:nth-child(6) {
+        --marketing-benefit-accent-rgb: 46 115 145;
+    }
+
+    .marketing-benefit-card:hover {
+        border-color: rgb(var(--marketing-benefit-accent-rgb) / 0.34);
+        box-shadow:
+            0 22px 46px rgb(var(--color-ink-rgb) / 0.07),
+            0 0 0 0.22rem rgb(var(--marketing-benefit-accent-rgb) / 0.07);
+        transform: translateY(-2px);
+    }
+
+    .marketing-benefit-card--with-visual-image {
+        min-height: 14rem;
+        background:
+            linear-gradient(90deg, #fff 0%, rgb(255 255 255 / 0.98) 43%, rgb(var(--marketing-benefit-accent-rgb) / 0.1) 100%),
+            linear-gradient(145deg, #fff 0%, rgb(var(--color-header-surface-rgb) / 0.26) 100%);
+    }
+
+    .marketing-benefit-card--with-visual-image .marketing-benefit-card__header,
+    .marketing-benefit-card--with-visual-image .marketing-benefit-card__description {
+        max-width: 50%;
+    }
+
+    .marketing-benefit-card--with-media {
+        position: relative;
+        gap: 1rem;
+        overflow: hidden;
+    }
+
+    .marketing-benefit-card__media {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: clamp(13rem, 20vw, 16.5rem);
+        margin: 0 -1.35rem 0;
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .marketing-benefit-card__media::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        z-index: 2;
+        height: 48%;
+        background: linear-gradient(
+            180deg,
+            rgb(255 255 255 / 0) 0%,
+            rgb(255 255 255 / 0.78) 52%,
+            #fff 100%
+        );
+        pointer-events: none;
+    }
+
+    .marketing-benefit-card__image {
+        display: block;
+        width: min(110%, 22rem);
+        height: auto;
+        margin: 0.15rem 0 -4.15rem clamp(0.15rem, 1.4vw, 0.9rem);
+        border: 1px solid rgb(var(--color-border-rgb) / 0.62);
+        border-radius: 1.1rem;
+        box-shadow:
+            0 18px 42px rgb(var(--color-ink-rgb) / 0.1),
+            inset 0 1px 0 rgb(255 255 255 / 0.68);
+        transform: none;
+    }
+
+    .marketing-benefit-card__header {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.9rem;
+    }
+
+    .marketing-benefit-card__icon {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.05rem;
+        height: 3.05rem;
+        border: 1px solid rgb(var(--marketing-benefit-accent-rgb) / 0.16);
+        border-radius: 1.05rem;
+        background:
+            linear-gradient(135deg, rgb(var(--marketing-benefit-accent-rgb) / 0.98), rgb(var(--marketing-benefit-accent-rgb) / 0.66)),
+            #fff;
+        box-shadow:
+            0 14px 28px rgb(var(--marketing-benefit-accent-rgb) / 0.2),
+            inset 0 1px 0 rgb(255 255 255 / 0.32);
+        color: #fff;
+    }
+
+    .marketing-benefit-card__icon svg {
+        width: 1.24rem;
+        height: 1.24rem;
+        display: block;
+    }
+
+    .marketing-benefit-card__title {
+        margin: 0;
+        color: var(--color-ink);
+        font-size: 1.1rem;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .marketing-benefit-card__visual {
+        position: absolute;
+        top: 1.05rem;
+        right: 1rem;
+        z-index: 1;
+        width: min(42%, 11rem);
+        min-width: 8.4rem;
+        height: 5.8rem;
+        color: rgb(var(--marketing-benefit-accent-rgb) / 1);
+        opacity: 0.34;
+        pointer-events: none;
+        transform: rotate(-2deg);
+    }
+
+    .marketing-benefit-card__visual::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgb(255 255 255 / 0.82) 0%, rgb(255 255 255 / 0.16) 62%, rgb(255 255 255 / 0) 100%);
+    }
+
+    .marketing-benefit-card--with-visual-image .marketing-benefit-card__visual--calendar {
+        top: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        width: 48%;
+        min-width: 12.5rem;
+        height: auto;
+        opacity: 1;
+        overflow: hidden;
+        border: 1px solid rgb(var(--marketing-benefit-accent-rgb) / 0.26);
+        border-radius: 1.05rem;
+        background: #eef4f0;
+        box-shadow:
+            0 20px 44px rgb(var(--marketing-benefit-accent-rgb) / 0.2),
+            inset 0 1px 0 rgb(255 255 255 / 0.92);
+        transform: none;
+    }
+
+    .marketing-benefit-card--with-visual-image .marketing-benefit-card__visual--calendar::after {
+        display: block;
+        background:
+            linear-gradient(90deg, rgb(255 255 255 / 0) 0%, rgb(255 255 255 / 0.08) 62%, rgb(255 255 255 / 0.26) 100%),
+            linear-gradient(180deg, rgb(255 255 255 / 0) 0%, rgb(255 255 255 / 0) 72%, rgb(255 255 255 / 0.34) 100%);
+    }
+
+    .marketing-benefit-visual__image {
+        display: block;
         width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        border: 1px solid rgb(var(--marketing-benefit-accent-rgb) / 0.22);
+        border-radius: 1rem;
+        box-shadow:
+            0 18px 34px rgb(var(--marketing-benefit-accent-rgb) / 0.14),
+            inset 0 1px 0 rgb(255 255 255 / 0.8);
+    }
+
+    .marketing-benefit-card--with-visual-image .marketing-benefit-card__visual--calendar .marketing-benefit-visual__image {
+        opacity: 1;
+        width: 100%;
+        height: 100%;
+        object-position: left top;
+        border: 0;
+        border-radius: inherit;
+        background: #eef4f0;
+        box-shadow: none;
+        filter: saturate(1.22) contrast(1.85) brightness(0.82);
+        mix-blend-mode: normal;
+        transform: scale(1.55);
+        transform-origin: left top;
+    }
+
+    .marketing-benefit-visual__frame {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        gap: 0.42rem;
+        align-content: center;
+        padding: 0.72rem;
+        border: 1px solid currentColor;
+        border-radius: 1rem;
+        background:
+            linear-gradient(135deg, rgb(255 255 255 / 0.9), rgb(var(--marketing-benefit-accent-rgb) / 0.13)),
+            #fff;
+        box-shadow:
+            0 18px 34px rgb(var(--marketing-benefit-accent-rgb) / 0.12),
+            inset 0 1px 0 rgb(255 255 255 / 0.8);
+    }
+
+    .marketing-benefit-visual__line,
+    .marketing-benefit-visual__button,
+    .marketing-benefit-visual__time,
+    .marketing-benefit-visual__card-line {
+        display: block;
+        width: 58%;
+        height: 0.38rem;
+        border-radius: 9999px;
+        background: currentColor;
+    }
+
+    .marketing-benefit-visual__line--wide {
+        width: 78%;
+    }
+
+    .marketing-benefit-visual__tiles,
+    .marketing-benefit-visual__toolbar,
+    .marketing-benefit-visual__calendar-row,
+    .marketing-benefit-visual__calendar-grid {
+        display: grid;
+        gap: 0.34rem;
+    }
+
+    .marketing-benefit-visual__tiles {
+        grid-template-columns: 1.25fr 0.85fr 0.85fr;
+    }
+
+    .marketing-benefit-visual__tiles span,
+    .marketing-benefit-visual__calendar-grid span {
+        min-height: 1.18rem;
+        border-radius: 0.42rem;
+        background: currentColor;
+    }
+
+    .marketing-benefit-visual__toolbar,
+    .marketing-benefit-visual__calendar-row,
+    .marketing-benefit-visual__calendar-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .marketing-benefit-visual__toolbar span,
+    .marketing-benefit-visual__calendar-row span,
+    .marketing-benefit-visual__chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 1.22rem;
+        border-radius: 9999px;
+        background: rgb(var(--marketing-benefit-accent-rgb) / 0.16);
+        color: currentColor;
+        font-size: 0.58rem;
+        font-weight: 800;
+    }
+
+    .marketing-benefit-visual__time {
+        width: 68%;
+        height: 1.1rem;
+        border-radius: 0.45rem;
+    }
+
+    .marketing-benefit-visual__button {
+        justify-self: end;
+        width: 46%;
+        height: 0.9rem;
+    }
+
+    .marketing-benefit-visual__button--full {
+        justify-self: stretch;
+        width: auto;
+    }
+
+    .marketing-benefit-visual__calendar-grid {
+        grid-template-rows: repeat(2, 1.45rem);
+    }
+
+    .marketing-benefit-visual__calendar-grid span:nth-child(2),
+    .marketing-benefit-visual__calendar-grid span:nth-child(5) {
+        grid-column: span 2;
+    }
+
+    .marketing-benefit-visual__card-line {
+        width: 82%;
+        height: 0.5rem;
+    }
+
+    .marketing-benefit-visual__card-line--short {
+        width: 48%;
+    }
+
+    .marketing-benefit-visual__check {
+        position: absolute;
+        right: 0.78rem;
+        bottom: 0.72rem;
+        width: 1.55rem;
+        height: 1.55rem;
+        border-radius: 9999px;
+        background: currentColor;
+    }
+
+    .marketing-benefit-visual__check::after {
+        content: "";
+        position: absolute;
+        left: 0.48rem;
+        top: 0.36rem;
+        width: 0.42rem;
+        height: 0.72rem;
+        border: solid #fff;
+        border-width: 0 0.16rem 0.16rem 0;
+        transform: rotate(45deg);
+    }
+
+    .marketing-benefit-visual__chip {
+        justify-content: flex-start;
+        padding: 0 0.55rem;
+    }
+
+    .marketing-benefit-card__description {
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        color: rgb(var(--color-text-rgb) / 0.78);
+        font-size: 0.96rem;
+        line-height: 1.68;
+    }
+
+    .marketing-benefits-actions {
+        display: flex;
+        justify-content: center;
+        padding-top: 0.35rem;
+    }
+
+    .marketing-benefits-button {
+        min-height: 3rem;
+        padding-inline: 1.35rem;
+    }
+
+    .marketing-benefits-tabs {
+        display: grid;
+        gap: 1.1rem;
+    }
+
+    .marketing-benefits-tabs__list-wrap {
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 100vw;
+        margin-inline: calc(50% - 50vw);
+        overflow-x: auto;
+        padding: 0 var(--marketing-inline-padding) 0.15rem;
+        scrollbar-width: none;
+    }
+
+    .marketing-benefits-tabs__list-wrap::-webkit-scrollbar {
+        display: none;
+    }
+
+    .marketing-benefits-tabs__list {
+        position: relative;
+        display: inline-flex;
+        gap: 0.35rem;
+        padding: 0.35rem;
+        border: 1px solid rgb(var(--color-border-rgb) / 0.72);
+        border-radius: 9999px;
+        background: rgb(255 255 255 / 0.86);
+        box-shadow:
+            0 18px 40px rgb(var(--color-ink-rgb) / 0.06),
+            inset 0 1px 0 rgb(255 255 255 / 0.8);
+    }
+
+    .marketing-benefits-tabs__indicator {
+        position: absolute;
+        top: 0.35rem;
+        bottom: 0.35rem;
+        left: 0;
+        z-index: 0;
+        border-radius: 9999px;
+        background: var(--color-ink);
+        box-shadow: 0 12px 24px rgb(var(--color-ink-rgb) / 0.18);
+        pointer-events: none;
+        transition:
+            transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+            width 520ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 180ms ease;
+        will-change: transform, width;
+    }
+
+    .marketing-benefits-tabs__tab {
+        position: relative;
+        z-index: 1;
+        min-height: 2.75rem;
+        padding: 0 1.15rem;
+        border: 0;
+        border-radius: 9999px;
+        background: transparent;
+        color: rgb(var(--color-text-rgb) / 0.74);
+        font-size: 0.92rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .marketing-benefits-tabs__tab:hover {
+        color: var(--color-ink);
+        transform: translateY(-1px);
+    }
+
+    .marketing-benefits-tabs__tab.is-active {
+        color: #fff;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .marketing-benefits-tabs__indicator {
+            transition: none;
+        }
+    }
+
+    .marketing-benefits-tabs__panels {
+        position: relative;
+        display: grid;
+        overflow: hidden;
+    }
+
+    .marketing-benefits-panel {
+        grid-area: 1 / 1;
+        width: 100%;
+        min-width: 0;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        transform-origin: center top;
+        backface-visibility: hidden;
+    }
+
+    .marketing-benefits-panel[hidden],
+    .marketing-benefits-panel.is-hidden {
+        display: none !important;
+    }
+
+    .marketing-benefits-panel.is-active .marketing-benefits-panel__media-column {
+        animation: marketing-benefits-panel-media-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .marketing-benefits-panel.is-active .marketing-benefits-panel__content-column {
+        animation: marketing-benefits-panel-content-in 560ms cubic-bezier(0.22, 1, 0.36, 1) 60ms both;
+    }
+
+    @keyframes marketing-benefits-panel-media-in {
+        from {
+            opacity: 0;
+            transform: translate3d(var(--benefits-panel-enter-x-soft, 0.75rem), 0.35rem, 0) scale(0.985);
+            filter: blur(8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+            filter: blur(0);
+        }
+    }
+
+    @keyframes marketing-benefits-panel-content-in {
+        from {
+            opacity: 0;
+            transform: translate3d(var(--benefits-panel-enter-x, 1.25rem), 0.55rem, 0) scale(0.99);
+            filter: blur(8px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+            filter: blur(0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .marketing-benefits-panel.is-active .marketing-benefits-panel__media-column,
+        .marketing-benefits-panel.is-active .marketing-benefits-panel__content-column {
+            animation: none;
+        }
+    }
+
+    .marketing-benefits-panel__inner {
+        --marketing-benefits-media-height: clamp(22rem, 34vw, 29rem);
+
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(22rem, 0.98fr);
+        align-items: start;
+        gap: clamp(1.4rem, 4vw, 3.8rem);
+        min-height: clamp(28rem, 42vw, 34rem);
+        padding: clamp(1.5rem, 3vw, 2.8rem) 0 0;
+    }
+
+    .marketing-benefits-panel__media-column,
+    .marketing-benefits-panel__content-column {
+        min-width: 0;
+    }
+
+    .marketing-benefits-panel__media-column {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: start;
+        width: 100%;
+        height: var(--marketing-benefits-media-height);
+        min-height: var(--marketing-benefits-media-height);
+    }
+
+    .marketing-benefits-panel__content-column {
+        display: flex;
+        align-items: center;
+        align-self: start;
+        min-height: var(--marketing-benefits-media-height);
+    }
+
+    .marketing-benefits-panel__visual {
+        --marketing-benefits-visual-pad: clamp(1rem, 2vw, 1.7rem);
+        --marketing-benefits-image-width: min(76%, 34rem);
+        --marketing-benefits-image-height: 68%;
+
+        position: relative;
+        flex: 1 1 auto;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        margin: 0;
+        overflow: hidden;
+        border: 0;
+        border-radius: clamp(1.25rem, 2vw, 1.8rem);
+        background:
+            radial-gradient(circle at 18% 18%, rgb(255 255 255 / 0.28), transparent 32%),
+            linear-gradient(135deg, rgb(var(--color-primary-rgb) / 0.22), rgb(var(--color-primary-rgb) / 0.36));
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.42);
+        isolation: isolate;
+    }
+
+    .marketing-benefits-panel__visual::after {
+        display: none;
+    }
+
+    .marketing-benefits-panel__visual img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        width: var(--marketing-benefits-image-width);
+        height: var(--marketing-benefits-image-height);
+        object-fit: contain;
+        object-position: center;
+        border-radius: clamp(0.85rem, 1.35vw, 1.15rem);
+        transform: translate(-50%, -50%);
+    }
+
+    .marketing-benefits-panel__visual--solution,
+    .marketing-benefits-panel__visual--booking {
+        display: block;
+        padding: 0;
+        background:
+            radial-gradient(circle at 18% 18%, rgb(255 255 255 / 0.3), transparent 32%),
+            linear-gradient(135deg, rgb(var(--color-primary-rgb) / 0.2), rgb(var(--color-primary-rgb) / 0.34));
+    }
+
+    .marketing-benefits-panel__visual--solution img,
+    .marketing-benefits-panel__visual--booking img {
+        width: min(92%, 48rem);
+        height: auto;
         max-width: none;
-        padding-inline: clamp(1.5rem, 3vw, 3rem);
+        max-height: none;
+        object-fit: contain;
+        object-position: center;
+        border-radius: 0;
+        filter: none;
+        transform: translate(-50%, -50%) scale(1.45);
+        transform-origin: center;
+    }
+
+    .marketing-benefits-panel__visual--website img {
+        object-position: center top;
+        filter: saturate(1.04) contrast(1.03);
+    }
+
+    .marketing-benefits-panel__visual--payment img {
+        object-position: left top;
+        filter: saturate(1.04) contrast(1.08);
+    }
+
+    .marketing-benefits-panel__visual--employee {
+        background:
+            radial-gradient(circle at 18% 18%, rgb(255 255 255 / 0.3), transparent 32%),
+            linear-gradient(135deg, rgb(var(--color-primary-rgb) / 0.2), rgb(var(--color-primary-rgb) / 0.34));
+    }
+
+    .marketing-benefits-panel__visual--employee img {
+        object-position: left top;
+        filter: saturate(1.12) contrast(1.2) brightness(0.94);
+    }
+
+    .marketing-benefits-panel__visual--customer-app img {
+        object-position: center;
+        filter: saturate(1.06) contrast(1.04);
+    }
+
+    .marketing-benefits-panel__content {
+        display: grid;
+        gap: clamp(1.25rem, 2.2vw, 1.85rem);
+        width: 100%;
+    }
+
+    .marketing-benefits-panel__heading {
+        display: grid;
+        gap: 0.75rem;
+    }
+
+    .marketing-benefits-panel__eyebrow {
+        margin: 0;
+        color: rgb(213 172 64 / 0.96);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .marketing-benefits-panel__heading h3 {
+        margin: 0;
+        max-width: 24ch;
+        color: var(--color-ink);
+        font-size: clamp(1.65rem, 2.25vw, 2.35rem);
+        font-weight: 500;
+        line-height: 1.08;
+        letter-spacing: -0.035em;
+    }
+
+    .marketing-benefits-panel__heading p {
+        margin: 0;
+        max-width: 40rem;
+        color: rgb(var(--color-text-rgb) / 0.78);
+        font-size: clamp(1rem, 1.25vw, 1.12rem);
+        line-height: 1.72;
+    }
+
+    .marketing-benefits-feature-list {
+        display: grid;
+        gap: 0.2rem;
+    }
+
+    .marketing-benefits-feature {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.85rem;
+        padding: 1rem 0;
+        border-top: 1px solid rgb(var(--color-border-rgb) / 0.66);
+    }
+
+    .marketing-benefits-feature__check {
+        position: relative;
+        width: 1.55rem;
+        height: 1.55rem;
+        margin-top: 0.12rem;
+        border-radius: 9999px;
+        background:
+            linear-gradient(135deg, rgb(var(--color-primary-rgb) / 0.96), rgb(var(--color-accent-rgb) / 0.78)),
+            var(--color-primary);
+        box-shadow: 0 10px 18px rgb(var(--color-primary-rgb) / 0.18);
+    }
+
+    .marketing-benefits-feature__check::after {
+        content: "";
+        position: absolute;
+        left: 0.52rem;
+        top: 0.34rem;
+        width: 0.42rem;
+        height: 0.74rem;
+        border: solid #fff;
+        border-width: 0 0.14rem 0.14rem 0;
+        transform: rotate(45deg);
+    }
+
+    .marketing-benefits-feature h4 {
+        margin: 0;
+        color: var(--color-ink);
+        font-size: 1.04rem;
+        font-weight: 800;
+        line-height: 1.25;
+    }
+
+    .marketing-benefits-feature p {
+        margin: 0.3rem 0 0;
+        color: rgb(var(--color-text-rgb) / 0.72);
+        font-size: 0.96rem;
+        line-height: 1.58;
     }
 
     .marketing-process-heading {
@@ -26,10 +827,10 @@
     }
 
     .marketing-process-section__shell {
-        width: 100%;
+        width: min(100%, var(--marketing-shell-wide-max));
         max-width: none;
         margin: 0 auto;
-        padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 3rem) clamp(3rem, 5vw, 4.5rem);
+        padding: clamp(1.5rem, 3vw, 2.5rem) var(--marketing-inline-padding) clamp(3rem, 5vw, 4.5rem);
     }
 
     .marketing-hero {
@@ -41,7 +842,7 @@
         position: relative;
         overflow: hidden;
         width: 100%;
-        background: transparent;
+        background: #fff;
     }
 
     .marketing-hero__shell {
@@ -170,11 +971,30 @@
     }
 
     .marketing-hero__button--solid {
-        box-shadow: 0 16px 36px rgb(var(--color-ink-rgb) / 0.16);
+        border-color: rgb(var(--color-header-ink-rgb) / 0.96);
+        background: var(--color-ink);
+        box-shadow:
+            0 18px 34px rgb(var(--color-ink-rgb) / 0.18),
+            0 0 0 0.28rem rgb(var(--color-primary-rgb) / 0.1);
+        color: #fff;
+    }
+
+    .marketing-hero__button--solid:hover {
+        border-color: rgb(var(--color-primary-rgb) / 0.96);
+        background: var(--color-primary-hover);
+        box-shadow:
+            0 22px 42px rgb(var(--color-primary-rgb) / 0.22),
+            0 0 0 0.32rem rgb(var(--color-primary-rgb) / 0.13);
     }
 
     .marketing-hero__button--ghost {
-        background: rgb(255 255 255 / 0.62);
+        border-color: rgb(var(--color-border-rgb) / 0.86);
+        background: var(--marketing-home-muted-surface-soft);
+    }
+
+    .marketing-hero__button--ghost:hover {
+        border-color: rgb(var(--color-primary-rgb) / 0.24);
+        background: var(--marketing-home-muted-surface);
     }
 
     .marketing-hero__feature-strip {
@@ -204,7 +1024,7 @@
         flex: 0 0 auto;
         width: 1rem;
         height: 0.58rem;
-        background: rgb(var(--color-primary-rgb) / 0.78);
+        background: rgb(var(--color-primary-rgb) / 0.92);
         clip-path: polygon(0 40%, 0 60%, 62% 60%, 62% 100%, 100% 50%, 62% 0, 62% 40%);
         opacity: 0;
         transform: translateY(1px) scaleX(0.2);
@@ -259,11 +1079,17 @@
         justify-content: center;
         min-height: 2rem;
         padding: 0.5rem 0.78rem;
-        border: 1px solid rgb(var(--color-ink-rgb) / 0.08);
+        border: 1px solid rgb(var(--color-primary-rgb) / 0.2);
         border-radius: 9999px;
-        background: rgb(255 255 255 / 0.7);
-        box-shadow: 0 14px 32px rgb(var(--color-ink-rgb) / 0.06);
-        color: var(--color-ink);
+        background: linear-gradient(
+            180deg,
+            rgb(var(--color-header-surface-rgb) / 0.96) 0%,
+            rgb(var(--color-surface-alt-rgb) / 0.94) 100%
+        );
+        box-shadow:
+            0 14px 32px rgb(var(--color-primary-rgb) / 0.1),
+            inset 0 1px 0 rgb(255 255 255 / 0.7);
+        color: rgb(var(--color-primary-rgb) / 1);
         font-size: 0.63rem;
         font-weight: 700;
         letter-spacing: 0.1em;
@@ -273,14 +1099,38 @@
     }
 
     .marketing-hero__feature-pill--solution {
-        border-color: rgb(var(--color-primary-rgb) / 0.14);
-        background: linear-gradient(135deg, rgb(var(--color-primary-rgb) / 0.96) 0%, rgb(var(--color-header-ink-rgb) / 0.96) 100%);
-        box-shadow: 0 18px 38px rgb(var(--color-header-ink-rgb) / 0.18);
-        color: rgb(255 255 255 / 0.98);
+        min-width: 7.8rem;
+        padding-inline: 1.15rem;
+        border-color: rgb(var(--color-primary-rgb) / 0.36);
+        background: linear-gradient(180deg, #fff 0%, rgb(var(--color-header-surface-rgb) / 0.94) 100%);
+        box-shadow:
+            0 18px 38px rgb(var(--color-primary-rgb) / 0.16),
+            0 0 0 0.2rem rgb(var(--color-primary-rgb) / 0.09),
+            inset 0 1px 0 rgb(255 255 255 / 0.8);
+        color: var(--color-ink);
+        font-family: Baskerville, "Iowan Old Style", "Times New Roman", serif;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        text-transform: none;
         will-change: transform, box-shadow, filter;
         animation:
             marketing-hero-feature-solution-pop 0.72s cubic-bezier(0.22, 0.9, 0.24, 1.16) 1s both,
             marketing-hero-feature-solution-glow 0.9s ease-out 1s both;
+    }
+
+    .marketing-hero__feature-brand {
+        line-height: 1;
+    }
+
+    .marketing-hero__feature-brand--plate {
+        color: #0e1833;
+        font-style: italic;
+    }
+
+    .marketing-hero__feature-brand--web {
+        color: #5e7097;
+        font-style: normal;
     }
 
     .marketing-hero__feature-pill--solution::before {
@@ -469,8 +1319,8 @@
         margin-inline: auto;
         padding: 0.72rem;
         border-radius: 2rem;
-        background: rgb(255 255 255 / 0.66);
-        border: 1px solid rgb(var(--color-ink-rgb) / 0.05);
+        background: var(--marketing-home-muted-surface);
+        border: 1px solid rgb(var(--color-border-rgb) / 0.78);
         box-shadow: none;
     }
 
@@ -488,6 +1338,13 @@
         height: 100%;
         object-fit: cover;
         object-position: top left;
+    }
+
+    .marketing-hero__browser-image--free {
+        position: relative;
+        z-index: 1;
+        height: auto;
+        filter: drop-shadow(0 14px 20px rgb(var(--color-ink-rgb) / 0.1));
     }
 
     .marketing-hero__phone {
@@ -596,6 +1453,25 @@
     }
 
     @media (max-width: 1023px) {
+        .marketing-benefits-panel__inner {
+            --marketing-benefits-media-height: clamp(18rem, 54vw, 28rem);
+
+            grid-template-columns: 1fr;
+            min-height: 0;
+        }
+
+        .marketing-benefits-panel__content-column {
+            min-height: 0;
+        }
+
+        .marketing-benefits-panel__visual {
+            min-height: clamp(18rem, 54vw, 28rem);
+        }
+
+        .marketing-benefits-panel__heading h3 {
+            max-width: 16ch;
+        }
+
         .marketing-hero__title,
         .marketing-hero__lede {
             max-width: none;
@@ -608,6 +1484,129 @@
     }
 
     @media (max-width: 767px) {
+        .marketing-benefits-tabs__list-wrap {
+            margin-inline: calc(50% - 50vw);
+        }
+
+        .marketing-benefits-tabs__list {
+            width: 100%;
+        }
+
+        .marketing-benefits-tabs__tab {
+            flex: 1 0 auto;
+            min-height: 2.55rem;
+            padding: 0 0.82rem;
+            font-size: 0.84rem;
+        }
+
+        .marketing-benefits-panel__inner {
+            --marketing-benefits-media-height: 16rem;
+
+            gap: 1.3rem;
+            padding: 1rem;
+        }
+
+        .marketing-benefits-panel__visual {
+            --marketing-benefits-visual-pad: 0.85rem;
+            --marketing-benefits-image-width: 78%;
+            --marketing-benefits-image-height: 62%;
+
+            height: 16rem;
+            min-height: 16rem;
+            border-radius: 1rem;
+        }
+
+        .marketing-benefits-panel__visual--solution img,
+        .marketing-benefits-panel__visual--booking img {
+            width: 88%;
+            height: auto;
+            transform: translate(-50%, -50%) scale(1.28);
+        }
+
+        .marketing-benefits-panel__heading {
+            gap: 0.65rem;
+        }
+
+        .marketing-benefits-panel__heading h3 {
+            max-width: 14ch;
+            font-size: clamp(1.75rem, 8vw, 2.15rem);
+        }
+
+        .marketing-benefits-feature {
+            gap: 0.75rem;
+            padding: 0.9rem 0;
+        }
+
+        .marketing-benefits-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .marketing-benefit-card {
+            padding: 1.15rem;
+            border-radius: 1.15rem;
+        }
+
+        .marketing-benefit-card--with-visual-image {
+            min-height: 13.25rem;
+        }
+
+        .marketing-benefit-card--with-visual-image .marketing-benefit-card__header,
+        .marketing-benefit-card--with-visual-image .marketing-benefit-card__description {
+            max-width: 54%;
+        }
+
+        .marketing-benefit-card__visual {
+            top: 0.8rem;
+            right: 0.75rem;
+            width: 7.8rem;
+            min-width: 0;
+            height: 4.8rem;
+            opacity: 0.24;
+        }
+
+        .marketing-benefit-card--with-visual-image .marketing-benefit-card__visual--calendar {
+            top: 0.8rem;
+            right: 0.75rem;
+            bottom: 0.8rem;
+            width: 42%;
+            min-width: 8.8rem;
+            height: auto;
+            opacity: 1;
+        }
+
+        .marketing-benefit-card--with-visual-image .marketing-benefit-card__visual--calendar .marketing-benefit-visual__image {
+            transform: scale(1.42);
+        }
+
+        .marketing-benefit-card__media {
+            min-height: 13rem;
+            margin: 0 -1.15rem 0;
+        }
+
+        .marketing-benefit-card__image {
+            width: min(108%, 21rem);
+            margin: 0.1rem 0 -3.65rem 0.2rem;
+        }
+
+        .marketing-benefit-card__header {
+            gap: 0.75rem;
+        }
+
+        .marketing-benefit-card__icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.85rem;
+        }
+
+        .marketing-benefits-actions {
+            display: grid;
+        }
+
+        .marketing-benefits-button {
+            width: 100%;
+            justify-content: center;
+        }
+
         .marketing-process-section__shell {
             padding: 1.85rem 0.875rem 2.6rem;
         }
@@ -682,6 +1681,12 @@
 
         .marketing-hero__browser-body {
             border-radius: 0.85rem;
+        }
+    }
+
+    @media (max-width: 1023px) and (min-width: 768px) {
+        .marketing-benefits-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 }

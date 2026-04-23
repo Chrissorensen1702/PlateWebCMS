@@ -28,8 +28,8 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSeeTextInOrder([
-            'Hjemmeside, booking og betaling',
-            'samlet ét sted',
+            'Alt du skal bruge til hjemmeside, booking og drift',
+            'Hos os kombinerer vi hjemmeside, kunde-CMS, bookingsystem, vagtplan, betaling og app',
         ]);
         $response->assertSeeText([
             'Produkter',
@@ -93,7 +93,7 @@ class ExampleTest extends TestCase
             ->assertSeeText('Beregn jeres pris')
             ->assertSeeText('Tilpas hjemmeside og booking')
             ->assertSeeText('Gå live');
-        $this->get('/om-os')->assertOk()->assertSeeText('Vi bygger loesninger, der samler hjemmeside, booking og CMS i samme retning.');
+        $this->get('/om-os')->assertOk()->assertSeeText('Tanken er at skabe et univers, hvor hjemmeside, bookingsystem og kundelogin ikke opleves som tre separate');
         $this->get('/designs')->assertOk()->assertSeeText('Et design, der passer til jeres forretning');
         $this->get('/custom-build')->assertOk()->assertSee('Custom builds med et skraeddersyet udtryk og samme CMS-kerne.');
         $this->get('/kunde-cms')->assertOk()->assertSee('Kundelogin og CMS som en stabil del af leverancen.');

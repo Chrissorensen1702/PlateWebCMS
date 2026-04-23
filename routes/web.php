@@ -41,6 +41,7 @@ Route::controller(SalesController::class)->group(function () {
 Route::redirect('/contact', '/kontakt');
 Route::post('/kontakt', [LeadController::class, 'store'])->middleware('throttle:6,1')->name('leads.store');
 Route::post('/contact', [LeadController::class, 'store'])->middleware('throttle:6,1');
+Route::post('/nyhedsbrev', [LeadController::class, 'newsletter'])->middleware('throttle:6,1')->name('newsletter.store');
 Route::post('/pricing/solution', [CustomerSolutionController::class, 'store'])->name('customer.solution.capture');
 Route::get('/sites/{site:slug}', [SiteController::class, 'show'])->name('sites.show');
 Route::get('/sites/{site:slug}/{pageSlug}', [SiteController::class, 'show'])->name('sites.page');
