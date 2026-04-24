@@ -81,7 +81,7 @@ class CustomerSolutionFlowTest extends TestCase
         $this->get(route('customer.solution.show'))
             ->assertOk()
             ->assertSeeText('Studio')
-            ->assertSeeText('Juster beregneren')
+            ->assertSeeText('Gå til prissiden')
             ->assertSeeText('Bookinger/år');
     }
 

@@ -6,8 +6,8 @@
             'eyebrow' => 'Samlet platform',
             'title' => 'Vi har samlet alt i én løsning!',
             'description' => 'PlateWeb samler hjemmeside, booking, betaling, vagtplan og app i én platform, så du slipper for at få flere systemer til at spille sammen.',
-            'image' => 'images/sales/test2-home-preview-cutout.png',
-            'image_alt' => 'PlateWeb vist på tablet',
+            'lottie' => 'lotties/lottie-test2.json',
+            'image_alt' => 'PlateWeb animation vist i Lottie',
             'items' => [
                 [
                     'title' => 'Én samlet arbejdsgang',
@@ -240,12 +240,21 @@
                         <div class="marketing-benefits-panel__inner">
                             <div class="marketing-benefits-panel__media-column">
                                 <figure class="marketing-benefits-panel__visual marketing-benefits-panel__visual--{{ $tab['key'] }}">
-                                    <img
-                                        src="{{ asset($tab['image']) }}"
-                                        alt="{{ $tab['image_alt'] }}"
-                                        loading="{{ $loop->first ? 'eager' : 'lazy' }}"
-                                        decoding="async"
-                                    >
+                                    @if (!empty($tab['lottie']))
+                                        <div
+                                            class="marketing-benefits-panel__lottie"
+                                            data-lottie-src="{{ asset($tab['lottie']) }}"
+                                            data-lottie-loop="true"
+                                            aria-label="{{ $tab['image_alt'] }}"
+                                        ></div>
+                                    @else
+                                        <img
+                                            src="{{ asset($tab['image']) }}"
+                                            alt="{{ $tab['image_alt'] }}"
+                                            loading="{{ $loop->first ? 'eager' : 'lazy' }}"
+                                            decoding="async"
+                                        >
+                                    @endif
                                 </figure>
                             </div>
 

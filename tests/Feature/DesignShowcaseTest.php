@@ -20,8 +20,8 @@ class DesignShowcaseTest extends TestCase
         $response->assertSeeText('Vælg det tema, der passer');
         $response->assertSeeText('Tilpas farverne, så de matcher');
         $response->assertSeeText('jeres brand og visuelle identitet.');
-        $response->assertSeeText('Få custom design til Studio-pris inkl. 6 måneder gratis.');
-        $response->assertSeeText('Læs mere');
+        $response->assertSeeText('Hver preview viser en forside i et konkret theme');
+        $response->assertSeeText('Accordion-layoutet holder siden enkel at overskue');
     }
 
     public function test_design_preview_route_can_render_a_selected_theme_homepage(): void

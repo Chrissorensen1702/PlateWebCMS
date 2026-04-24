@@ -16,15 +16,15 @@
                         <p class="register-page__eyebrow">Kom igang med det samme</p>
                         <h1 class="register-page__title">Kom i gang på få minutter</h1>
                         <p class="register-page__copy">
-                           Med vores dynamiske prisberegner finder vi en pris, der passer til netop jeres setup og størrelse. Brug prisberegneren, inden I opretter en konto, så vi sammen kan sikre en løsning og en pris, der er rentabel for begge parter.
+                           Vi har samlet PlateWeb i faste pakker, så du hurtigere kan finde den retning, der passer til din forretning. Brug prissiden som udgangspunkt, før du opretter en konto.
                         </p>
 
                         @if (empty($pendingSolution))
                             <article class="ui-card register-page__solution-card register-page__solution-card--empty">
-                                <p class="register-page__solution-eyebrow">Vil du starte med prisguiden?</p>
-                                <h2 class="register-page__solution-title">Byg først din løsning og opret derefter konto.</h2>
+                                <p class="register-page__solution-eyebrow">Vil du starte med pakkerne?</p>
+                                <h2 class="register-page__solution-title">Se Start, Pro og Connect først.</h2>
                                 <p class="register-page__solution-detail">
-                                    Hvis du går gennem prisguiden først, gemmer vi dit valgte spor og dine vigtigste behov, så de er klar herinde bagefter.
+                                    Prissiden viser nu de faste pakker, så du lettere kan vælge retning, før du går videre med konto og opsætning.
                                 </p>
 
                                 <a href="{{ route('templates') }}#pricing-guide" class="ui-button register-page__solution-action">
@@ -32,10 +32,10 @@
                                 </a>
                             </article>
 
-                            <ul class="register-page__solution-steps" aria-label="Sådan fungerer prisguiden">
-                                <li>Vælg den pakke og de tilvalg, der passer til jeres behov.</li>
-                                <li>Udfyld jeres ønsker, så vi kan beregne en pris ud fra setup og størrelse.</li>
-                                <li>Opret konto bagefter og fortsæt direkte med det gemte oplæg.</li>
+                            <ul class="register-page__solution-steps" aria-label="Status paa pakkerne">
+                                <li>Start samler hjemmeside og booking i ét gratis spor.</li>
+                                <li>Pro lægger betaling og mere drift ovenpå.</li>
+                                <li>Connect udvider med kundeapp og mere loyalitet.</li>
                             </ul>
                         @endif
                     </div>

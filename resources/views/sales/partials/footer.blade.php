@@ -35,25 +35,27 @@
         <div class="ui-shell site-common-footer__inner">
             <section class="site-common-footer__section site-common-footer__section--brand">
                 <div class="site-common-footer__section-header">
-                    <h2 class="site-common-footer__section-title">Kontaktoplysninger</h2>
+                    <h2 class="site-common-footer__section-title">Kontakt os</h2>
                 </div>
 
                 <div class="marketing-footer__brand-stack">
-                    <div class="site-common-footer__brand-block">
-                        <div class="site-common-footer__brand-copy">
-                            <p class="site-common-footer__lead">
-                                PlateDigital<br>
-                                CVR: 42456187<br>
-                                +45 20 63 12 99<br>
-                                hallo@plateweb.dk
-                            </p>
+                    <div class="marketing-footer__contact-panel">
+                        <div class="site-common-footer__brand-block">
+                            <div class="site-common-footer__brand-copy">
+                                <p class="site-common-footer__lead marketing-footer__contact-copy">
+                                    PlateDigital<br>
+                                    CVR: 42456187<br>
+                                    +45 20 63 12 99<br>
+                                    hallo@plateweb.dk
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="site-common-footer__action">
-                        <a href="{{ route('contact') }}" class="site-common-footer__cta">
-                            Se kontaktformular
-                        </a>
+                        <div class="site-common-footer__action">
+                            <a href="{{ route('contact') }}" class="site-common-footer__cta">
+                                Se kontaktformular
+                            </a>
+                        </div>
                     </div>
 
                     <div class="marketing-footer__powered-brand">

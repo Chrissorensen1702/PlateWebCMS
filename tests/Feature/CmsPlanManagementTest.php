@@ -21,8 +21,8 @@ class CmsPlanManagementTest extends TestCase
         $response = $this->actingAs($developer)->get(route('cms.plans.index'));
 
         $response->assertOk();
-        $response->assertSee('Pakker i systemet');
-        $response->assertSee('Opret en ny pakke');
+        $response->assertSee('Vi starter forfra med faste pakker');
+        $response->assertSee('Det gamle pakke-admin er sat på pause');
     }
 
     public function test_customer_managers_cannot_view_the_plan_management_page(): void
@@ -37,7 +37,7 @@ class CmsPlanManagementTest extends TestCase
             ->assertForbidden();
     }
 
-    public function test_full_access_developers_can_create_plans(): void
+    public function test_full_access_developers_cannot_create_plans_while_the_system_is_paused(): void
     {
         $developer = User::factory()->create([
             'role' => 'developer',
@@ -57,29 +57,14 @@ class CmsPlanManagementTest extends TestCase
             'features' => "Forside\nKontakt\nBookingflow",
         ]);
 
-        $plan = Plan::query()->where('name', 'Premium template')->first();
-
         $response->assertRedirect(route('cms.plans.index'));
-        $this->assertNotNull($plan);
-
-        $this->assertDatabaseHas('plans', [
-            'id' => $plan->id,
-            'slug' => 'premium-template',
-            'kind' => 'template',
-            'price_from' => 4999,
-            'build_time' => '2 uger',
-            'is_active' => true,
-            'sort_order' => 3,
+        $response->assertSessionHas('status');
+        $this->assertDatabaseMissing('plans', [
+            'name' => 'Premium template',
         ]);
-
-        $this->assertSame([
-            'Forside',
-            'Kontakt',
-            'Bookingflow',
-        ], $plan->fresh()->features);
     }
 
-    public function test_full_access_developers_can_update_plans(): void
+    public function test_full_access_developers_cannot_update_plans_while_the_system_is_paused(): void
     {
         $developer = User::factory()->create([
             'role' => 'developer',
@@ -114,23 +99,22 @@ class CmsPlanManagementTest extends TestCase
         ]);
 
         $response->assertRedirect(route('cms.plans.index'));
+        $response->assertSessionHas('status');
 
-        $this->assertDatabaseHas('plans', [
-            'id' => $plan->id,
-            'name' => 'Starter Plus',
-            'slug' => 'starter-plus',
-            'kind' => 'custom',
-            'headline' => 'Mere fleksibel pakke',
-            'summary' => 'Opdateret beskrivelse',
-            'price_from' => 2999,
-            'build_time' => '3 uger',
-            'is_active' => false,
-            'sort_order' => 5,
-        ]);
+        $plan->refresh();
 
+        $this->assertSame('Starter', $plan->name);
+        $this->assertSame('starter', $plan->slug);
+        $this->assertSame('template', $plan->kind);
+        $this->assertSame('Start let', $plan->headline);
+        $this->assertSame('Kort summary', $plan->summary);
+        $this->assertSame(1999, $plan->price_from);
+        $this->assertSame('1 uge', $plan->build_time);
+        $this->assertTrue($plan->is_active);
+        $this->assertSame(1, $plan->sort_order);
         $this->assertSame([
-            'Custom design',
-            'Udvidet indhold',
-        ], $plan->fresh()->features);
+            'Kontakt',
+            'Hero',
+        ], $plan->features);
     }
 }

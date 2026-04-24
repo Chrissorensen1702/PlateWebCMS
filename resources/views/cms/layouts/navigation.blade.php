@@ -86,12 +86,6 @@
                         </x-nav-link>
                     @endif
 
-                    @if (Auth::user()->canManagePlans())
-                        <x-nav-link :href="route('cms.plans.index')" :active="request()->routeIs('cms.plans.*')">
-                            {{ __('Pakker') }}
-                        </x-nav-link>
-                    @endif
-
                     <x-nav-link :href="route('cms.sites.index')" :active="request()->routeIs('cms.sites.*')">
                         {{ __('Sider') }}
                     </x-nav-link>
@@ -223,12 +217,6 @@
             @if (Auth::user()->isDeveloper())
                 <x-responsive-nav-link :href="route('cms.orders.index')" :active="request()->routeIs('cms.orders.*')">
                     {{ __('Bestillinger') }}
-                </x-responsive-nav-link>
-            @endif
-
-            @if (Auth::user()->canManagePlans())
-                <x-responsive-nav-link :href="route('cms.plans.index')" :active="request()->routeIs('cms.plans.*')">
-                    {{ __('Pakker') }}
                 </x-responsive-nav-link>
             @endif
 

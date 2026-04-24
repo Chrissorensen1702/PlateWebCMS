@@ -53,7 +53,7 @@
 
                         <div class="customer-solution-hero__actions">
                             <a href="{{ $adjustHref }}" class="ui-button ui-button--light">
-                                Juster beregneren
+                                Gå til prissiden
                             </a>
                             <a href="{{ $contactHref }}" class="ui-button ui-button--light-outline">
                                 Kontakt os om næste skridt
@@ -61,14 +61,14 @@
                         </div>
                     @else
                         <p class="ui-kicker ui-kicker--light">Ingen løsning endnu</p>
-                        <h3 class="ui-title">Byg først din løsning i prisberegneren</h3>
+                        <h3 class="ui-title">Se vores faste pakker</h3>
                         <p class="customer-solution-hero__detail">
-                            Når du har valgt pakke og justeret setup, kan du gemme løsningen her og vende tilbage til den senere.
+                            PlateWeb er nu samlet i faste pakker. Gå til prissiden og se hvilken retning der passer bedst til dit setup, før du går videre.
                         </p>
 
                         <div class="customer-solution-hero__actions">
                             <a href="{{ route('templates') }}" class="ui-button ui-button--light">
-                                Gå til prisberegneren
+                                Gå til prissiden
                             </a>
                         </div>
                     @endif

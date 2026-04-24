@@ -48,12 +48,9 @@ class DashboardController extends Controller
         $stats = $canViewLeads
             ? [
                 [
-                    'label' => 'Aktive pakker',
+                    'label' => 'Pakke-data',
                     'value' => $plans->count(),
-                    'copy' => 'Pakker der er aktive paa salgssiden.',
-                    'action' => $user->canManagePlans()
-                        ? ['label' => 'Administrere', 'href' => route('cms.plans.index')]
-                        : null,
+                    'copy' => 'Tidligere pakke-data er bevaret i baggrunden, mens den nye pris-side bygges op.',
                 ],
                 [
                     'label' => 'Henvendelser',

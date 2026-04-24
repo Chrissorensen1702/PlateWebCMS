@@ -83,14 +83,14 @@ class ExampleTest extends TestCase
 
         $this->get('/templates')
             ->assertOk()
-            ->assertSeeTextInOrder([
-                'En løsning, der passer',
-                'til jeres behov',
-            ]);
+            ->assertSeeText('Det skal være let at vælge rigtigt')
+            ->assertSeeText('Starter')
+            ->assertSeeText('Pro')
+            ->assertSeeText('Connect');
         $this->get('/kom-i-gang')
             ->assertOk()
             ->assertSeeText('Kortlæg jeres behov')
-            ->assertSeeText('Beregn jeres pris')
+            ->assertSeeText('Se pakkerne')
             ->assertSeeText('Tilpas hjemmeside og booking')
             ->assertSeeText('Gå live');
         $this->get('/om-os')->assertOk()->assertSeeText('Tanken er at skabe et univers, hvor hjemmeside, bookingsystem og kundelogin ikke opleves som tre separate');

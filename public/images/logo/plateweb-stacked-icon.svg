@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="620" viewBox="0 0 520 620" fill="none">
+  <defs>
+    <linearGradient id="plateweb-stacked-ring" x1="168" y1="72" x2="352" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9CB4DE"/>
+      <stop offset="1" stop-color="#5D79AB"/>
+    </linearGradient>
+    <linearGradient id="plateweb-stacked-fill" x1="184" y1="88" x2="336" y2="220" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#EEF4FF" stop-opacity="0.68"/>
+      <stop offset="1" stop-color="#C6D6F0" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+
+  <g>
+    <circle cx="260" cy="156" r="86" fill="url(#plateweb-stacked-fill)"/>
+    <circle cx="260" cy="156" r="78" stroke="url(#plateweb-stacked-ring)" stroke-width="16"/>
+    <circle cx="260" cy="156" r="58" stroke="#FFFFFF24" stroke-width="2"/>
+  </g>
+
+  <text
+    x="260"
+    y="206"
+    text-anchor="middle"
+    font-family="Avenir Next, Avenir, 'SF Pro Display', Inter, 'Helvetica Neue', Arial, sans-serif"
+    font-size="138"
+    font-weight="700"
+    letter-spacing="-3.6"
+    fill="#0E1833"
+  >P</text>
+
+  <text
+    x="260"
+    y="398"
+    text-anchor="middle"
+    font-family="Baskerville, 'Iowan Old Style', 'Times New Roman', serif"
+    font-size="176"
+    font-weight="700"
+    letter-spacing="-4"
+    fill="#5E7097"
+  >Web</text>
+</svg>

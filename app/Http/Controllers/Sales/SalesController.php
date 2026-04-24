@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use App\Support\Sales\DesignShowcaseCatalog;
-use App\Support\Sales\PricingPackageCatalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
@@ -35,18 +34,18 @@ class SalesController extends Controller
                 ],
                 [
                     'eyebrow' => 'Trin 02',
-                    'title' => 'Beregn jeres pris',
-                    'copy' => 'Vælg løsning og udfyld den dynamiske prisberegner, så I får et konkret overslag med det samme.',
+                    'title' => 'Se pakkerne',
+                    'copy' => 'Brug prissiden som overblik, mens vi omlægger PlateWeb til et nyt og enklere pakkesystem.',
                     'tag' => 'Konto og kontakt',
                     'action' => [
-                        'label' => 'Åbn prisberegner',
+                        'label' => 'Åbn prissiden',
                         'href' => route('templates').'#pricing-guide',
                     ],
                 ],
                 [
                     'eyebrow' => 'Trin 03',
                     'title' => 'Kom i gang med det samme',
-                    'copy' => 'Når beregningen er gennemført, kan I oprette konto og gå direkte videre med den løsning, I har valgt.',
+                    'copy' => 'Når retningen er på plads, kan I oprette konto og gå videre med den løsning, der passer til jeres setup.',
                     'tag' => 'Opsaetning',
                 ],
                 [
@@ -69,26 +68,16 @@ class SalesController extends Controller
                 ],
             ],
             'checkpoints' => [
-                'Prisoverslag foer kontooprettelse, saa alle nye spor starter med rigtig kontekst.',
-                'Kontoen aabnes foerst, naar beregningen er gennemfoert og klar til at blive gemt.',
+                'Prissiden er lagt om, saa nye spor kan bygges op omkring faste pakker.',
+                'Kontoen kan stadig oprettes, selv om det gamle dynamiske pakke-flow er sat paa pause.',
                 'Flowet er bygget til at foere brugeren videre uden at hoppe frem og tilbage mellem sider.',
             ],
         ]);
     }
 
-    public function templates(Request $request, PricingPackageCatalog $pricingPackageCatalog): View
+    public function templates(): View
     {
-        $plans = $this->plans();
-        $packages = $pricingPackageCatalog->packages($plans);
-
-        return view('sales.pages.templates', [
-            'packages' => $packages,
-            'comparisonRows' => $pricingPackageCatalog->comparisonRows(),
-            'initialSelection' => $pricingPackageCatalog->normalizeSelection(
-                $request->query(),
-                collect($packages)->mapWithKeys(fn (array $package) => [$package['key'] => $package])->all(),
-            ),
-        ]);
+        return view('sales.pages.templates');
     }
 
     public function about(): View

@@ -34,7 +34,8 @@
     .marketing-benefits-intro {
         display: grid;
         gap: 0.9rem;
-        max-width: 44rem;
+        width: min(100%, 72rem);
+        max-width: 72rem;
         justify-self: center;
         text-align: center;
     }
@@ -56,11 +57,12 @@
         font-weight: 500;
         line-height: 0.98;
         letter-spacing: -0.05em;
+        white-space: nowrap;
     }
 
     .marketing-benefits-copy {
         margin: 0;
-        max-width: 40rem;
+        max-width: 58rem;
         justify-self: center;
         color: rgb(var(--color-text-rgb) / 0.78);
         font-size: 1rem;
@@ -667,6 +669,26 @@
         transform: translate(-50%, -50%);
     }
 
+    .marketing-benefits-panel__lottie {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        width: min(90%, 48rem);
+        aspect-ratio: 1 / 1;
+        transform: translate(-50%, -50%);
+        display: grid;
+        place-items: center;
+    }
+
+    .marketing-benefits-panel__lottie > svg,
+    .marketing-benefits-panel__lottie canvas {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100%;
+        display: block;
+    }
+
     .marketing-benefits-panel__visual--solution,
     .marketing-benefits-panel__visual--booking {
         display: block;
@@ -688,6 +710,23 @@
         filter: none;
         transform: translate(-50%, -50%) scale(1.45);
         transform-origin: center;
+    }
+
+    .marketing-benefits-panel__visual--solution .marketing-benefits-panel__lottie {
+        width: auto;
+        height: min(88%, 24rem);
+        max-width: 92%;
+        aspect-ratio: auto;
+        transform: translate(-50%, -50%);
+        transform-origin: center;
+    }
+
+    .marketing-benefits-panel__visual--solution .marketing-benefits-panel__lottie > svg,
+    .marketing-benefits-panel__visual--solution .marketing-benefits-panel__lottie > canvas {
+        width: auto !important;
+        height: 100% !important;
+        max-width: 100%;
+        max-height: 100%;
     }
 
     .marketing-benefits-panel__visual--website img {
@@ -1488,6 +1527,15 @@
             margin-inline: calc(50% - 50vw);
         }
 
+        .marketing-benefits-intro {
+            width: 100%;
+            max-width: 44rem;
+        }
+
+        .marketing-benefits-title {
+            white-space: normal;
+        }
+
         .marketing-benefits-tabs__list {
             width: 100%;
         }
@@ -1521,6 +1569,13 @@
             width: 88%;
             height: auto;
             transform: translate(-50%, -50%) scale(1.28);
+        }
+
+        .marketing-benefits-panel__visual--solution .marketing-benefits-panel__lottie {
+            width: auto;
+            height: min(84%, 13.25rem);
+            max-width: 90%;
+            transform: translate(-50%, -50%);
         }
 
         .marketing-benefits-panel__heading {
